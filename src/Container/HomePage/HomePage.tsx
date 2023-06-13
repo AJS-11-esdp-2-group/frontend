@@ -1,5 +1,4 @@
 import React from "react";
-import {useGetAllGoodsQuery} from "../../Store/services/crmService";
 
 
 

@@ -3,7 +3,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 
 import Header from "./Components/Layout/Header/Header";
 import HomePage from "./Container/HomePage/HomePage";
-import Goods from "./Container/Goods/Goods";
+import Items from "./Container/Items/Items";
 import Suppliers from "./Container/Suppliers/Suppliers";
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
           <Routes>
               <Route path={'/'} element={<Header/>}>
                   <Route index element={<HomePage/>}/>
-                  <Route path={'/goods'} element={<Goods/>}/>
+                  <Route path={'/goods'} element={<Items/>}/>
                   <Route path={'/suppliers'} element={<Suppliers/>}/>
               </Route>
           </Routes>
