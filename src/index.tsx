@@ -4,16 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux';
-import {configureStore} from '@reduxjs/toolkit';
-import CrmReducer from "./Store/CrmSlice";
+import {store} from "./Store/services";
 
-
-
-const store = configureStore({
-    reducer: {
-        crmReducer: CrmReducer
-    }
-})
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
