@@ -39,7 +39,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
     }),
 }));
 
-const CardItems = ({name, description, category_description, create_date, image, onClick, id_category, onClickDelete}: IProps) => {
+const CardSuppliers = ({name, description, category_description, create_date, image, onClick, id_category, onClickDelete}: IProps) => {
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {
@@ -47,7 +47,7 @@ const CardItems = ({name, description, category_description, create_date, image,
     };
 
     return (
-        <Card sx={{ width: 300, m: '25px' }}>
+        <Card sx={{ maxWidth: 500, m: '25px' }}>
             <CardHeader
                 sx={{height: '80px'}}
                 action={[
@@ -57,31 +57,18 @@ const CardItems = ({name, description, category_description, create_date, image,
                     <IconButton onClick={onClick} aria-label="settings">
                         <EditIcon/>
                     </IconButton>,
+                    <ExpandMore
+                        expand={expanded}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="show more"
+                    >
+                        <ExpandMoreIcon />
+                    </ExpandMore>
                 ]}
                 title={name}
                 subheader={create_date}
             />
-            <CardMedia
-                component="img"
-                height="194"
-                image={image}
-                alt="Items img"
-            />
-            <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                    {description}
-                </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-                <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                >
-                    <ExpandMoreIcon />
-                </ExpandMore>
-            </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
                     <Typography paragraph>{id_category}</Typography>
@@ -93,4 +80,4 @@ const CardItems = ({name, description, category_description, create_date, image,
     );
 }
 
-export default CardItems
+export default CardSuppliers
