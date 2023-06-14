@@ -6,9 +6,9 @@ import {
     FetchBaseQueryError,
     FetchBaseQueryMeta
   } from "@reduxjs/toolkit/query/react";
-  import { apiUrl } from "../../common/constans";
-  import { RootState } from "../services/store";
-  import { CustomError } from "../../interfaces/errors/CustomError";
+  import { apiUrl } from "../common/constans";
+  import { RootState } from "../Store/services/store";
+  import { CustomError } from "../interfaces/errors/CustomError";
   
   export const api = createApi({
     baseQuery: fetchBaseQuery({
