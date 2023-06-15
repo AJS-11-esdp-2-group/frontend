@@ -1,5 +1,5 @@
 import CardItems from '../../Components/Layout/Card/CardItems';
-import { useGetAllItemsQuery } from '../../Store/services/crmApi';
+import { useGetAllItemsQuery } from '../../Store/services/items';
 import { Grid } from '@mui/material';
 
 const handleClick = () => {};
@@ -8,7 +8,7 @@ const Items = () => {
   if (isLoading) return <h1>Loading...</h1>;
   return (
     <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-      {data.map((item: any) => {
+      {data && data.map((item: any) => {
         return (
           <CardItems
             key={item.id_item}
