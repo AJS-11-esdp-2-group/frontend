@@ -1,0 +1,29 @@
+{
+    "extends": [
+        "react-app",
+        "react-app/jest"
+    ],
+    "rules": {
+        "no-console":"warn",
+        "quotes": ["warn", "single"],
+        "jsx-quotes": ["warn", "prefer-double"],
+        "max-len": ["warn", {"code": 120}], 
+        "semi": ["warn", "always"],
+        "comma-dangle": ["warn", "always-multiline"],
+        "import/order": [
+            "error",
+            {
+              "groups": [
+                "index",
+                "sibling",
+                "parent",
+                "internal",
+                "external",
+                "builtin",
+                "object",
+                "type"
+              ]
+            }
+          ]
+    }
+}

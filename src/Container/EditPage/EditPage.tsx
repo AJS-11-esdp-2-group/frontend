@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 
 const EditPage = () => {
@@ -6,7 +6,7 @@ const EditPage = () => {
         <div>
 
         </div>
-    )
-}
+    );
+};
 
-export default EditPage
+export default EditPage;

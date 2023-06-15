@@ -9,7 +9,7 @@ import Collapse from '@mui/material/Collapse';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import EditIcon from "@mui/icons-material/Edit";
+import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 
@@ -39,7 +39,15 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
     }),
 }));
 
-const CardItems = ({name, description, category_description, create_date, image, onClick, id_category, onClickDelete}: IProps) => {
+const CardItems = ({
+    name, 
+    description, 
+    category_description, 
+    create_date, 
+    image, 
+    onClick, 
+    id_category, 
+    onClickDelete}: IProps) => {
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {
@@ -91,6 +99,6 @@ const CardItems = ({name, description, category_description, create_date, image,
             </Collapse>
         </Card>
     );
-}
+};
 
-export default CardItems
+export default CardItems;
