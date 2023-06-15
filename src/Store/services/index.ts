@@ -28,6 +28,5 @@ import {
       FetchBaseQueryMeta
     >,
     endpoints: () => ({}),
-    // tagTypes: ["Items", "Suppliers"]
     tagTypes: ['Items', 'Suppliers'],
 });

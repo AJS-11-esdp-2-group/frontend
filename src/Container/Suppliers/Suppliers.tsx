@@ -1,4 +1,4 @@
-import { useGetAllSuppliersQuery } from '../../Store/services/crmApi';
+import { useGetAllSuppliersQuery } from '../../Store/services/suppliers';
 import CardSuppliers from '../../Components/Layout/Card/CardSuppliers';
 import { Container } from '@mui/material';
 
@@ -8,7 +8,7 @@ const Suppliers = () => {
   if (isLoading) return <h1>Loading...</h1>;
   return (
     <Container sx={{ verticalAlign: 'center' }}>
-      {data.map((item: any) => {
+      {data && data.map((item: any) => {
         return (
           <CardSuppliers
             key={item.id_supplier}
