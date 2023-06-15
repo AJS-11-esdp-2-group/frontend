@@ -1,16 +1,16 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Header from './Components/Layout/Header/Header'
-import HomePage from './Container/HomePage/HomePage'
-import Items from './Container/Items/Items'
-import Suppliers from './Container/Suppliers/Suppliers'
-import Register from './Container/Register/Register'
-import Login from './Container/Login/Login'
-import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute'
-import { useAppSelector } from './Store/hooks'
+import Header from './Components/Layout/Header/Header';
+import HomePage from './Container/HomePage/HomePage';
+import Items from './Container/Items/Items';
+import Suppliers from './Container/Suppliers/Suppliers';
+import Register from './Container/Register/Register';
+import Login from './Container/Login/Login';
+import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
+import { useAppSelector } from './Store/hooks';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React from 'react';
 
 function App() {
-  const { user } = useAppSelector((state) => state.auth)
+  const { user } = useAppSelector((state) => state.auth);
   return (
     <BrowserRouter>
       <Routes>
@@ -37,7 +37,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

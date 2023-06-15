@@ -1,15 +1,11 @@
-import React from 'react'
-import { useGetAllSuppliersQuery } from '../../Store/services/crmApi'
-import { Container } from '@mui/material'
-import CardSuppliers from '../../Components/Layout/Card/CardSuppliers'
+import { useGetAllSuppliersQuery } from '../../Store/services/crmApi';
+import CardSuppliers from '../../Components/Layout/Card/CardSuppliers';
+import { Container } from '@mui/material';
 
-const handleClick = () => {
-  console.log('click')
-}
+const handleClick = () => {};
 const Suppliers = () => {
-  const { data, isLoading } = useGetAllSuppliersQuery()
-  console.log(data)
-  if (isLoading) return <h1>Loading...</h1>
+  const { data, isLoading } = useGetAllSuppliersQuery();
+  if (isLoading) return <h1>Loading...</h1>;
   return (
     <Container sx={{ verticalAlign: 'center' }}>
       {data.map((item: any) => {
@@ -25,10 +21,10 @@ const Suppliers = () => {
             onClick={() => handleClick()}
             onClickDelete={() => handleClick()}
           />
-        )
+        );
       })}
     </Container>
-  )
-}
+  );
+};
 
-export default Suppliers
+export default Suppliers;

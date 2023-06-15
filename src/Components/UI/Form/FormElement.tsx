@@ -22,7 +22,7 @@ const FormElement = (
     required = false,
     error,
     id,
-  }: Props
+  }: Props,
 ) => {
   return (
     <Grid item xs={12}>
@@ -33,14 +33,14 @@ const FormElement = (
         value={value}
         onChange={onChange}
         name={name}
-        variant='outlined'
+        variant="outlined"
         fullWidth
         label={label}
         error={!!error}
         helperText={error}
       />
     </Grid>
-  )
-}
+  );
+};
 
 export default FormElement;

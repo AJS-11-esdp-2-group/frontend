@@ -1,5 +1,5 @@
-import { Navigate } from 'react-router-dom'
-import { ReactElement } from 'react'
+import { Navigate } from 'react-router-dom';
+import { ReactElement } from 'react';
 
 interface Props {
   isAllowed: boolean
@@ -9,9 +9,9 @@ interface Props {
 
 const ProtectedRoute = ({ isAllowed, redirectPath, children }: Props) => {
   if (!isAllowed) {
-    return <Navigate to={redirectPath} replace />
+    return <Navigate to={redirectPath} replace />;
   }
-  return children
-}
+  return children;
+};
 
-export default ProtectedRoute
+export default ProtectedRoute;

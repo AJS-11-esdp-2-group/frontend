@@ -1,19 +1,19 @@
-import React from 'react'
-import AppBar from '@mui/material/AppBar'
-import { Box, Container } from '@mui/material'
-import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import Menu from '@mui/material/Menu'
-import MenuIcon from '@mui/icons-material/Menu'
-import Button from '@mui/material/Button'
-import Tooltip from '@mui/material/Tooltip'
-import MenuItem from '@mui/material/MenuItem'
-import AdbIcon from '@mui/icons-material/Adb'
-import { useAppSelector } from '../../../Store/hooks'
-import { useLogoutMutation } from '../../../Store/services/auth'
-import { useNavigate, Outlet, Link } from 'react-router-dom'
-import SettingsIcon from '@mui/icons-material/Settings'
+import { useAppSelector } from '../../../Store/hooks';
+import { useLogoutMutation } from '../../../Store/services/auth';
+import React from 'react';
+import AppBar from '@mui/material/AppBar';
+import { Box, Container } from '@mui/material';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import AdbIcon from '@mui/icons-material/Adb';
+import { useNavigate, Outlet, Link } from 'react-router-dom';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const pages = [
   {
@@ -24,7 +24,7 @@ const pages = [
     ru: 'Поставщики',
     en: 'suppliers',
   },
-]
+];
 
 const unauthorizedZone = [
   {
@@ -35,55 +35,53 @@ const unauthorizedZone = [
     ru: 'Авторизация',
     en: 'login',
   },
-]
+];
 
 const settings = [
   {
     ru: 'Выйти',
     en: 'logout',
   },
-]
+];
 
 const Header = () => {
-  const { user } = useAppSelector((state) => state.auth)
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const { user } = useAppSelector((state) => state.auth);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const handleClose = () => {
-    setAnchorEl(null)
-  }
+    setAnchorEl(null);
+  };
 
   //необходимо сделать logout
-  const [logout] = useLogoutMutation()
+  const [logout] = useLogoutMutation();
   const logoutHandler = async () => {
-    handleClose()
-    await logout()
-  }
+    handleClose();
+    await logout();
+  };
 
-  const navigate = useNavigate()
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null,
-  )
+  const navigate = useNavigate();
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget)
-  }
+    setAnchorElNav(event.currentTarget);
+  };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget)
-  }
+    setAnchorElUser(event.currentTarget);
+  };
 
   const handleCloseNavMenu = (page: string) => {
-    setAnchorElNav(null)
-    navigate(`${page}`)
-  }
+    setAnchorElNav(null);
+    navigate(`${page}`);
+  };
 
   const handleCloseUnauthorizedZone = (zone: string) => {
-    setAnchorElNav(null)
-    navigate(`${zone}`)
-  }
+    setAnchorElNav(null);
+    navigate(`${zone}`);
+  };
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null)
-  }
+    setAnchorElUser(null);
+  };
 
   return (
     <Box>
@@ -144,10 +142,7 @@ const Header = () => {
                 <>
                   {user
                     ? pages.map((page) => (
-                        <MenuItem
-                          key={page.en}
-                          onClick={() => handleCloseNavMenu(page.en)}
-                        >
+                        <MenuItem key={page.en} onClick={() => handleCloseNavMenu(page.en)}>
                           <Typography textAlign="center">{page.ru}</Typography>
                         </MenuItem>
                       ))
@@ -214,10 +209,7 @@ const Header = () => {
                 <>
                   {user
                     ? settings.map((setting) => (
-                        <MenuItem
-                          key={setting.ru}
-                          onClick={handleCloseUserMenu}
-                        >
+                        <MenuItem key={setting.ru} onClick={handleCloseUserMenu}>
                           <Typography
                             textAlign="center"
                             // onClick={() => handleCloseNavMenu(setting.en)}
@@ -231,10 +223,7 @@ const Header = () => {
                       ))
                     : unauthorizedZone.map((zone) => (
                         <MenuItem key={zone.ru} onClick={handleCloseUserMenu}>
-                          <Typography
-                            textAlign="center"
-                            onClick={() => handleCloseUnauthorizedZone(zone.en)}
-                          >
+                          <Typography textAlign="center" onClick={() => handleCloseUnauthorizedZone(zone.en)}>
                             {zone.ru}
                           </Typography>
                         </MenuItem>
@@ -249,7 +238,7 @@ const Header = () => {
         <Outlet />
       </Container>
     </Box>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

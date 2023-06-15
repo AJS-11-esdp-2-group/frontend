@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 
 
@@ -8,7 +8,7 @@ const HomePage = () => {
         <div>
             <h1>CRM</h1>
         </div>
-    )
-}
+    );
+};
 
-export default HomePage
+export default HomePage;

@@ -1,14 +1,14 @@
+  import { apiUrl } from '../../common/constans';
+  import { RootState } from '../services/store';
+  import { CustomError } from '../../interfaces/errors/CustomError';
 import {
     BaseQueryFn,
     createApi,
     FetchArgs,
     fetchBaseQuery,
     FetchBaseQueryError,
-    FetchBaseQueryMeta
-  } from "@reduxjs/toolkit/query/react";
-  import { apiUrl } from "../../common/constans";
-  import { RootState } from "../services/store";
-  import { CustomError } from "../../interfaces/errors/CustomError";
+    FetchBaseQueryMeta,
+  } from '@reduxjs/toolkit/query/react';
   
   export const api = createApi({
     baseQuery: fetchBaseQuery({
@@ -17,9 +17,9 @@ import {
         const state: RootState = getState();
         const token = state.auth.user?.token;
         if (token) {
-          headers.set("Authorization", token);
+          headers.set('Authorization', token);
         }
-      }
+      },
     }) as BaseQueryFn<
       string | FetchArgs,
       unknown,
@@ -29,5 +29,5 @@ import {
     >,
     endpoints: () => ({}),
     // tagTypes: ["Items", "Suppliers"]
-    tagTypes: ["Items", "Suppliers"]
+    tagTypes: ['Items', 'Suppliers'],
 });

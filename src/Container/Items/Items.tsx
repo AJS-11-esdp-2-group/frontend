@@ -1,15 +1,11 @@
-import React from 'react'
-import CardItems from '../../Components/Layout/Card/CardItems'
-import { useGetAllItemsQuery } from '../../Store/services/crmApi'
-import { Grid } from '@mui/material'
+import CardItems from '../../Components/Layout/Card/CardItems';
+import { useGetAllItemsQuery } from '../../Store/services/crmApi';
+import { Grid } from '@mui/material';
 
-const handleClick = () => {
-  console.log('click')
-}
+const handleClick = () => {};
 const Items = () => {
-  const { data, isLoading } = useGetAllItemsQuery()
-  console.log(data)
-  if (isLoading) return <h1>Loading...</h1>
+  const { data, isLoading } = useGetAllItemsQuery();
+  if (isLoading) return <h1>Loading...</h1>;
   return (
     <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
       {data.map((item: any) => {
@@ -25,10 +21,10 @@ const Items = () => {
             onClick={() => handleClick()}
             onClickDelete={() => handleClick()}
           />
-        )
+        );
       })}
     </Grid>
-  )
-}
+  );
+};
 
-export default Items
+export default Items;
