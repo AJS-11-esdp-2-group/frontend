@@ -1,20 +1,19 @@
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-import store from './Store/services/store';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import {BrowserRouter} from 'react-router-dom';
+// eslint-disable-next-line import/order
+import store from './Store/services/store';
 import { Provider } from 'react-redux';
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement,
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <React.StrictMode>
+      <Provider store={store}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+      </Provider>
+  </React.StrictMode>,
 );
-root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-);
-
-reportWebVitals();
