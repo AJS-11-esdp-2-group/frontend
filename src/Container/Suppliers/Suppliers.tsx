@@ -1,5 +1,5 @@
 import { useGetAllSuppliersQuery } from '../../Store/services/suppliers';
-import CardSuppliers from '../../Components/Layout/Card/CardSuppliers';
+import CardSuppliers from '../../Components/UI/Layout/Card/CardSuppliers';
 import { Container } from '@mui/material';
 
 const handleClick = () => {};

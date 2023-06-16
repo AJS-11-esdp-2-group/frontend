@@ -1,13 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair&display=swap');
+* {
+  font-family: 'Playfair', serif;
+  text-decoration: none;
+}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  background-color: #f0e9f4;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+header {
+  margin-bottom: 100px;
+}
+a {
+  color: aliceblue;
 }
