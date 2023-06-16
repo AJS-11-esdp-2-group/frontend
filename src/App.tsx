@@ -6,6 +6,7 @@ import Login from './Container/Login/Login';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
 import { useAppSelector } from './Store/hooks';
 import AppToolBar from './Components/UI/Layout/AppToolbar/ApptoolBar';
+import AddItem from './Container/Items/AddItems';
 import {Routes, Route } from 'react-router-dom';
 import { CssBaseline, PaletteMode, createTheme, ThemeProvider } from '@mui/material';
 import { amber, blueGrey, grey, green } from '@mui/material/colors';
@@ -80,6 +81,14 @@ function App() {
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
                   <Suppliers />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/new-item"
+              element={
+                <ProtectedRoute isAllowed={!!user} redirectPath="/">
+                  <AddItem/>
                 </ProtectedRoute>
               }
             />

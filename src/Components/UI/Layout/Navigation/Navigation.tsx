@@ -50,7 +50,7 @@ const Navigation = ({logout}: Props) => {
             <ListItemIcon>
               <Add />
             </ListItemIcon>
-            <Typography>Создать товар</Typography>
+            <Typography component={Link} to="/new-item">Создать товар</Typography>
           </ListItemButton>
         </ListItem>
         <ListItem>
