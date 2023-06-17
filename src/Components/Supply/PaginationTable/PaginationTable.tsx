@@ -1,4 +1,7 @@
+import { useGetSuppliesBetweenMutation } from '../../../Store/services/supply';
+import { ISupplies } from '../../../interfaces/ISupply';
 import * as React from 'react';
+import {useEffect} from 'react';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -17,36 +20,6 @@ import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 import {DeleteForever} from '@mui/icons-material';
 import { Button } from '@mui/material';
-
-interface Data {
-  supplier: string;
-  storage: string;
-  item: string;
-  qty: number;
-  price: number;
-  total_price: number;
-  date: string;
-}
-
-function createData(
-  supplier: string,
-  storage: string,
-  item: string,
-  qty: number,
-  price: number,
-  total_price: number,
-  date: string
-): Data {
-  return {
-    supplier,
-    storage,
-    item,
-    qty,
-    price,
-    total_price,
-    date
-  };
-}
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -86,26 +59,26 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
 
 interface HeadCell {
   disablePadding: boolean;
-  id: keyof Data;
+  id: keyof ISupplies;
   label: string;
   numeric: boolean;
 }
 
 const headCells: readonly HeadCell[] = [
   {
-    id: 'supplier',
+    id: 'source',
     numeric: false,
     disablePadding: true,
     label: 'Поставщик',
   },
   {
-    id: 'storage',
+    id: 'target',
     numeric: true,
     disablePadding: false,
     label: 'Хранилище',
   },
   {
-    id: 'item',
+    id: 'item_name',
     numeric: true,
     disablePadding: false,
     label: 'Товар',
@@ -138,7 +111,7 @@ const headCells: readonly HeadCell[] = [
 
 interface EnhancedTableProps {
   numSelected: number;
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
+  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof ISupplies) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
   orderBy: string;
@@ -149,7 +122,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
     props;
   const createSortHandler =
-    (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof ISupplies) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
 
@@ -226,53 +199,52 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
   );
 }
 
-const generateRows = (quantity: number, flower: string) => {
-    const list: Array<Data> = [];
-
-    for (let index = 0; index < quantity; index++) {
-      list.push(createData('Cupcake', 'Холодильник', flower, 67, 100, 6700, '10.05.2023'))
-    }
-
-    return list;
-}
-
 export default function PaginationTable() {
   const [order, setOrder] = React.useState<Order>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof Data>('storage');
+  const [orderBy, setOrderBy] = React.useState<keyof ISupplies>('target');
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [rows, setRows] = React.useState(generateRows(rowsPerPage, 'Роза'));
+  const [rows, setRows] = React.useState<Array<ISupplies> | []>([]);
+  const [getSuppliesBetween] = useGetSuppliesBetweenMutation();
+
+  useEffect(() => {
+    initialState();
+  }, [])
+
+  const initialState = async() => {
+    const result = await getSuppliesBetween({start: 1, end:5});
+    setRows((result as {data: Array<ISupplies>}).data);
+  };
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof Data,
+    property: keyof ISupplies,
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    
-  };
+  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {};
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    
-  };
+  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {};
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = async(event: unknown, newPage: number) => {
     if(newPage > page) {
-      setRows(prev => prev.concat(generateRows(rowsPerPage, 'Белая Роза')));
+      const result = await getSuppliesBetween({start: (page-1)* rowsPerPage + 1 , end: page * rowsPerPage});
+      const resultData = (result as {data: Array<never>}).data;
+      setRows(prev => prev.concat(resultData));
     }
-    
+
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = async(event: React.ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setRows(generateRows(parseInt(event.target.value), 'Роза'));
+    const result = await getSuppliesBetween({start: 1, end: parseInt(event.target.value)});
+    setRows((result as {data: Array<ISupplies>}).data);
     setPage(0);
   };
 
@@ -287,17 +259,7 @@ export default function PaginationTable() {
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-
-  const visibleRows = React.useMemo(
-    () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage,
-      ),
-    [order, orderBy, page, rowsPerPage],
-  );
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -318,18 +280,18 @@ export default function PaginationTable() {
               rowCount={rows.length}
             />
             <TableBody>
-              {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.supplier);
+              {rows.map((row, index) => {
+                const isItemSelected = isSelected(row.source);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.supplier)}
+                    // onClick={(event) => handleClick(event, row.source)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.supplier}
+                    key={row.source}
                     selected={isItemSelected}
                     sx={{ cursor: 'pointer' }}
                   >
@@ -341,14 +303,14 @@ export default function PaginationTable() {
                       scope="row"
                       padding="none"
                     >
-                      {row.supplier}
+                      {row.source}
                     </TableCell>
-                    <TableCell align="right">{row.storage}</TableCell>
-                    <TableCell align="right">{row.item}</TableCell>
+                    <TableCell align="right">{row.target}</TableCell>
+                    <TableCell align="right">{row.item_name}</TableCell>
                     <TableCell align="right">{row.qty}</TableCell>
                     <TableCell align="right">{row.price}</TableCell>
                     <TableCell align="right">{row.total_price}</TableCell>
-                    <TableCell align="right">{row.date}</TableCell>
+                    <TableCell align="right">{new Date(row.date).toLocaleDateString()}</TableCell>
                     <TableCell >
                       <Button
                         style={{maxWidth:'20'}}
@@ -378,7 +340,7 @@ export default function PaginationTable() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={-1}
+          count={rows.length>0 ? parseInt(rows[0].total_count): -1}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
