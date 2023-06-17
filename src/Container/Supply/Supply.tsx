@@ -1,4 +1,5 @@
 import PaginationTable from "../../Components/Supply/PaginationTable/PaginationTable";
+import StaticPaginationTable from "../../Components/Supply/StaticPaginationTable/StaticPaginationTable";
 import { Container, Box, Tab } from "@mui/material";
 import * as React from 'react';
 import {TabContext, TabList, TabPanel} from '@mui/lab';
@@ -26,7 +27,9 @@ const Supply = () => {
                         <PaginationTable/>
                     </TabPanel>
                     <TabPanel value="2">Item Two</TabPanel>
-                    <TabPanel value="3">Item Three</TabPanel>
+                    <TabPanel value="3" style={{padding:'0'}}>
+                        <StaticPaginationTable/>
+                    </TabPanel>
                 </TabContext>
             </Box>
         </Container>
