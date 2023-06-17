@@ -2,7 +2,7 @@ import { useGetAllSuppliersQuery } from '../../Store/services/suppliers';
 import CardSuppliers from '../../Components/UI/Layout/Card/CardSuppliers';
 import { Container } from '@mui/material';
 
-const handleClick = () => {};
+const handleClick = () => { };
 const Suppliers = () => {
   const { data, isLoading } = useGetAllSuppliersQuery();
   if (isLoading) return <h1>Loading...</h1>;
@@ -12,12 +12,14 @@ const Suppliers = () => {
         return (
           <CardSuppliers
             key={item.id_supplier}
-            name={item.name_supplier}
-            image={item.image_large !== null ? item.image_large : 'image.jpeg'}
+            name_supplier={item.name_supplier}
+            contact_person={item.contact_person}
+            email={item.email}
+            phone={item.phone}
+            address={item.address}
+            id_country={item.id_country}
+            id_city={item.id_city}
             create_date={item.create_date}
-            description={item.goods_description}
-            id_category={item.id_category}
-            category_description={item.category_description}
             onClick={() => handleClick()}
             onClickDelete={() => handleClick()}
           />

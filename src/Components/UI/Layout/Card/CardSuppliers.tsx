@@ -1,4 +1,4 @@
-import React, {MouseEventHandler} from 'react';
+import React, { MouseEventHandler } from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -12,15 +12,16 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 
 interface IProps {
-    image: string
-    name: string
+    name_supplier: string,
+    contact_person: string,
+    email: string,
+    phone: string,
+    address: string,
+    id_country: number,
+    id_city: number,
     onClick: MouseEventHandler<HTMLButtonElement>
     onClickDelete: MouseEventHandler<HTMLButtonElement>
-    description: string
     create_date: string
-    category_description: string
-    id_category: number
-
 }
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -38,14 +39,16 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 const CardSuppliers = ({
-    name, 
-    description, 
-    category_description, 
-    create_date, 
-    image, 
-    onClick, 
-    id_category, 
-    onClickDelete}: IProps) => {
+    name_supplier,
+    contact_person,
+    email,
+    phone,
+    address,
+    id_country,
+    id_city,
+    create_date,
+    onClick,
+    onClickDelete }: IProps) => {
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {
@@ -55,13 +58,13 @@ const CardSuppliers = ({
     return (
         <Card sx={{ maxWidth: 500, m: '25px' }}>
             <CardHeader
-                sx={{height: '80px'}}
+                sx={{ height: '80px' }}
                 action={[
                     <IconButton onClick={onClickDelete} aria-label="settings">
-                        <DeleteForeverIcon/>
+                        <DeleteForeverIcon />
                     </IconButton>,
                     <IconButton onClick={onClick} aria-label="settings">
-                        <EditIcon/>
+                        <EditIcon />
                     </IconButton>,
                     <ExpandMore
                         expand={expanded}
@@ -72,14 +75,17 @@ const CardSuppliers = ({
                         <ExpandMoreIcon />
                     </ExpandMore>,
                 ]}
-                title={name}
+                title={name_supplier}
                 subheader={create_date}
             />
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                    <Typography paragraph>{id_category}</Typography>
-                    <Typography paragraph>{description}</Typography>
-                    <Typography paragraph>{category_description}</Typography>
+                    <Typography paragraph>{contact_person}</Typography>
+                    <Typography paragraph>{email}</Typography>
+                    <Typography paragraph>{phone}</Typography>
+                    <Typography paragraph>{address}</Typography>
+                    <Typography paragraph>{id_country}</Typography>
+                    <Typography paragraph>{id_city}</Typography>
                 </CardContent>
             </Collapse>
         </Card>

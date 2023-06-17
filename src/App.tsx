@@ -7,6 +7,7 @@ import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
 import { useAppSelector } from './Store/hooks';
 import AppToolBar from './Components/UI/Layout/AppToolbar/ApptoolBar';
 import AddItem from './Container/Items/AddItems';
+import AddSupplier from './Container/Suppliers/AddSuppliers';
 import {Routes, Route } from 'react-router-dom';
 import { CssBaseline, PaletteMode, createTheme, ThemeProvider } from '@mui/material';
 import { amber, blueGrey, grey, green } from '@mui/material/colors';
@@ -17,7 +18,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
     primary: {
       ...amber,
       ...(mode === 'dark' && {
-        main: amber[400],
+        main: amber[300],
       }),
     },
     ...(mode === 'dark' && {
@@ -29,7 +30,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
     text: {
       ...(mode === 'light'
         ? {
-            primary: blueGrey[100],
+            primary: blueGrey[900],
             secondary: grey[500],
           }
         : {
@@ -89,6 +90,14 @@ function App() {
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
                   <AddItem/>
+                </ProtectedRoute>
+              }
+            />
+             <Route
+              path="/new-supplier"
+              element={
+                <ProtectedRoute isAllowed={!!user} redirectPath="/">
+                  <AddSupplier/>
                 </ProtectedRoute>
               }
             />
