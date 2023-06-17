@@ -10,7 +10,7 @@ const suppliersApi = api.injectEndpoints({
     getSupplierById: build.query<ISuppliers, number>({
       query: (id) => `/suppliers/${id}`,
     }),
-    addSupplier: build.mutation<ISupplier, FormData>({
+    addSupplier: build.mutation<ISuppliers, ISupplier>({
       query: (supplier) => ({
         url: '/suppliers',
         method: 'POST',
