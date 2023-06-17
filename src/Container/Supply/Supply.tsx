@@ -1,6 +1,8 @@
+import PaginationTable from "../../Components/Supply/PaginationTable/PaginationTable";
 import { Container, Box, Tab } from "@mui/material";
 import * as React from 'react';
 import {TabContext, TabList, TabPanel} from '@mui/lab';
+
 
 const Supply = () => {
     const [value, setValue] = React.useState('1');
@@ -16,11 +18,13 @@ const Supply = () => {
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <TabList onChange={handleChange} aria-label="lab API tabs example">
                         <Tab label="Приходы" value="1" />
-                        <Tab label="Приходы по датам" value="2" />
-                        <Tab label="Приходы по поставщикам" value="3" />
+                        <Tab label="По дате" value="2" />
+                        <Tab label="По поставщикам" value="3" />
                     </TabList>
                     </Box>
-                    <TabPanel value="1">Item One</TabPanel>
+                    <TabPanel value="1" style={{padding:'0'}}>
+                        <PaginationTable/>
+                    </TabPanel>
                     <TabPanel value="2">Item Two</TabPanel>
                     <TabPanel value="3">Item Three</TabPanel>
                 </TabContext>
