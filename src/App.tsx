@@ -4,6 +4,7 @@ import Suppliers from './Container/Suppliers/Suppliers';
 import Register from './Container/Register/Register';
 import Login from './Container/Login/Login';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
+import Supply from './Container/Supply/Supply';
 import { useAppSelector } from './Store/hooks';
 import AppToolBar from './Components/UI/Layout/AppToolbar/ApptoolBar';
 import AddItem from './Container/Items/AddItems';
@@ -89,6 +90,14 @@ function App() {
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
                   <AddItem/>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/supply"
+              element={
+                <ProtectedRoute isAllowed={!!user} redirectPath="/">
+                  <Supply />
                 </ProtectedRoute>
               }
             />

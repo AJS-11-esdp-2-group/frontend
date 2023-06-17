@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Box, Drawer, Button, List, Divider, ListItem, ListItemButton, ListItemIcon, Typography } from '@mui/material';
+import BlindsClosedOutlinedIcon from '@mui/icons-material/BlindsClosedOutlined';
 import { Link } from 'react-router-dom';
 import { LocalFlorist, LocalShipping, Add, Logout } from '@mui/icons-material';
 
@@ -59,6 +60,14 @@ const Navigation = ({logout}: Props) => {
               <Add />
             </ListItemIcon>
             <Typography>Создать поставщика</Typography>
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton>
+            <ListItemIcon>
+              <BlindsClosedOutlinedIcon />
+            </ListItemIcon>
+            <Typography component={Link} to="/supply">Приходы</Typography>
           </ListItemButton>
         </ListItem>
       </List>
