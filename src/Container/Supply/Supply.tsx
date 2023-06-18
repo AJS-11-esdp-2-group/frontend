@@ -1,6 +1,6 @@
-import PaginationTable from "../../Components/Supply/PaginationTable/PaginationTable";
-import StaticPaginationTable from "../../Components/Supply/StaticPaginationTable/StaticPaginationTable";
-import { Container, Box, Tab } from "@mui/material";
+import PaginationTable from '../../Components/Supply/PaginationTable/PaginationTable';
+import StaticPaginationTable from '../../Components/Supply/StaticPaginationTable/StaticPaginationTable';
+import { Container, Box, Tab } from '@mui/material';
 import * as React from 'react';
 import {TabContext, TabList, TabPanel} from '@mui/lab';
 
@@ -33,8 +33,8 @@ const Supply = () => {
                 </TabContext>
             </Box>
         </Container>
-    )
-}
+    );
+};
 
 export default Supply;
 

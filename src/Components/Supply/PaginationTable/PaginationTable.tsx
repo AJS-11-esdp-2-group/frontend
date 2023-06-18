@@ -36,7 +36,7 @@ export default function PaginationTable() {
 
   useEffect(() => {
     initialRows();
-  }, [])
+  }, []);
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -80,7 +80,7 @@ export default function PaginationTable() {
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
-    [rows,page, rowsPerPage]
+    [rows,page, rowsPerPage],
   );
   
   return (
