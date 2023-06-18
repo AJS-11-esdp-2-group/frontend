@@ -2,7 +2,8 @@ export interface Items {
     id: number;
     item_name: string;
     item_description: string;
-    id_category: number;
+    category_name: string;
+    category_name_description: string;
     image_small: string;
     image_large: string;
     id_user: number;
@@ -11,7 +12,8 @@ export interface Items {
 export interface Item {
     item_name: string;
     item_description: string;
-    id_category: number;
+    category_name: string;
+    category_name_description: string;
     image_small: string;
     image_large: string;
     id_user: number;

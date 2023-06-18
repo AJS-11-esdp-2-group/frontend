@@ -1,5 +1,5 @@
-import { ISupplies } from "../../../../interfaces/ISupply";
-import { TableCell, TableHead, TableRow, TableSortLabel, Box } from "@mui/material";
+import { ISupplies } from '../../../../interfaces/ISupply';
+import { TableCell, TableHead, TableRow, TableSortLabel, Box } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 
 interface HeadCell {
@@ -62,7 +62,7 @@ const headCells: readonly HeadCell[] = [
       numeric: true,
       disablePadding: false,
       label: 'Дата',
-    }
+    },
 ];
 
 export default function EnhancedTableHead(props: EnhancedTableProps) {

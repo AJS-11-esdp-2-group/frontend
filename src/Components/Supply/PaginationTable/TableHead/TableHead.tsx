@@ -1,5 +1,5 @@
-import { ISupplies } from "../../../../interfaces/ISupply";
-import { visuallyHidden } from "@mui/utils";
+import { ISupplies } from '../../../../interfaces/ISupply';
+import { visuallyHidden } from '@mui/utils';
 import {Box, TableHead, TableRow, TableCell, TableSortLabel} from '@mui/material';
 
 type Order = 'asc' | 'desc';
@@ -62,7 +62,7 @@ const headCells: readonly HeadCell[] = [
       numeric: true,
       disablePadding: false,
       label: 'Дата',
-    }
+    },
 ];
 
 export default function EnhancedTableHead(props: EnhancedTableProps) {

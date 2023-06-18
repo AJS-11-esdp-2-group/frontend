@@ -1,4 +1,4 @@
-import { Items } from '../../interfaces/Items';
+import { Item, Items } from '../../interfaces/Items';
 import { api } from '../../features/index';
 ;
 
@@ -11,7 +11,7 @@ const itemsApi = api.injectEndpoints({
         getItemById: build.query<Items, number>({
             query: (id) => `/items/${id}`,
         }),
-        addItem: build.mutation<Items, FormData>({
+        addItem: build.mutation<Item, FormData>({
             query: (item) => ({
                 url: '/items',
                 method: 'POST',
@@ -26,7 +26,21 @@ const itemsApi = api.injectEndpoints({
             }),
             invalidatesTags: ['Items'],
         }),
+        editItem: build.mutation<Item, FormData>({
+            query: (item) => ({
+              url: `/items/${item.get('id')}`,
+              method: 'PUT',
+              body: item,
+            }),
+            invalidatesTags: ['Items'],
+          }),
     }),
 });
 
-export const { useGetAllItemsQuery, useGetItemByIdQuery, useAddItemMutation, useDeleteItemMutation } = itemsApi;
+export const {
+    useGetAllItemsQuery, 
+    useGetItemByIdQuery, 
+    useAddItemMutation, 
+    useDeleteItemMutation, 
+    useEditItemMutation,
+} = itemsApi;

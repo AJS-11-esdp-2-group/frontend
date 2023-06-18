@@ -1,4 +1,5 @@
 import { useAppSelector } from '../../Store/hooks';
+import { Link } from 'react-router-dom';
 import { Container, Typography, Button, Box } from '@mui/material';
 
 const HomePage = () => {
@@ -50,7 +51,7 @@ const HomePage = () => {
           <Button sx={{ width: '100%' }} variant="contained" color="primary">
             <Typography variant="body1">Supply</Typography>
           </Button>
-          <Button sx={{ width: '100%' }} variant="contained">
+          <Button component={Link}  to={'/supply'} sx={{ width: '100%' }} variant="contained">
             <Typography variant="body1">Supplies list</Typography>
           </Button>
         </Box>
