@@ -1,27 +1,36 @@
-import { useGetAllSuppliersQuery } from '../../Store/services/suppliers';
+import { useDeleteSupplierMutation, useGetAllSuppliersQuery } from '../../Store/services/suppliers';
 import CardSuppliers from '../../Components/UI/Layout/Card/CardSuppliers';
+import { ISuppliers } from '../../interfaces/ISuppliers';
 import { Container } from '@mui/material';
 
 const handleClick = () => { };
 const Suppliers = () => {
-  const { data, isLoading } = useGetAllSuppliersQuery();
+  const { data, isLoading, refetch } = useGetAllSuppliersQuery();
+  const [deleteSupplier] = useDeleteSupplierMutation();
   if (isLoading) return <h1>Loading...</h1>;
+
+  const handleDelete = async (supplierId: number): Promise<void> => {
+    await deleteSupplier(supplierId);
+    refetch();
+  };
+
   return (
     <Container sx={{ verticalAlign: 'center' }}>
-      {data && data.map((item: any) => {
+      {data && data.map((supplier: ISuppliers) => {
         return (
           <CardSuppliers
-            key={item.id_supplier}
-            name_supplier={item.name_supplier}
-            contact_person={item.contact_person}
-            email={item.email}
-            phone={item.phone}
-            address={item.address}
-            id_country={item.id_country}
-            id_city={item.id_city}
-            create_date={item.create_date}
+            id={supplier.id}
+            key={supplier.id}
+            name_supplier={supplier.name_supplier}
+            contact_person={supplier.contact_person}
+            email={supplier.email}
+            phone={supplier.phone}
+            address={supplier.address}
+            id_country={supplier.id_country}
+            id_city={supplier.id_city}
+            create_date={supplier.create_date}
             onClick={() => handleClick()}
-            onClickDelete={() => handleClick()}
+            onClickDelete={() => handleDelete(supplier.id)}
           />
         );
       })}

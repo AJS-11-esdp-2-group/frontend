@@ -1,6 +1,6 @@
 import { useAppSelector } from '../../Store/hooks';
-import { Link } from 'react-router-dom';
 import { Container, Typography, Button, Box } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
     const { user } = useAppSelector((state) => state.auth);
@@ -51,8 +51,8 @@ const HomePage = () => {
           <Button sx={{ width: '100%' }} variant="contained" color="primary">
             <Typography variant="body1">Supply</Typography>
           </Button>
-          <Button component={Link}  to={'/supply'} sx={{ width: '100%' }} variant="contained">
-            <Typography variant="body1">Supplies list</Typography>
+          <Button sx={{ width: '100%' }} variant="contained" color="success">
+            <Typography variant="body1" component={Link} to="/suppliers">Suppliers list</Typography>
           </Button>
         </Box>
       </Container>

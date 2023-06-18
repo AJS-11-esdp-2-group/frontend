@@ -12,13 +12,14 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 
 interface IProps {
+    id: number,
     name_supplier: string,
     contact_person: string,
     email: string,
     phone: string,
     address: string,
-    id_country: number,
-    id_city: number,
+    id_country: string,
+    id_city: string,
     onClick: MouseEventHandler<HTMLButtonElement>
     onClickDelete: MouseEventHandler<HTMLButtonElement>
     create_date: string
@@ -39,6 +40,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 const CardSuppliers = ({
+    id,
     name_supplier,
     contact_person,
     email,
@@ -55,9 +57,12 @@ const CardSuppliers = ({
         setExpanded(!expanded);
     };
 
+    const date = new Date(create_date);
+    const formattedDate = date.toLocaleDateString();
+
     return (
-        <Card sx={{ maxWidth: 500, m: '25px' }}>
-            <CardHeader
+        <Card key={id} sx={{ maxWidth: 500, m: '25px' }}>
+            <CardHeader key={id}
                 sx={{ height: '80px' }}
                 action={[
                     <IconButton onClick={onClickDelete} aria-label="settings">
@@ -76,16 +81,16 @@ const CardSuppliers = ({
                     </ExpandMore>,
                 ]}
                 title={name_supplier}
-                subheader={create_date}
+                subheader={phone}
             />
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
                     <Typography paragraph>{contact_person}</Typography>
                     <Typography paragraph>{email}</Typography>
-                    <Typography paragraph>{phone}</Typography>
                     <Typography paragraph>{address}</Typography>
                     <Typography paragraph>{id_country}</Typography>
                     <Typography paragraph>{id_city}</Typography>
+                    <Typography paragraph>{formattedDate}</Typography>
                 </CardContent>
             </Collapse>
         </Card>
