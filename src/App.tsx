@@ -93,6 +93,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
+             <Route
+              path="/new-supplier"
+              element={
+                <ProtectedRoute isAllowed={!!user} redirectPath="/">
+                  <AddSupplier/>
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/supply"
               element={
