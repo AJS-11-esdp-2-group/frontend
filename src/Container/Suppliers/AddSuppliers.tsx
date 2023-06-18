@@ -7,7 +7,6 @@ import { ChangeEvent, useEffect, useState } from 'react';
 
 const AddSupplier = () => {
     const [addSupplier, { error, isError }] = useAddSupplierMutation();
-    
     interface Props {
         name_supplier: string,
         contact_person: string,
