@@ -7,7 +7,7 @@ export interface ISuppliers {
     address: string;
     id_country: string;
     id_city: string;
-    create_date: string;
+    create_date: Date;
 };
 
 export interface ISupplier {

@@ -9,6 +9,7 @@ import AppToolBar from './Components/UI/Layout/AppToolbar/ApptoolBar';
 import AddItem from './Container/Items/AddItems';
 import AddSupplier from './Container/Suppliers/AddSuppliers';
 import EditItem from './Container/Items/EditItem';
+import EditSupplier from './Container/Suppliers/EditSupplier';
 import Supply from './Container/Supply/Supply';
 import AddSupply from './Container/Supply/AddSupply';
 import {Routes, Route } from 'react-router-dom';
@@ -109,6 +110,14 @@ function App() {
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
                   <AddSupplier/>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/edit-supplier/:id"
+              element={
+                <ProtectedRoute isAllowed={!!user} redirectPath="/">
+                  <EditSupplier/>
                 </ProtectedRoute>
               }
             />

@@ -5,7 +5,7 @@ const suppliersApi = api.injectEndpoints({
   endpoints: (build) => ({
     getAllSuppliers: build.query<ISuppliers[], void>({
       query: () => '/suppliers',
-      providesTags: () => [{ type: 'Items', id: 'LIST' }],
+      providesTags: () => [{ type: 'Suppliers', id: 'LIST' }],
     }),
     getSupplierById: build.query<ISuppliers, number>({
       query: (id) => `/suppliers/${id}`,
@@ -25,6 +25,14 @@ const suppliersApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Suppliers'],
     }),
+    editSupplier: build.mutation<ISuppliers, { id: number, supplier: ISupplier }>({
+      query: (supplier) => ({
+        url: `/suppliers/${supplier.id}`,
+        method: 'PUT',
+        body: supplier,
+      }),
+      invalidatesTags: ['Suppliers'],
+    }),
   }),
 });
 
@@ -33,4 +41,5 @@ export const {
   useAddSupplierMutation,
   useDeleteSupplierMutation,
   useGetSupplierByIdQuery,
+  useEditSupplierMutation,
 } = suppliersApi;
