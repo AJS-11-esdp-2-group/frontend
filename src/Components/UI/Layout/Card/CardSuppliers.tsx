@@ -22,7 +22,7 @@ interface IProps {
     id_city: string,
     onClick: MouseEventHandler<HTMLButtonElement>
     onClickDelete: MouseEventHandler<HTMLButtonElement>
-    create_date: string
+    create_date: Date
 }
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
