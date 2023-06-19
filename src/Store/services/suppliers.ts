@@ -5,7 +5,7 @@ const suppliersApi = api.injectEndpoints({
   endpoints: (build) => ({
     getAllSuppliers: build.query<ISuppliers[], void>({
       query: () => '/suppliers',
-      providesTags: () => [{ type: 'Items', id: 'LIST' }],
+      providesTags: () => [{ type: 'Suppliers', id: 'LIST' }],
     }),
     getSupplierById: build.query<ISuppliers, number>({
       query: (id) => `/suppliers/${id}`,
