@@ -49,10 +49,10 @@ const HomePage = () => {
           }}
         >
           <Button sx={{ width: '100%' }} variant="contained" color="primary">
-            <Typography variant="body1">Supply</Typography>
+            <Typography variant="body1" component={Link} to="/new-supply">Создать Приход</Typography>
           </Button>
           <Button sx={{ width: '100%' }} variant="contained" color="success">
-            <Typography variant="body1" component={Link} to="/suppliers">Suppliers list</Typography>
+            <Typography variant="body1" component={Link} to="/supply">Приходы</Typography>
           </Button>
         </Box>
       </Container>

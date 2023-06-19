@@ -12,14 +12,14 @@ export interface ISupplies {
     update_date: Date | null
 };
 export interface ISupply {
-    total_count: string;
+    total_count: number;
     name: string;
     source: string;
     target: string;
     item_name: string;
     qty: number;
-    price: string;
-    total_price: string;
+    price: number;
+    total_price: 0;
     date: Date;
     update_date: Date | null
 };
