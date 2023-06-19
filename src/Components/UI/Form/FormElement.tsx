@@ -1,15 +1,16 @@
 import { TextField, Grid } from '@mui/material';
-import React, {ChangeEventHandler, HTMLInputTypeAttribute} from 'react';
+import React, {ChangeEventHandler, HTMLInputTypeAttribute, ReactNode} from 'react';
 
 interface Props {
   value: string;
   label: string;
   name: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   type?: HTMLInputTypeAttribute | 'select';
   required?: boolean;
   error?: string;
   id?: string;
+  children?: ReactNode;
 }
 
 const FormElement = (
@@ -22,6 +23,7 @@ const FormElement = (
     required = false,
     error,
     id,
+    children,
   }: Props,
 ) => {
   return (
@@ -39,6 +41,7 @@ const FormElement = (
         error={!!error}
         helperText={error}
       />
+      {children}
     </Grid>
   );
 };

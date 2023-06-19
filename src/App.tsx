@@ -10,6 +10,7 @@ import AddItem from './Container/Items/AddItems';
 import AddSupplier from './Container/Suppliers/AddSuppliers';
 import EditItem from './Container/Items/EditItem';
 import Supply from './Container/Supply/Supply';
+import AddSupply from './Container/Supply/AddSupply';
 import {Routes, Route } from 'react-router-dom';
 import { CssBaseline, PaletteMode, createTheme, ThemeProvider } from '@mui/material';
 import { amber, blueGrey, grey, green } from '@mui/material/colors';
@@ -116,6 +117,14 @@ function App() {
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
                   <Supply/>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/new-supply"
+              element={
+                <ProtectedRoute isAllowed={!!user} redirectPath="/">
+                  <AddSupply/>
                 </ProtectedRoute>
               }
             />
