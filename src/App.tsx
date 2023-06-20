@@ -14,37 +14,32 @@ import Supply from './Container/Supply/Supply';
 import AddSupply from './Container/Supply/AddSupply';
 import {Routes, Route } from 'react-router-dom';
 import { CssBaseline, PaletteMode, createTheme, ThemeProvider } from '@mui/material';
-import { amber, blueGrey, grey, green } from '@mui/material/colors';
+import {blueGrey, grey, blue } from '@mui/material/colors';
 
 const getDesignTokens = (mode: PaletteMode) => ({
   palette: {
     mode,
     primary: {
-      ...amber,
-      ...(mode === 'dark' && {
-        main: amber[300],
-      }),
+      ...blue,
+      main: mode === 'light' ? blue[500] : blue[400],
     },
-    ...(mode === 'dark' && {
-      background: {
-        default: blueGrey[600],
-        paper: green[800],
-      },
-    }),
+    background: {
+      default: mode === 'light' ? 'white' : '#383b48',
+      paper: mode === 'light' ? '#383b48' : 'white',
+    },
     text: {
-      ...(mode === 'light'
-        ? {
-            primary: blueGrey[900],
-            secondary: grey[500],
-          }
-        : {
-            primary: '#fff',
-            secondary: grey[800],
-          }),
+      primary: mode === 'light' ? blueGrey[50] : '#000',
+      secondary: mode === 'light' ? blueGrey[200] : grey[500],
+    },
+    input: {
+      background: '#383b48',
+      text: '#fff',
     },
   },
 });
-const darkModeTheme = createTheme(getDesignTokens('dark'));
+
+
+const darkModeTheme = createTheme(getDesignTokens('light'));
 function App() {
   const { user } = useAppSelector((state) => state.auth);
   
