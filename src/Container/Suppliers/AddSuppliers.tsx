@@ -57,7 +57,7 @@ const AddSupplier = () => {
 
     return (
         <form onSubmit={submitFormHandler}>
-            <Container component="section" maxWidth="xs" sx={{ marginTop: '100px' }}>
+            <Container component="section" maxWidth="xs" sx={{ marginTop: '100px'}}>
                 <Snackbar
                     anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                     open={open}
@@ -65,7 +65,7 @@ const AddSupplier = () => {
                     onClose={handleClose}
                 >
                     <Alert severity="error" onClose={handleClose}>
-                        {(error as CustomError)?.data?.error}
+                        {(error as CustomError)?.data?.message}
                     </Alert>
                 </Snackbar>
                 <FormElement

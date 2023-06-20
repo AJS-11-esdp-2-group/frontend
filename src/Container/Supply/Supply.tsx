@@ -16,7 +16,7 @@ const Supply = () => {
         <Container component="section" maxWidth="lg">
             <Box sx={{ width: '100%', typography: 'body1' }}>
                 <TabContext value={value}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
                     <TabList onChange={handleChange} aria-label="lab API tabs example">
                         <Tab label="Приходы" value="1" />
                         <Tab label="По дате" value="2" />

@@ -24,7 +24,7 @@ const HomePage = () => {
           gap: '20px',
         }}
       >
-        <Typography variant="h6">Flowers Shop CRM</Typography>
+        <Typography variant="h6" color="primary">Flowers Shop CRM</Typography>
       </Box>
       {user ? (
         <Container

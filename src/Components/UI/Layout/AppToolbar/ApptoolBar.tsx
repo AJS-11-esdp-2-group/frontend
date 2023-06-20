@@ -14,7 +14,7 @@ const AppToolBar = () => {
 
   return (
     <>
-      <AppBar position="fixed" sx={{ backgroundColor: '#087026', marginBottom: '64px' }}>
+      <AppBar position="fixed" sx={{ backgroundColor: '#383b48', marginBottom: '64px' }}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Typography
             variant="h6"

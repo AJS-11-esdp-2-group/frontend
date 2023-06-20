@@ -1,12 +1,5 @@
-export interface ISuppliers {
+export interface ISuppliers extends ISupplier {
     id: number;
-    name_supplier: string;
-    contact_person: string;
-    email: string;
-    phone: string;
-    address: string;
-    id_country: string;
-    id_city: string;
     create_date: Date;
 };
 
@@ -18,4 +11,4 @@ export interface ISupplier {
     address: string;
     id_country: string;
     id_city: string;
-};
+}

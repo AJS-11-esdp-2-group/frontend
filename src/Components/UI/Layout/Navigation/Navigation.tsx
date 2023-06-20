@@ -28,7 +28,11 @@ const Navigation = ({logout}: Props) => {
   };
 
   const left = (anchor: Anchor) => (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
+    <Box 
+      sx={{ width: 250, color: 'white' }} 
+      role="presentation" onClick={toggleDrawer(false)} 
+      onKeyDown={toggleDrawer(false)
+    }>
       <List>
         <ListItem>
           <ListItemButton component={Link} to="/items">
@@ -87,7 +91,7 @@ const Navigation = ({logout}: Props) => {
 
   return (
     <div>
-      <Button sx={{color: 'aliceblue'}} onClick={toggleDrawer(true)}>Menu</Button>
+      <Button sx={{color: 'secondary'}} onClick={toggleDrawer(true)}>Menu</Button>
       <Drawer anchor="left" open={state.left} onClose={toggleDrawer(false)}>
         {left('left')}
       </Drawer>

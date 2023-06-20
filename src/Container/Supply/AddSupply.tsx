@@ -5,87 +5,41 @@ import { useGetAllSourcesQuery } from '../../Store/services/source';
 import { useGetAllStorageQuery } from '../../Store/services/storages';
 import FormElement from '../../Components/UI/Form/FormElement';
 import { useAppSelector } from '../../Store/hooks';
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import BasicSelect from '../../Components/UI/Form/SelectFormElement';
 import { useNavigate } from 'react-router';
 import { Container, Button, Snackbar, Alert } from '@mui/material';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
-interface SelectOption {
-  id: number;
-  name: string;
-}
-
-interface SelectProps {
-  value: string;
-  label: string;
-  name: string;
-  onChange: (value: string) => void;
-  options: SelectOption[];
-}
-
-const BasicSelect: React.FC<SelectProps> = ({ value, label, name, onChange, options }) => {
-  const handleChange = (event: SelectChangeEvent) => {
-    onChange(event.target.value as string);
-  };
-
-  return (
-    <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id={`select-label-${name}`}>{label}</InputLabel>
-        <Select
-          labelId={`select-label-${name}`}
-          id={`select-${name}`}
-          value={value}
-          label={label}
-          onChange={handleChange}
-        >
-          {options.map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </Box>
-  );
-};
 
 export interface Supply {
-    operation_type: number
-  source: string;
-  target: string;
-  item_name: string;
+  operation_type_id: number;
+  source_id: string;
+  target_id: string;
+  item_id: string;
   qty: string;
   price: string;
   total_price: number;
   date: Date;
-  update_date: Date | null;
-  user: string | any
+  update_date?: Date ;
+  user: string | any;
 }
 
 const AddSupply = () => {
   const { data: storages } = useGetAllStorageQuery();
   const { data: sources } = useGetAllSourcesQuery();
-  
   const { data: items } = useGetAllItemsQuery();
-  const {user} = useAppSelector(state => state.auth);
+  const { user } = useAppSelector((state) => state.auth);
 
   const [addsupply, { error, isError }] = useAddsupplyMutation();
   const [form, setForm] = useState<Supply>({
-    operation_type: 1,
-    source: '',
-    target: '',
-    item_name: '',
+    operation_type_id: 1,
+    source_id: '',
+    target_id: '',
+    item_id: '',
     qty: '',
     price: '',
     total_price: 0,
     date: new Date(),
-    update_date: null,
     user: user,
   });
   const [open, setOpen] = useState(false);
@@ -111,10 +65,9 @@ const AddSupply = () => {
     const { name, value } = e.target;
 
     setForm((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const selectChangeHandler = (name: string, value: string) => {
@@ -127,6 +80,7 @@ const AddSupply = () => {
   const submitFormHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = await addsupply(form);
+    
     if (!(data as { error: object }).error) {
       navigate('/');
     }
@@ -142,37 +96,34 @@ const AddSupply = () => {
           onClose={handleClose}
         >
           <Alert severity="error" onClose={handleClose}>
-            {(error as CustomError)?.data?.error}
+            {(error as CustomError)?.data?.message}
           </Alert>
         </Snackbar>
         <BasicSelect
-          value={form.source}
+          value={form.source_id}
           label="Откуда"
-          name="source"
-          onChange={(value) => selectChangeHandler('source', value)}
+          name="source_id"
+          onChange={(value) => selectChangeHandler('source_id', value)}
           options={sources ? sources.map((source) => ({ id: source.id, name: source.name })) : []}
         />
 
         <BasicSelect
-          value={form.target}
+          value={form.target_id}
           label="Куда"
           name="target"
-          onChange={(value) => selectChangeHandler('target', value)}
+          onChange={(value) => selectChangeHandler('target_id', value)}
           options={storages ? storages.map((storage) => ({ id: storage.id, name: storage.storage })) : []}
         />
         <BasicSelect
-          value={form.item_name}
+          value={form.item_id}
           label="Товар"
-          name="item_name"
-          onChange={(value) => selectChangeHandler('item_name', value)}
+          name="item_id"
+          onChange={(value) => selectChangeHandler('item_id', value)}
           options={items ? items.map((item) => ({ id: item.id, name: item.item_name })) : []}
         />
         <FormElement value={form.qty} label="Количество" name="qty" onChange={inputChangeHandler} />
         <FormElement value={form.price} label="Цена за штуку" name="price" onChange={inputChangeHandler} />
-        <FormElement
-                  value={form.total_price.toString()}
-                  label="Общая цена"
-                  name="total_price"/>
+        <FormElement value={form.total_price.toString()} label="Общая цена" name="total_price" />
         <Button
           fullWidth
           variant="contained"
