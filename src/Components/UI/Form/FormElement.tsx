@@ -1,5 +1,5 @@
 import { TextField, Grid } from '@mui/material';
-import React, {ChangeEventHandler, HTMLInputTypeAttribute, ReactNode} from 'react';
+import React, { ChangeEventHandler, HTMLInputTypeAttribute, ReactNode } from 'react';
 
 interface Props {
   value: string;
@@ -13,21 +13,19 @@ interface Props {
   children?: ReactNode;
 }
 
-const FormElement = (
-  {
-    name,
-    label,
-    value,
-    onChange,
-    type = 'text',
-    required = false,
-    error,
-    id,
-    children,
-  }: Props,
-) => {
+const FormElement = ({
+  name,
+  label,
+  value,
+  onChange,
+  type = 'text',
+  required = false,
+  error,
+  id,
+  children,
+}: Props) => {
   return (
-    <Grid item xs={12}>
+    <Grid item xs={12} sx={{ color: 'secondary', my: 2 }}>
       <TextField
         id={id}
         type={type}
@@ -38,6 +36,16 @@ const FormElement = (
         variant="outlined"
         fullWidth
         label={label}
+        InputProps={{
+          style: {
+            color: 'black',
+          },
+        }}
+        InputLabelProps={{
+          style: {
+            color: 'primary',
+          },
+        }}
         error={!!error}
         helperText={error}
       />
