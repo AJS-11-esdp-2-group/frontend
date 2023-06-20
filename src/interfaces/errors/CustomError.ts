@@ -1,5 +1,5 @@
-export interface CustomError {
+export interface CustomError{
   data: {
-    error: string;
+    message: string;
   }
 }
