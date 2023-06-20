@@ -2,10 +2,9 @@
 * {
   font-family: 'Playfair', serif;
   text-decoration: none;
+  margin: 0;
 }
 body {
-  margin: 0;
-  background-color: #f0e9f4;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

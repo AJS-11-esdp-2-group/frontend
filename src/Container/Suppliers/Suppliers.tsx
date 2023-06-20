@@ -47,7 +47,7 @@ const Suppliers = () => {
             onClose={handleClose}
           >
             <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-              {(error as CustomError)?.data?.error}
+              {(error as CustomError)?.data?.message}
             </Alert>
           </Snackbar>
           <CardSuppliers

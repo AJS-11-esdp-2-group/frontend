@@ -88,7 +88,7 @@ const EditItem = () => {
           onClose={handleClose}
         >
           <Alert severity="error" onClose={handleClose}>
-            {(error as CustomError)?.data?.error}
+            {(error as CustomError)?.data?.message}
           </Alert>
         </Snackbar>
         <FormElement value={form.item_name} label="Title" name="item_name" onChange={inputChangeHandler} />

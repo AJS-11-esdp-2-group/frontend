@@ -35,36 +35,36 @@ const Items = () => {
 
   if (isLoading) return <h1>Loading...</h1>;
   return (
-    <Container>
-      <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ margin: 'auto' }}>
-      {data &&
-        data.map((item: any) => {
-          return (
-            <Grid key={item.id}>
-              <Snackbar
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                open={open}
-                autoHideDuration={3000}
-                onClose={handleClose}
-              >
-                <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-                  {(error as CustomError)?.data?.error}
-                </Alert>
-              </Snackbar>
-              <CardItems
-                id={item.id}
-                name={item.item_name}
-                image={image}
-                create_date={item.create_date}
-                description={item.item_description}
-                id_category={item.id_category}
-                onClick={() => navigate(`/edit-item/${item.id}`)}
-                onClickDelete={() => handleDeleteItem(item.id)}
-              />
-            </Grid>
-          );
-        })}
-    </Grid>
+    <Container sx={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
+      <Grid container columnSpacing={{ xs: 3, sm: 2, md: 1 }}>
+        {data &&
+          data.map((item: any) => {
+            return (
+              <Grid item key={item.id}>
+                <Snackbar
+                  anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                  open={open}
+                  autoHideDuration={3000}
+                  onClose={handleClose}
+                >
+                  <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                    {(error as CustomError)?.data?.message}
+                  </Alert>
+                </Snackbar>
+                <CardItems
+                  id={item.id}
+                  name={item.item_name}
+                  image={image}
+                  create_date={item.create_date}
+                  description={item.item_description}
+                  id_category={item.id_category}
+                  onClick={() => navigate(`/edit-item/${item.id}`)}
+                  onClickDelete={() => handleDeleteItem(item.id)}
+                />
+              </Grid>
+            );
+          })}
+      </Grid>
     </Container>
   );
 };
