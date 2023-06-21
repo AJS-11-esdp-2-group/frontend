@@ -29,7 +29,7 @@ const suppliersApi = api.injectEndpoints({
       query: (supplier) => ({
         url: `/suppliers/${supplier.id}`,
         method: 'PUT',
-        body: supplier,
+        body: supplier.supplier,
       }),
       invalidatesTags: ['Suppliers'],
     }),
