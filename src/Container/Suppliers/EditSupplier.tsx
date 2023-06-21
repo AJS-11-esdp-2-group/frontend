@@ -81,7 +81,7 @@ const EditSupplier = () => {
                     onClose={handleClose}
                 >
                     <Alert severity="error" onClose={handleClose}>
-                        {(error as CustomError)?.data?.error}
+                        {(error as CustomError)?.data?.message}
                     </Alert>
                 </Snackbar>
                 <FormElement
