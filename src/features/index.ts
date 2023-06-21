@@ -29,5 +29,5 @@ import {
     >,
     endpoints: () => ({}),
     // tagTypes: ["Items", "Suppliers"]
-    tagTypes: ['Items', 'Suppliers', 'Supplies', 'Storages', 'Sources', 'Categories'],
+    tagTypes: ['Items', 'Suppliers', 'Supplies', 'Storages', 'Sources', 'Categories', 'Countries', 'Cities'],
 });
