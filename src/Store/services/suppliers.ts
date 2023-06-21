@@ -1,6 +1,7 @@
 import { api } from '../../features/index';
 import { ISupplier, ISuppliers } from '../../interfaces/ISuppliers';
 
+
 const suppliersApi = api.injectEndpoints({
   endpoints: (build) => ({
     getAllSuppliers: build.query<ISuppliers[], void>({
@@ -29,7 +30,7 @@ const suppliersApi = api.injectEndpoints({
       query: (supplier) => ({
         url: `/suppliers/${supplier.id}`,
         method: 'PUT',
-        body: supplier,
+        body: supplier.supplier,
       }),
       invalidatesTags: ['Suppliers'],
     }),
