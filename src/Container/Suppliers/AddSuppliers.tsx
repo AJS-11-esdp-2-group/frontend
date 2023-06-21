@@ -51,7 +51,7 @@ const AddSupplier = () => {
         e.preventDefault();
         const data = await addSupplier(form);
         if (!(data as { error: object }).error) {
-            navigate('/');
+            navigate('/suppliers');
         }
     };
 

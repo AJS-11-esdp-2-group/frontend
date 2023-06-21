@@ -67,7 +67,7 @@ const EditSupplier = () => {
         e.preventDefault();
         const data = await editSupplier({ id: Number(id), supplier: form });
         if (!(data as { error: object }).error) {
-            navigate('/');
+            navigate('/suppliers');
         }
     };
 
