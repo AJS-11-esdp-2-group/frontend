@@ -1,20 +1,17 @@
-import { useAppSelector } from '../../../../Store/hooks';
-import { useLogoutMutation } from '../../../../Store/services/auth';
-import AnonymousMenu from '../../Menu/AnonymousMenu';
-import Navigation from '../Navigation/Navigation';
-import { Typography, Toolbar, AppBar, Grid } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../../../Store/hooks'
+import AnonymousMenu from '../../Menu/AnonymousMenu'
+import Navigation from '../Navigation/Navigation'
+import { Typography, Toolbar, AppBar, Grid } from '@mui/material'
+import { Link } from 'react-router-dom'
 const AppToolBar = () => {
-  const { user } = useAppSelector((state) => state.auth);
-
-  const [logout] = useLogoutMutation();
-  const logoutHandel = async () => {
-    await logout();
-  };
+  const { user } = useAppSelector((state) => state.auth)
 
   return (
     <>
-      <AppBar position="fixed" sx={{ backgroundColor: '#383b48', marginBottom: '64px' }}>
+      <AppBar
+        position="fixed"
+        sx={{ backgroundColor: '#383b48', marginBottom: '64px' }}
+      >
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Typography
             variant="h6"
@@ -37,7 +34,7 @@ const AppToolBar = () => {
                 fontWeight: 'bold',
               }}
             >
-              <Navigation logout={logoutHandel}/>
+              <Navigation />
             </Typography>
           ) : (
             <Grid item>
@@ -47,7 +44,7 @@ const AppToolBar = () => {
         </Toolbar>
       </AppBar>
     </>
-  );
-};
+  )
+}
 
-export default AppToolBar;
+export default AppToolBar

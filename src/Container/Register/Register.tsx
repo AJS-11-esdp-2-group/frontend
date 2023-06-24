@@ -1,8 +1,8 @@
-import { UserForm } from '../../interfaces/RegisterForm';
-import { useSignUpMutation } from '../../Store/services/auth';
-import { CustomError } from '../../interfaces/errors/CustomError';
-import FormElement from '../../Components/UI/Form/FormElement';
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { UserForm } from '../../interfaces/RegisterForm'
+import { useSignUpMutation } from '../../Store/services/auth'
+import { CustomError } from '../../interfaces/errors/CustomError'
+import FormElement from '../../Components/UI/Form/FormElement'
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 
 import {
   Container,
@@ -14,9 +14,9 @@ import {
   Box,
   Snackbar,
   Alert,
-} from '@mui/material';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { LockOutlined } from '@mui/icons-material';
+} from '@mui/material'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
+import { LockOutlined } from '@mui/icons-material'
 
 const Register = () => {
   const [form, setForm] = useState<UserForm>({
@@ -28,34 +28,33 @@ const Register = () => {
     last_name: '',
     address: '',
     country: 1, //пока на моках так как нету сервиса по получения стран
-  });
+  })
 
-  const [signUp, { isError, error }] = useSignUpMutation();
+  const [signUp, { isError, error }] = useSignUpMutation()
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
-    setOpen(isError);
-  }, [isError]);
+    setOpen(isError)
+  }, [isError])
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
+    const { name, value } = e.target
     setForm((prevState) => ({
       ...prevState,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const submitFormHandler = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const data = await signUp(form);
+    e.preventDefault()
+    const data = await signUp(form)
     if (!(data as { error: object }).error) {
       setForm({
         username: '',
@@ -66,10 +65,10 @@ const Register = () => {
         last_name: '',
         address: '',
         country: 1, //пока на моках так как нету сервиса по получения стран
-      });
-      navigate('/');
+      })
+      navigate('/login')
     }
-  };
+  }
 
   return (
     <Container component="section" maxWidth="xs">
@@ -169,7 +168,7 @@ const Register = () => {
         </Box>
       </Box>
     </Container>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register
