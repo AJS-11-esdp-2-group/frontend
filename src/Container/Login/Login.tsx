@@ -1,8 +1,8 @@
-import { loginForm } from '../../interfaces/loginForm';
-import { useSignInMutation } from '../../Store/services/auth';
-import FormElement from '../../Components/UI/Form/FormElement';
-import { CustomError } from '../../interfaces/errors/CustomError';
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { loginForm } from '../../interfaces/loginForm'
+import { useSignInMutation } from '../../Store/services/auth'
+import FormElement from '../../Components/UI/Form/FormElement'
+import { CustomError } from '../../interfaces/errors/CustomError'
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import {
   Container,
   Avatar,
@@ -12,57 +12,57 @@ import {
   Link,
   Box,
   Snackbar,
-} from '@mui/material';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { LockOpen } from '@mui/icons-material';
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
+} from '@mui/material'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
+import { LockOpen } from '@mui/icons-material'
+import MuiAlert, { AlertProps } from '@mui/material/Alert'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref,
 ) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
 
 const Login = () => {
   const [form, setForm] = useState<loginForm>({
     username: '',
     password: '',
-  });
+  })
 
-  const [signIn, { isError, error }] = useSignInMutation();
-  const [open, setOpen] = useState(false);
+  const [signIn, { isError, error }] = useSignInMutation()
+  const [open, setOpen] = useState(false)
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
-    setOpen(isError);
-  }, [isError]);
+    setOpen(isError)
+  }, [isError])
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
 
     setForm((prevState) => ({
       ...prevState,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const submitFormHandler = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const data = await signIn(form);
+    e.preventDefault()
+    const data = await signIn(form)
     if (!(data as { error: object }).error) {
       setForm({
         username: '',
         password: '',
-      });
-      navigate('/');
+      })
+      navigate('/')
     }
-  };
+  }
   return (
     <Container component="section" maxWidth="xs">
       <Snackbar
@@ -125,7 +125,7 @@ const Login = () => {
         </Box>
       </Box>
     </Container>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

@@ -1,38 +1,61 @@
-import * as React from 'react';
-import { Box, Drawer, Button, List, Divider, ListItem, ListItemButton, ListItemIcon, Typography } from '@mui/material';
-import BlindsClosedOutlinedIcon from '@mui/icons-material/BlindsClosedOutlined';
-import { Link } from 'react-router-dom';
-import { LocalFlorist, LocalShipping, Add, Logout } from '@mui/icons-material';
+import { useLogoutMutation } from '../../../../Store/services/auth'
+import * as React from 'react'
+import {
+  Box,
+  Drawer,
+  Button,
+  List,
+  Divider,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  Typography,
+} from '@mui/material'
+import BlindsClosedOutlinedIcon from '@mui/icons-material/BlindsClosedOutlined'
+import { Link } from 'react-router-dom'
+import { LocalFlorist, LocalShipping, Add, Logout } from '@mui/icons-material'
 
-type Anchor = 'left';
+type Anchor = 'left'
 
-interface Props {
-  logout: () => Promise<void>;
-}
-
-const Navigation = ({logout}: Props) => {
+const Navigation = () => {
   const [state, setState] = React.useState({
     left: false,
-  });
+  })
 
-  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+  const [logout] = useLogoutMutation()
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
+  const logoutHandler = async () => {
+    handleClose()
+    await logout()
+  }
+
+  const toggleDrawer = (open: boolean) => (
+    event: React.KeyboardEvent | React.MouseEvent,
+  ) => {
     if (
       event &&
       event.type === 'keydown' &&
-      ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')
+      ((event as React.KeyboardEvent).key === 'Tab' ||
+        (event as React.KeyboardEvent).key === 'Shift')
     ) {
-      return;
+      return
     }
 
-    setState({ ...state, left: open });
-  };
+    setState({ ...state, left: open })
+  }
 
   const left = (anchor: Anchor) => (
-    <Box 
-      sx={{ width: 250, color: 'white' }} 
-      role="presentation" onClick={toggleDrawer(false)} 
-      onKeyDown={toggleDrawer(false)
-    }>
+    <Box
+      sx={{ width: 250, color: 'white' }}
+      role="presentation"
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
+    >
       <List>
         <ListItem>
           <ListItemButton component={Link} to="/items">
@@ -55,7 +78,9 @@ const Navigation = ({logout}: Props) => {
             <ListItemIcon>
               <Add />
             </ListItemIcon>
-            <Typography component={Link} to="/new-item">Создать товар</Typography>
+            <Typography component={Link} to="/new-item">
+              Создать товар
+            </Typography>
           </ListItemButton>
         </ListItem>
         <ListItem>
@@ -63,7 +88,9 @@ const Navigation = ({logout}: Props) => {
             <ListItemIcon>
               <Add />
             </ListItemIcon>
-            <Typography component={Link} to="/new-supplier">Создать поставщика</Typography>
+            <Typography component={Link} to="/new-supplier">
+              Создать поставщика
+            </Typography>
           </ListItemButton>
         </ListItem>
         <ListItem>
@@ -71,7 +98,9 @@ const Navigation = ({logout}: Props) => {
             <ListItemIcon>
               <BlindsClosedOutlinedIcon />
             </ListItemIcon>
-            <Typography component={Link} to="/supply">Приходы</Typography>
+            <Typography component={Link} to="/supply">
+              Приходы
+            </Typography>
           </ListItemButton>
         </ListItem>
       </List>
@@ -82,21 +111,25 @@ const Navigation = ({logout}: Props) => {
             <ListItemIcon>
               <Logout />
             </ListItemIcon>
-            <Typography>Выйти</Typography>
+            <Typography onClick={logoutHandler} component={Link} to={'/'}>
+              Выйти
+            </Typography>
           </ListItemButton>
         </ListItem>
       </List>
     </Box>
-  );
+  )
 
   return (
     <div>
-      <Button sx={{color: 'secondary'}} onClick={toggleDrawer(true)}>Menu</Button>
+      <Button sx={{ color: 'secondary' }} onClick={toggleDrawer(true)}>
+        Menu
+      </Button>
       <Drawer anchor="left" open={state.left} onClose={toggleDrawer(false)}>
         {left('left')}
       </Drawer>
     </div>
-  );
-};
+  )
+}
 
-export default Navigation;
+export default Navigation
