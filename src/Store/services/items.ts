@@ -1,5 +1,6 @@
 import { Item, Items } from '../../interfaces/Items';
 import { api } from '../../features/index';
+import { ItemProps } from '../../Container/Items/EditItem';
 ;
 
 const itemsApi = api.injectEndpoints({
@@ -8,7 +9,7 @@ const itemsApi = api.injectEndpoints({
             query: () => '/items',
             providesTags: () => [{ type: 'Items', id: 'LIST' }],
         }),
-        getItemById: build.query<Items, number>({
+        getItemById: build.query<Items[], number | string>({
             query: (id) => `/items/${id}`,
         }),
         addItem: build.mutation<Item, FormData>({
@@ -26,14 +27,15 @@ const itemsApi = api.injectEndpoints({
             }),
             invalidatesTags: ['Items'],
         }),
-        editItem: build.mutation<Item, FormData>({
-            query: (item) => ({
-              url: `/items/${item.get('id')}`,
+        editItem: build.mutation<Item, { itemId: string; item: ItemProps }>({
+            query: ({ itemId, item }) => ({
+              url: `/items/${itemId}`,
               method: 'PUT',
               body: item,
             }),
             invalidatesTags: ['Items'],
           }),
+          
     }),
 });
 

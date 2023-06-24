@@ -1,5 +1,6 @@
 export interface Items extends Item {
     id: number;
+    id_category: number | string;
 };
 
 export interface Item {
