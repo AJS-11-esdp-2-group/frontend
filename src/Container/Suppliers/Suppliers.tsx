@@ -3,7 +3,7 @@ import CardSuppliers from '../../Components/UI/Layout/Card/CardSuppliers';
 import { ISuppliers } from '../../interfaces/ISuppliers';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import Modal from '../../Components/UI/Modal/Modal';
-import { Alert, Container, Grid, Snackbar } from '@mui/material';
+import {Alert, Container, Grid, Snackbar, Typography, Box} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
@@ -53,7 +53,11 @@ const Suppliers = () => {
   if (isLoading) return <h1>Loading...</h1>;
 
   return (
-    <Container sx={{ verticalAlign: 'center' }}>
+    <Container maxWidth={'xs'} sx={{ verticalAlign: 'center', m: '0 auto'}}>
+      <Box sx={{display: 'flex', justifyContent: 'center'}}>
+        <Typography sx={{color: 'black'}}>База поставщиков</Typography>
+
+      </Box>
       {data &&
         data.map((supplier: ISuppliers) => {
           return (

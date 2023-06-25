@@ -2,7 +2,7 @@ import FormElement from '../../Components/UI/Form/FormElement';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import { useAddSupplierMutation } from '../../Store/services/suppliers';
 import { useNavigate } from 'react-router';
-import { Container, Button, Snackbar, Alert } from '@mui/material';
+import {Container, Button, Snackbar, Alert, Typography} from '@mui/material';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 const AddSupplier = () => {
@@ -68,15 +68,16 @@ const AddSupplier = () => {
                         {(error as CustomError)?.data?.message}
                     </Alert>
                 </Snackbar>
+                <Typography sx={{color: 'black'}}>Добавление постащика </Typography>
                 <FormElement
                     value={form.name_supplier}
-                    label="Name of supplier"
+                    label="Имя поставщка"
                     name="name_supplier"
                     onChange={inputChangeHandler}
                 />
                 <FormElement
                     value={form.contact_person}
-                    label="Contact person"
+                    label="Контактное лицо"
                     name="contact_person"
                     onChange={inputChangeHandler}
                 />
@@ -88,25 +89,25 @@ const AddSupplier = () => {
                 />
                 <FormElement
                     value={form.phone}
-                    label="Phone"
+                    label="Сотовый номер"
                     name="phone"
                     onChange={inputChangeHandler}
                 />
                 <FormElement
                     value={form.address}
-                    label="Address"
+                    label="Адрес"
                     name="address"
                     onChange={inputChangeHandler}
                 />
                 <FormElement
                     value={form.id_country}
-                    label="Country"
+                    label="Страна"
                     name="id_country"
                     onChange={inputChangeHandler}
                 />
                 <FormElement
                     value={form.id_city}
-                    label="City"
+                    label="Город"
                     name="id_city"
                     onChange={inputChangeHandler}
                 />
@@ -118,7 +119,7 @@ const AddSupplier = () => {
                     className="submit"
                     sx={{ marginBottom: 2, marginTop: 3 }}
                 >
-                    Add
+                    Добавить поставщика
                 </Button>
             </Container>
         </form>
