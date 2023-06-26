@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import { Container, Button, Snackbar, Alert } from '@mui/material';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
+import {Typography} from "@mui/material";
 interface Props {
     name_supplier: string;
     contact_person: string;
@@ -32,6 +32,7 @@ const EditSupplier = () => {
         id_city: '',
     });
 
+
     const [open, setOpen] = useState(false);
 
     const navigate = useNavigate();
@@ -41,15 +42,15 @@ const EditSupplier = () => {
     };
     useEffect(() => {
         if (data) {
-          setForm({
-            name_supplier: data.name_supplier || '',
-            contact_person: data.contact_person || '',
-            email: data.email || '',
-            phone: data.phone || '',
-            address: data.address || '',
-            id_country: data.id_country || '',
-            id_city: data.id_city || '',
-          });
+            setForm({
+                name_supplier: data.name_supplier || '',
+                contact_person: data.contact_person || '',
+                email: data.email || '',
+                phone: data.phone || '',
+                address: data.address || '',
+                id_country: data.id_country || '',
+                id_city: data.id_city || '',
+              });
         }
       }, [data]);
       
@@ -70,6 +71,7 @@ const EditSupplier = () => {
             navigate('/suppliers');
         }
     };
+    console.log(data)
 
     return (
         <form onSubmit={submitFormHandler}>
@@ -84,14 +86,15 @@ const EditSupplier = () => {
                         {(error as CustomError)?.data?.message}
                     </Alert>
                 </Snackbar>
+                <Typography sx={{color: 'black'}}>Редактирование постащика </Typography>
                 <FormElement
                     value={form.name_supplier}
-                    label="Name of supplier"
+                    label="Имя поставщка"
                     name="name_supplier"
                     onChange={inputChangeHandler} />
                 <FormElement
                     value={form.contact_person}
-                    label="Contact person"
+                    label="Контактное лицо"
                     name="contact_person"
                     onChange={inputChangeHandler}
                 />
@@ -102,22 +105,22 @@ const EditSupplier = () => {
                     onChange={inputChangeHandler} />
                 <FormElement
                     value={form.phone}
-                    label="Phone"
+                    label="Сотовый номер"
                     name="phone"
                     onChange={inputChangeHandler} />
                 <FormElement
                     value={form.address}
-                    label="Address"
+                    label="Адрес"
                     name="address"
                     onChange={inputChangeHandler} />
                 <FormElement
                     value={form.id_country}
-                    label="Country"
+                    label="Страна"
                     name="id_country"
                     onChange={inputChangeHandler} />
                 <FormElement
                     value={form.id_city}
-                    label="City"
+                    label="Город"
                     name="id_city"
                     onChange={inputChangeHandler} />
                 <Button
@@ -128,7 +131,7 @@ const EditSupplier = () => {
                     className="submit"
                     sx={{ marginBottom: 2, marginTop: 3 }}
                 >
-                    Edit supplier
+                    Изменить поставщика
                 </Button>
             </Container>
         </form>

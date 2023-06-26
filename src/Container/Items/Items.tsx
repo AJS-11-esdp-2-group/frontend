@@ -4,7 +4,7 @@ import image from '../../assets/image.jpeg';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import Modal from '../../Components/UI/Modal/Modal';
 import { useEffect, useState } from 'react';
-import { Alert, Container, Grid, Snackbar } from '@mui/material';
+import {Alert, Box, Container, Grid, Snackbar, Typography} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const Items = () => {
@@ -51,8 +51,11 @@ const Items = () => {
 
   if (isLoading) return <h1>Loading...</h1>;
   return (
-    <Container sx={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
-      <Grid container columnSpacing={{ xs: 3, sm: 2, md: 1 }}>
+      <Container maxWidth={'xl'} sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
+        <Box sx={{display: 'flex', justifyContent: 'center'}}>
+          <Typography sx={{color: 'black'}}>База поставщиков</Typography>
+        </Box>
+      <Grid container columnSpacing={{ xs: -5, sm: -5, md: -15 }} >
         {data &&
           data.map((item: any) => {
             return (
