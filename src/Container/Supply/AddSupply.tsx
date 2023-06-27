@@ -1,15 +1,15 @@
 import { CustomError } from '../../interfaces/errors/CustomError';
 import { useGetAllItemsQuery } from '../../Store/services/items';
 import { useAddsupplyMutation } from '../../Store/services/supply';
-import { useGetAllSourcesQuery } from '../../Store/services/source';
+import { useGetAllSuppliersQuery } from '../../Store/services/suppliers';
 import { useGetAllStorageQuery } from '../../Store/services/storages';
 import FormElement from '../../Components/UI/Form/FormElement';
 import { useAppSelector } from '../../Store/hooks';
 import BasicSelect from '../../Components/UI/Form/SelectFormElement';
+import { Items } from '../../interfaces/Items';
 import { useNavigate } from 'react-router';
-import { Container, Button, Snackbar, Alert } from '@mui/material';
+import { Container, Button, Snackbar, Alert, Autocomplete, TextField } from '@mui/material';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-
 
 export interface Supply {
   operation_type_id: number;
@@ -20,13 +20,13 @@ export interface Supply {
   price: string;
   total_price: number;
   date: Date;
-  update_date?: Date ;
+  update_date?: Date;
   user: string | any;
 }
 
 const AddSupply = () => {
   const { data: storages } = useGetAllStorageQuery();
-  const { data: sources } = useGetAllSourcesQuery();
+  const { data: suppliers } = useGetAllSuppliersQuery();
   const { data: items } = useGetAllItemsQuery();
   const { user } = useAppSelector((state) => state.auth);
 
@@ -40,7 +40,7 @@ const AddSupply = () => {
     price: '',
     total_price: 0,
     date: new Date(),
-    user: user,
+    user: user[0].id,
   });
   const [open, setOpen] = useState(false);
 
@@ -69,6 +69,23 @@ const AddSupply = () => {
       [name]: value,
     }));
   };
+  const autocompleteChangeHandler = (event: ChangeEvent<{}>, value: Items | string | null) => {
+    if (value !== null) {
+      let itemId: string;
+
+      if (typeof value === 'string') {
+        itemId = '';
+      } else {
+        const selectedItem = items?.find((item) => item.item_name === value.item_name);
+        itemId = selectedItem ? selectedItem.id.toString() : '';
+      }
+
+      setForm((prevState) => ({
+        ...prevState,
+        item_id: itemId,
+      }));
+    }
+  };
 
   const selectChangeHandler = (name: string, value: string) => {
     setForm((prevState) => ({
@@ -77,12 +94,19 @@ const AddSupply = () => {
     }));
   };
 
+  const isFormValid = () => {
+    return (
+      form.source_id !== '' && form.target_id !== '' && form.item_id !== '' && form.qty !== '' && form.price !== ''
+    );
+  };
+
   const submitFormHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = await addsupply(form);
-    
-    if (!(data as { error: object }).error) {
-      navigate('/');
+    if (isFormValid()) {
+      const data = await addsupply(form);
+      if (!(data as { error: object }).error) {
+        navigate('/');
+      }
     }
   };
 
@@ -104,7 +128,7 @@ const AddSupply = () => {
           label="Откуда"
           name="source_id"
           onChange={(value) => selectChangeHandler('source_id', value)}
-          options={sources ? sources.map((source) => ({ id: source.id, name: source.name })) : []}
+          options={suppliers ? suppliers.map((suppliers) => ({ id: suppliers.id, name: suppliers.name_supplier })) : []}
         />
 
         <BasicSelect
@@ -114,15 +138,23 @@ const AddSupply = () => {
           onChange={(value) => selectChangeHandler('target_id', value)}
           options={storages ? storages.map((storage) => ({ id: storage.id, name: storage.storage })) : []}
         />
-        <BasicSelect
-          value={form.item_id}
-          label="Товар"
-          name="item_id"
-          onChange={(value) => selectChangeHandler('item_id', value)}
-          options={items ? items.map((item) => ({ id: item.id, name: item.item_name })) : []}
+        <Autocomplete
+          disablePortal
+          options={items ? items : []}
+          getOptionLabel={(option) => option.item_name}
+          onChange={autocompleteChangeHandler}
+          value={items?.find((item) => item.id.toString() === form.item_id) || null}
+          renderInput={(params) => <TextField name="item_id" {...params} label="Товар" />}
         />
-        <FormElement value={form.qty} label="Количество" name="qty" onChange={inputChangeHandler} />
-        <FormElement value={form.price} label="Цена за штуку" name="price" onChange={inputChangeHandler} />
+
+        <FormElement type="number" value={form.qty} label="Количество" name="qty" onChange={inputChangeHandler} />
+        <FormElement
+          type="number"
+          value={form.price}
+          label="Цена за штуку"
+          name="price"
+          onChange={inputChangeHandler}
+        />
         <FormElement value={form.total_price.toString()} label="Общая цена" name="total_price" />
         <Button
           fullWidth
@@ -131,8 +163,9 @@ const AddSupply = () => {
           type="submit"
           className="submit"
           sx={{ marginBottom: 2, marginTop: 3 }}
+          disabled={!isFormValid()}
         >
-          Add
+          Создать Приход
         </Button>
       </Container>
     </form>
