@@ -14,7 +14,7 @@ import Supply from './Container/Supply/Supply';
 import AddSupply from './Container/Supply/AddSupply';
 import {Routes, Route } from 'react-router-dom';
 import { CssBaseline, PaletteMode, createTheme, ThemeProvider } from '@mui/material';
-import {blueGrey, grey, blue } from '@mui/material/colors';
+import {grey, blue, blueGrey } from '@mui/material/colors';
 
 const getDesignTokens = (mode: PaletteMode) => ({
   palette: {
@@ -25,15 +25,11 @@ const getDesignTokens = (mode: PaletteMode) => ({
     },
     background: {
       default: mode === 'light' ? 'white' : '#383b48',
-      paper: mode === 'light' ? '#383b48' : 'white',
+      paper: mode === 'light' ? '#383b48' : blueGrey[900],
     },
     text: {
-      primary: mode === 'light' ? blueGrey[50] : '#000',
-      secondary: mode === 'light' ? blueGrey[200] : grey[500],
-    },
-    input: {
-      background: '#383b48',
-      text: '#fff',
+      primary: mode === 'light' ? blue[700]: blue[50],
+      secondary: mode === 'light' ? grey[500] : grey[300],
     },
   },
 });
