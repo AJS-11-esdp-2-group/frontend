@@ -51,7 +51,7 @@ const Items = () => {
 
   if (isLoading) return <h1>Loading...</h1>;
   return (
-      <Container maxWidth={'xl'} sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
+      <Container  sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
           <Typography sx={{color: 'black'}}>База поставщиков</Typography>
         </Box>

@@ -1,3 +1,4 @@
+import { GlobalTheme } from '../..';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import { useGetAllItemsQuery } from '../../Store/services/items';
 import { useAddsupplyMutation } from '../../Store/services/supply';
@@ -7,9 +8,8 @@ import FormElement from '../../Components/UI/Form/FormElement';
 import { useAppSelector } from '../../Store/hooks';
 import BasicSelect from '../../Components/UI/Form/SelectFormElement';
 import { useNavigate } from 'react-router';
-import { Container, Button, Snackbar, Alert } from '@mui/material';
+import { Container, Button, Snackbar, Alert, ThemeProvider } from '@mui/material';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-
 
 export interface Supply {
   operation_type_id: number;
@@ -87,55 +87,56 @@ const AddSupply = () => {
   };
 
   return (
-    <form onSubmit={submitFormHandler}>
-      <Container component="section" maxWidth="xs" sx={{ marginTop: '100px' }}>
-        <Snackbar
-          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          open={open}
-          autoHideDuration={3000}
-          onClose={handleClose}
-        >
-          <Alert severity="error" onClose={handleClose}>
-            {(error as CustomError)?.data?.message}
-          </Alert>
-        </Snackbar>
-        <BasicSelect
-          value={form.source_id}
-          label="Откуда"
-          name="source_id"
-          onChange={(value) => selectChangeHandler('source_id', value)}
-          options={sources ? sources.map((source) => ({ id: source.id, name: source.name })) : []}
-        />
+    <ThemeProvider theme={GlobalTheme}>
+      <form onSubmit={submitFormHandler}>
+        <Container component="section" maxWidth="xs" sx={{ marginTop: '100px' }}>
+          <Snackbar
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            open={open}
+            autoHideDuration={3000}
+            onClose={handleClose}
+          >
+            <Alert severity="error" onClose={handleClose}>
+              {(error as CustomError)?.data?.message}
+            </Alert>
+          </Snackbar>
+          <BasicSelect
+            value={form.source_id}
+            label="Откуда"
+            name="source_id"
+            onChange={(value) => selectChangeHandler('source_id', value)}
+            options={sources ? sources.map((source) => ({ id: source.id, name: source.name })) : []}
+          />
 
-        <BasicSelect
-          value={form.target_id}
-          label="Куда"
-          name="target"
-          onChange={(value) => selectChangeHandler('target_id', value)}
-          options={storages ? storages.map((storage) => ({ id: storage.id, name: storage.storage })) : []}
-        />
-        <BasicSelect
-          value={form.item_id}
-          label="Товар"
-          name="item_id"
-          onChange={(value) => selectChangeHandler('item_id', value)}
-          options={items ? items.map((item) => ({ id: item.id, name: item.item_name })) : []}
-        />
-        <FormElement value={form.qty} label="Количество" name="qty" onChange={inputChangeHandler} />
-        <FormElement value={form.price} label="Цена за штуку" name="price" onChange={inputChangeHandler} />
-        <FormElement value={form.total_price.toString()} label="Общая цена" name="total_price" />
-        <Button
-          fullWidth
-          variant="contained"
-          color="success"
-          type="submit"
-          className="submit"
-          sx={{ marginBottom: 2, marginTop: 3 }}
-        >
-          Add
-        </Button>
-      </Container>
-    </form>
+          <BasicSelect
+            value={form.target_id}
+            label="Куда"
+            name="target"
+            onChange={(value) => selectChangeHandler('target_id', value)}
+            options={storages ? storages.map((storage) => ({ id: storage.id, name: storage.storage })) : []}
+          />
+          <BasicSelect
+            value={form.item_id}
+            label="Товар"
+            name="item_id"
+            onChange={(value) => selectChangeHandler('item_id', value)}
+            options={items ? items.map((item) => ({ id: item.id, name: item.item_name })) : []}
+          />
+          <FormElement value={form.qty} label="Количество" name="qty" onChange={inputChangeHandler} />
+          <FormElement value={form.price} label="Цена за штуку" name="price" onChange={inputChangeHandler} />
+          <FormElement value={form.total_price.toString()} label="Общая цена" name="total_price" />
+          <Button
+            fullWidth
+            variant="contained"
+            color="success"
+            type="submit"
+            className="submit"
+          >
+            Add
+          </Button>
+        </Container>
+      </form>
+    </ThemeProvider>
   );
 };
 

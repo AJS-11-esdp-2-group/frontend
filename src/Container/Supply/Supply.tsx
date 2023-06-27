@@ -4,7 +4,6 @@ import { Container, Box, Tab } from '@mui/material';
 import * as React from 'react';
 import {TabContext, TabList, TabPanel} from '@mui/lab';
 
-
 const Supply = () => {
     const [value, setValue] = React.useState('1');
 
@@ -13,7 +12,7 @@ const Supply = () => {
     };
 
     return (
-        <Container component="section" maxWidth="lg">
+        <Container component="section" >
             <Box sx={{ width: '100%', typography: 'body1' }}>
                 <TabContext value={value}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>

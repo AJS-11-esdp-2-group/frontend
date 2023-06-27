@@ -1,3 +1,4 @@
+import { GlobalTheme } from '../..'
 import { loginForm } from '../../interfaces/loginForm'
 import { useSignInMutation } from '../../Store/services/auth'
 import FormElement from '../../Components/UI/Form/FormElement'
@@ -12,6 +13,7 @@ import {
   Link,
   Box,
   Snackbar,
+  ThemeProvider,
 } from '@mui/material'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import { LockOpen } from '@mui/icons-material'
@@ -64,67 +66,68 @@ const Login = () => {
     }
   }
   return (
-    <Container component="section" maxWidth="xs">
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        open={open}
-        autoHideDuration={3000}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          {(error as CustomError)?.data?.message}
-        </Alert>
-      </Snackbar>
-      <Box>
-        <Avatar sx={{ marginTop: 3, marginBottom: 2, marginLeft: 22 }}>
-          <LockOpen />
-        </Avatar>
-        <Typography
-          component="h1"
-          variant="h5"
-          sx={{ marginTop: 3, marginBottom: 2, marginLeft: 20 }}
+    <ThemeProvider theme={GlobalTheme}>
+      <Container component="section" maxWidth="xs">
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={open}
+          autoHideDuration={3000}
+          onClose={handleClose}
         >
-          Войти
-        </Typography>
+          <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+            {(error as CustomError)?.data?.message}
+          </Alert>
+        </Snackbar>
         <Box>
-          <form onSubmit={submitFormHandler}>
-            <Grid container spacing={2}>
-              <FormElement
-                required
-                value={form.username}
-                onChange={inputChangeHandler}
-                name="username"
-                label="Имя пользователя"
-              />
-              <FormElement
-                required
-                value={form.password}
-                onChange={inputChangeHandler}
-                type="password"
-                name="password"
-                label="Пароль"
-              />
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              sx={{ marginTop: 3, marginBottom: 2 }}
-            >
-              Войти
-            </Button>
-            <Grid container>
-              <Grid item sx={{ marginLeft: 6 }}>
-                <Link component={RouterLink} to="/register">
-                  У вас нет аккаунта? Зарегистрироваться
-                </Link>
+          <Avatar sx={{ marginTop: 3, marginBottom: 2, marginLeft: 22 }}>
+            <LockOpen />
+          </Avatar>
+          <Typography
+            component="h1"
+            variant="h5"
+            sx={{ marginTop: 3, marginBottom: 2, marginLeft: 20 }}
+          >
+            Войти
+          </Typography>
+          <Box>
+            <form onSubmit={submitFormHandler}>
+              <Grid container spacing={2}>
+                <FormElement
+                  required
+                  value={form.username}
+                  onChange={inputChangeHandler}
+                  name="username"
+                  label="Имя пользователя"
+                />
+                <FormElement
+                  required
+                  value={form.password}
+                  onChange={inputChangeHandler}
+                  type="password"
+                  name="password"
+                  label="Пароль"
+                />
               </Grid>
-            </Grid>
-          </form>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+              >
+                Войти
+              </Button>
+              <Grid container>
+                <Grid item sx={{ marginLeft: 6 }}>
+                  <Link component={RouterLink} to="/register">
+                    У вас нет аккаунта? Зарегистрироваться
+                  </Link>
+                </Grid>
+              </Grid>
+            </form>
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </ThemeProvider>
   )
 }
 
