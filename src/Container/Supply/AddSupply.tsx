@@ -1,3 +1,4 @@
+import { GlobalTheme } from '../..';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import { useGetAllItemsQuery } from '../../Store/services/items';
 import { useAddsupplyMutation } from '../../Store/services/supply';
