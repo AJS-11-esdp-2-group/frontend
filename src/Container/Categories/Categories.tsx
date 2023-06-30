@@ -1,5 +1,6 @@
 import { useDeleteCategoryMutation, useGetAllcategoriesQuery } from '../../Store/services/category';
 import ICategory from '../../interfaces/ICategory';
+import Modal from '../../Components/UI/Modal/Modal';
 import React, { useEffect, useState } from 'react';
 import { Container } from '@mui/material';
 import {
@@ -10,8 +11,15 @@ import {
     ListItemText,
     Collapse,
 } from '@mui/material';
-import { Send as SendIcon, Drafts as DraftsIcon, ExpandLess, ExpandMore, StarBorder } from '@mui/icons-material';
-
+import {
+    Send as SendIcon,
+    Drafts as DraftsIcon,
+    ExpandLess,
+    ExpandMore,
+    StarBorder
+} from '@mui/icons-material';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import IconButton from '@mui/material/IconButton';
 
 const Categories = () => {
     const { data, isLoading, isError, error } = useGetAllcategoriesQuery();
@@ -28,7 +36,7 @@ const Categories = () => {
         setOpen(isError);
     }, [isError]);
 
-    const handleClose = () => {
+    const handleCloseModal = () => {
         setOpen(false);
         setOpenModal(false);
     };
@@ -76,11 +84,23 @@ const Categories = () => {
                         const isItemOpen = category.id === openItemId;
                         return (
                             <React.Fragment key={category.id}>
+                                <Modal
+                                    isOpen={openModal && deleteCategoryId === category.id}
+                                    onClose={handleCloseModal}
+                                    title="Вы действительно хотите удалить эту категорию?"
+                                    isLoading={isLoading}
+                                    actionButtonLabel="Удалить"
+                                    onActionButtonClick={handleConfirmDelete}
+                                >
+                                </Modal>
                                 <ListItemButton onClick={() => handleClick(category.id)}>
                                     <ListItemIcon>
                                         <StarBorder />
                                     </ListItemIcon>
                                     <ListItemText primary={category.category_name} />
+                                    <IconButton onClick={() => handleDeleteCategory(category.id)} aria-label="settings">
+                                        <DeleteForeverIcon />
+                                    </IconButton>
                                     {isItemOpen ? <ExpandLess /> : <ExpandMore />}
                                 </ListItemButton>
                                 <Collapse in={isItemOpen} timeout="auto" unmountOnExit>
