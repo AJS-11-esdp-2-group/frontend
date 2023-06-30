@@ -7,7 +7,21 @@ const categoryApi = api.injectEndpoints({
             query: () => '/items_category',
             providesTags: () => [{type: 'Categories'}],
         }),
+        getCategoryById: build.query<ICategory[], number | string>({
+            query: (id) => `/items_category/${id}`,
+        }),
+        deleteCategory: build.mutation<void, number>({
+            query: (categoryId) => ({
+                url: `/items_category/${categoryId}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Categories'],
+        }),
     }),
 });
 
-export const {useGetAllcategoriesQuery} = categoryApi;
+export const {
+    useGetAllcategoriesQuery,
+    useGetCategoryByIdQuery,
+    useDeleteCategoryMutation,  
+} = categoryApi;

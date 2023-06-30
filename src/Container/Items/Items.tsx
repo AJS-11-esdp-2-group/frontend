@@ -53,7 +53,7 @@ const Items = () => {
   return (
       <Container maxWidth={'xl'} sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
-          <Typography sx={{color: 'black'}}>База поставщиков</Typography>
+          <Typography sx={{color: 'black'}}>Каталог товаров</Typography>
         </Box>
       <Grid container columnSpacing={{ xs: -5, sm: -5, md: -15 }} >
         {data &&
