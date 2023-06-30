@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 import BlindsClosedOutlinedIcon from '@mui/icons-material/BlindsClosedOutlined'
 import { Link } from 'react-router-dom'
-import { LocalFlorist, LocalShipping, Add, Logout } from '@mui/icons-material'
+import { LocalFlorist, LocalShipping, Add, Logout, CategoryRounded } from '@mui/icons-material'
 
 type Anchor = 'left'
 
@@ -101,6 +101,14 @@ const Navigation = () => {
             <Typography component={Link} to="/supply">
               Приходы
             </Typography>
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton component={Link} to="/items_categories">
+            <ListItemIcon>
+              <CategoryRounded />
+            </ListItemIcon>
+            <Typography>Категории товаров</Typography>
           </ListItemButton>
         </ListItem>
       </List>
