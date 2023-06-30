@@ -1,18 +1,28 @@
-import CardCategories from '../../Components/UI/Layout/Card/CardCategories';
 import { useDeleteCategoryMutation, useGetAllcategoriesQuery } from '../../Store/services/category';
-import { CustomError } from '../../interfaces/errors/CustomError';
-import Modal from '../../Components/UI/Modal/Modal';
-import { useEffect, useState } from 'react';
-import { Alert, Box, Container, Grid, Snackbar, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import ICategory from '../../interfaces/ICategory';
+import React, { useEffect, useState } from 'react';
+import { Container } from '@mui/material';
+import {
+    List,
+    ListItemButton,
+    ListSubheader,
+    ListItemIcon,
+    ListItemText,
+    Collapse,
+} from '@mui/material';
+import { Send as SendIcon, Drafts as DraftsIcon, ExpandLess, ExpandMore, StarBorder } from '@mui/icons-material';
+
 
 const Categories = () => {
     const { data, isLoading, isError, error } = useGetAllcategoriesQuery();
     const [open, setOpen] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [deleteCategoryId, setDeleteCategoryId] = useState<number | null>(null);
+    const [openItemId, setOpenItemId] = useState<number | null>(null);
 
-    const navigate = useNavigate();
+    const handleClick = (itemId: number) => {
+        setOpenItemId(itemId === openItemId ? null : itemId);
+    };
 
     useEffect(() => {
         setOpen(isError);
@@ -51,44 +61,42 @@ const Categories = () => {
     if (isLoading) return <h1>Loading...</h1>;
     return (
         <Container maxWidth={'xl'} sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Typography sx={{ color: 'black' }}>Список категорий</Typography>
-            </Box>
-            <Grid container columnSpacing={{ xs: -5, sm: -5, md: -15 }} >
+            <List
+                sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+                component="nav"
+                aria-labelledby="nested-list-subheader"
+                subheader={
+                    <ListSubheader component="div" id="nested-list-subheader">
+                        Список категорий
+                    </ListSubheader>
+                }
+            >
                 {data &&
-                    data.map((category: any) => {
+                    data.map((category: ICategory) => {
+                        const isItemOpen = category.id === openItemId;
                         return (
-                            <Grid item key={category.id}>
-                                <Snackbar
-                                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                                    open={open}
-                                    autoHideDuration={3000}
-                                    onClose={handleClose}
-                                >
-                                    <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-                                        {(error as CustomError)?.data?.message}
-                                    </Alert>
-                                </Snackbar>
-                                <Modal
-                                    isOpen={openModal && deleteCategoryId === category.id}
-                                    onClose={handleClose}
-                                    title="Вы действительно хотите удалить эту категорию?"
-                                    isLoading={isLoading}
-                                    actionButtonLabel="Удалить"
-                                    onActionButtonClick={handleConfirmDelete}
-                                >
-                                </Modal>
-                                <CardCategories
-                                    id={category.id}
-                                    category_name={category.category_name}
-                                    category_description={category.category_description}
-                                    onClick={() => navigate(`/edit-category/${category.id}`)}
-                                    onClickDelete={() => handleDeleteCategory(category.id)}
-                                />
-                            </Grid>
+                            <React.Fragment key={category.id}>
+                                <ListItemButton onClick={() => handleClick(category.id)}>
+                                    <ListItemIcon>
+                                        <StarBorder />
+                                    </ListItemIcon>
+                                    <ListItemText primary={category.category_name} />
+                                    {isItemOpen ? <ExpandLess /> : <ExpandMore />}
+                                </ListItemButton>
+                                <Collapse in={isItemOpen} timeout="auto" unmountOnExit>
+                                    <List component="div" disablePadding>
+                                        <ListItemButton sx={{ pl: 4 }}>
+                                            <ListItemIcon>
+                                                <SendIcon />
+                                            </ListItemIcon>
+                                            <ListItemText primary={category.category_description} />
+                                        </ListItemButton>
+                                    </List>
+                                </Collapse>
+                            </React.Fragment>
                         );
                     })}
-            </Grid>
+            </List>
         </Container>
     );
 };
