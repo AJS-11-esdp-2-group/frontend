@@ -2,6 +2,7 @@ import HomePage from './Container/HomePage/HomePage';
 import Items from './Container/Items/Items';
 import Suppliers from './Container/Suppliers/Suppliers';
 import Categories from './Container/Categories/Categories';
+import AddCategory from './Container/Categories/AddCategory';
 import Register from './Container/Register/Register';
 import Login from './Container/Login/Login';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
@@ -138,18 +139,10 @@ function App() {
               }
             />
             <Route
-              path="/edit-category/:id"
-              element={
-                <ProtectedRoute isAllowed={!!user} redirectPath="/">
-                  <EditSupplier/>
-                </ProtectedRoute>
-              }
-            />
-            <Route
               path="/new-category"
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
-                  <AddSupply/>
+                  <AddCategory/>
                 </ProtectedRoute>
               }
             />
