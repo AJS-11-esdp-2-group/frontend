@@ -11,4 +11,4 @@ export interface ISupplier {
     address: string;
     id_country: string;
     id_city: string;
-}
+};

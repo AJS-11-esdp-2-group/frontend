@@ -1,17 +1,20 @@
-import { useDeleteCategoryMutation, useGetAllcategoriesQuery } from '../../Store/services/category';
-import ICategory from '../../interfaces/ICategory';
+import { useDeleteCategoryMutation, useGetAllcategoriesQuery } from '../../Store/services/categories';
+import { ICategories } from '../../interfaces/ICategories';
 import Modal from '../../Components/UI/Modal/Modal';
 import React, { useEffect, useState } from 'react';
-import { Container } from '@mui/material';
 import {
+    Container,
     List,
     ListItemButton,
     ListSubheader,
+    ListItem,
     ListItemIcon,
     ListItemText,
     Collapse,
+    Typography
 } from '@mui/material';
 import {
+    Add,
     Send as SendIcon,
     Drafts as DraftsIcon,
     ExpandLess,
@@ -20,6 +23,7 @@ import {
 } from '@mui/icons-material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import IconButton from '@mui/material/IconButton';
+import { Link } from 'react-router-dom'
 
 const Categories = () => {
     const { data, isLoading, isError, error } = useGetAllcategoriesQuery();
@@ -74,13 +78,31 @@ const Categories = () => {
                 component="nav"
                 aria-labelledby="nested-list-subheader"
                 subheader={
-                    <ListSubheader component="div" id="nested-list-subheader">
+                    <ListSubheader
+                        component="div"
+                        id="nested-list-subheader"
+                        sx={{ fontSize: '1.5rem', textAlign: 'center', color: 'white' }}
+                    >
                         Список категорий
                     </ListSubheader>
                 }
             >
+                <ListItem>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <Add />
+                        </ListItemIcon>
+                        <Typography
+                            component={Link}
+                            to="/new-category"
+                            sx={{ color: '#AAAAAA' }}
+                        >
+                            Создать категорию
+                        </Typography>
+                    </ListItemButton>
+                </ListItem>
                 {data &&
-                    data.map((category: ICategory) => {
+                    data.map((category: ICategories) => {
                         const isItemOpen = category.id === openItemId;
                         return (
                             <React.Fragment key={category.id}>

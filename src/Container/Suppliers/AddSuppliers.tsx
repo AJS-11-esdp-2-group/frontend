@@ -50,7 +50,7 @@ const AddSupplier = () => {
     const submitFormHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const data = await addSupplier(form);
-        if (!(data as { error: object }).error) {
+        if (!(data as unknown as { error: object }).error) {
             navigate('/suppliers');
         }
     };
@@ -71,7 +71,7 @@ const AddSupplier = () => {
                 <Typography sx={{color: 'black'}}>Добавление постащика </Typography>
                 <FormElement
                     value={form.name_supplier}
-                    label="Имя поставщка"
+                    label="Имя поставщика"
                     name="name_supplier"
                     onChange={inputChangeHandler}
                 />

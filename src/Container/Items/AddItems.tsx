@@ -2,7 +2,7 @@ import FormElement from '../../Components/UI/Form/FormElement';
 import FileUpload from '../../Components/UI/Form/FileUpload';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import { useAddItemMutation } from '../../Store/services/items';
-import { useGetAllcategoriesQuery } from '../../Store/services/category';
+import { useGetAllcategoriesQuery } from '../../Store/services/categories';
 import BasicSelect from '../../Components/UI/Form/SelectFormElement';
 import { useAppSelector } from '../../Store/hooks';
 import { useNavigate } from 'react-router';

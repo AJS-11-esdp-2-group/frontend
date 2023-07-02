@@ -37,6 +37,7 @@ export const api = createApi({
     "Storages",
     "Sources",
     "Categories",
+    "Subcategories",
     "Countries",
     "Cities"
   ]
