@@ -14,6 +14,8 @@ import EditItem from './Container/Items/EditItem';
 import EditSupplier from './Container/Suppliers/EditSupplier';
 import Supply from './Container/Supply/Supply';
 import AddSupply from './Container/Supply/AddSupply';
+import Recipes from './Container/Recipes/Recipes';
+import AddRecipes from './Container/Recipes/AddRecipes';
 import {Routes, Route } from 'react-router-dom';
 import { CssBaseline, PaletteMode, createTheme, ThemeProvider } from '@mui/material';
 import {grey, blue, blueGrey } from '@mui/material/colors';
@@ -37,7 +39,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
 });
 
 
-const darkModeTheme = createTheme(getDesignTokens('light'));
+const darkModeTheme = createTheme(getDesignTokens('dark'));
 function App() {
   const { user } = useAppSelector((state) => state.auth);
   
@@ -143,6 +145,22 @@ function App() {
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
                   <AddCategory/>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/recipes"
+              element={
+                <ProtectedRoute isAllowed={!!user} redirectPath="/">
+                  <Recipes/>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/new-recipes/:id"
+              element={
+                <ProtectedRoute isAllowed={!!user} redirectPath="/">
+                  <AddRecipes/>
                 </ProtectedRoute>
               }
             />
