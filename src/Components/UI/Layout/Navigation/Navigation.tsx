@@ -1,53 +1,40 @@
-import { useLogoutMutation } from '../../../../Store/services/auth'
-import * as React from 'react'
-import {
-  Box,
-  Drawer,
-  Button,
-  List,
-  Divider,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  Typography,
-} from '@mui/material'
-import BlindsClosedOutlinedIcon from '@mui/icons-material/BlindsClosedOutlined'
-import { Link } from 'react-router-dom'
-import { LocalFlorist, LocalShipping, Add, Logout, CategoryRounded } from '@mui/icons-material'
+import { useLogoutMutation } from '../../../../Store/services/auth';
+import * as React from 'react';
+import { Box, Drawer, Button, List, Divider, ListItem, ListItemButton, ListItemIcon, Typography } from '@mui/material';
+import BlindsClosedOutlinedIcon from '@mui/icons-material/BlindsClosedOutlined';
+import { Link } from 'react-router-dom';
+import { LocalFlorist, LocalShipping, Add, Logout, CategoryRounded, EmojiNatureTwoTone } from '@mui/icons-material';
 
-type Anchor = 'left'
+type Anchor = 'left';
 
 const Navigation = () => {
   const [state, setState] = React.useState({
     left: false,
-  })
+  });
 
-  const [logout] = useLogoutMutation()
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const [logout] = useLogoutMutation();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClose = () => {
-    setAnchorEl(null)
-  }
+    setAnchorEl(null);
+  };
 
   const logoutHandler = async () => {
-    handleClose()
-    await logout()
-  }
+    handleClose();
+    await logout();
+  };
 
-  const toggleDrawer = (open: boolean) => (
-    event: React.KeyboardEvent | React.MouseEvent,
-  ) => {
+  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (
       event &&
       event.type === 'keydown' &&
-      ((event as React.KeyboardEvent).key === 'Tab' ||
-        (event as React.KeyboardEvent).key === 'Shift')
+      ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')
     ) {
-      return
+      return;
     }
 
-    setState({ ...state, left: open })
-  }
+    setState({ ...state, left: open });
+  };
 
   const left = (anchor: Anchor) => (
     <Box
@@ -111,6 +98,12 @@ const Navigation = () => {
             <Typography>Категории товаров</Typography>
           </ListItemButton>
         </ListItem>
+        <ListItemButton component={Link} to="/recipes">
+          <ListItemIcon>
+            <EmojiNatureTwoTone />
+          </ListItemIcon>
+          <Typography>Рецепты</Typography>
+        </ListItemButton>
       </List>
       <Divider />
       <List>
@@ -126,7 +119,7 @@ const Navigation = () => {
         </ListItem>
       </List>
     </Box>
-  )
+  );
 
   return (
     <div>
@@ -137,7 +130,7 @@ const Navigation = () => {
         {left('left')}
       </Drawer>
     </div>
-  )
-}
+  );
+};
 
-export default Navigation
+export default Navigation;
