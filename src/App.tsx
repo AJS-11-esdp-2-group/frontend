@@ -16,9 +16,9 @@ import Supply from './Container/Supply/Supply';
 import AddSupply from './Container/Supply/AddSupply';
 import Recipes from './Container/Recipes/Recipes';
 import AddRecipes from './Container/Recipes/AddRecipes';
-import {Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { CssBaseline, PaletteMode, createTheme, ThemeProvider } from '@mui/material';
-import {grey, blue, blueGrey } from '@mui/material/colors';
+import { grey, blue, blueGrey } from '@mui/material/colors';
 
 const getDesignTokens = (mode: PaletteMode) => ({
   palette: {
@@ -32,17 +32,16 @@ const getDesignTokens = (mode: PaletteMode) => ({
       paper: mode === 'light' ? '#383b48' : blueGrey[900],
     },
     text: {
-      primary: mode === 'light' ? blue[700]: blue[50],
+      primary: mode === 'light' ? blue[700] : blue[50],
       secondary: mode === 'light' ? grey[500] : grey[300],
     },
   },
 });
 
-
 const darkModeTheme = createTheme(getDesignTokens('dark'));
 function App() {
   const { user } = useAppSelector((state) => state.auth);
-  
+
   return (
     <ThemeProvider theme={darkModeTheme}>
       <CssBaseline>
@@ -51,7 +50,7 @@ function App() {
         </header>
         <main>
           <Routes>
-            <Route path="/" element={<HomePage/>}/>
+            <Route path="/" element={<HomePage />} />
             <Route
               path="/register"
               element={
@@ -88,7 +87,7 @@ function App() {
               path="/new-item"
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
-                  <AddItem/>
+                  <AddItem />
                 </ProtectedRoute>
               }
             />
@@ -96,15 +95,15 @@ function App() {
               path="/edit-item/:id"
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
-                  <EditItem/>
+                  <EditItem />
                 </ProtectedRoute>
               }
             />
-             <Route
+            <Route
               path="/new-supplier"
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
-                  <AddSupplier/>
+                  <AddSupplier />
                 </ProtectedRoute>
               }
             />
@@ -112,7 +111,7 @@ function App() {
               path="/edit-supplier/:id"
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
-                  <EditSupplier/>
+                  <EditSupplier />
                 </ProtectedRoute>
               }
             />
@@ -120,7 +119,7 @@ function App() {
               path="/supply"
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
-                  <Supply/>
+                  <Supply />
                 </ProtectedRoute>
               }
             />
@@ -128,7 +127,7 @@ function App() {
               path="/new-supply"
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
-                  <AddSupply/>
+                  <AddSupply />
                 </ProtectedRoute>
               }
             />
@@ -136,7 +135,7 @@ function App() {
               path="/items_categories"
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
-                  <Categories/>
+                  <Categories />
                 </ProtectedRoute>
               }
             />
@@ -144,7 +143,7 @@ function App() {
               path="/new-category"
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
-                  <AddCategory/>
+                  <AddCategory />
                 </ProtectedRoute>
               }
             />
@@ -152,7 +151,7 @@ function App() {
               path="/recipes"
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
-                  <Recipes/>
+                  <Recipes />
                 </ProtectedRoute>
               }
             />
@@ -160,7 +159,7 @@ function App() {
               path="/new-recipes/:id"
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
-                  <AddRecipes/>
+                  <AddRecipes />
                 </ProtectedRoute>
               }
             />
