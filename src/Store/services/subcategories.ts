@@ -7,6 +7,7 @@ const subcategoryApi = api.injectEndpoints({
         getAllSubcategories: build.query<ISubcategories[], void>({
             query: () => '/items_subcategory',
             providesTags: () => [{type: 'Subcategories'}],
+            
         }),
         getSubcategoryById: build.query<ISubcategories[], number | string>({
             query: (id) => `/items_subcategory/${id}`,
@@ -24,6 +25,5 @@ const subcategoryApi = api.injectEndpoints({
 export const {
     useGetAllSubcategoriesQuery,
     useGetSubcategoryByIdQuery,
-
-    useDeleteSubcategoryMutation,  
+    useDeleteSubcategoryMutation,
 } = subcategoryApi;
