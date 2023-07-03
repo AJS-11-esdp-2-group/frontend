@@ -21,7 +21,7 @@ import {
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Add, ExpandLess, ExpandMore, StarBorder, Send as SendIcon, Edit } from '@mui/icons-material';
+import { Add, ExpandLess, ExpandMore, Edit, Person } from '@mui/icons-material';
 
 const Suppliers = () => {
   const { data, isLoading, refetch, isError, error } = useGetAllSuppliersQuery();
@@ -135,7 +135,7 @@ const Suppliers = () => {
                 </Modal>
                 <ListItemButton onClick={() => handleClick(supplier.id)}>
                   <ListItemIcon>
-                    <StarBorder />
+                    <Person/>
                   </ListItemIcon>
                   <ListItemText primary={supplier.name_supplier} />
                   <IconButton

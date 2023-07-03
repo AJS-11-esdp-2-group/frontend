@@ -100,14 +100,6 @@ function App() {
               }
             />
             <Route
-              path="/new-supplier"
-              element={
-                <ProtectedRoute isAllowed={!!user} redirectPath="/">
-                  <AddSupplier />
-                </ProtectedRoute>
-              }
-            />
-            <Route
               path="/edit-supplier/:id"
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
@@ -136,14 +128,6 @@ function App() {
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
                   <Categories />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/new-category"
-              element={
-                <ProtectedRoute isAllowed={!!user} redirectPath="/">
-                  <AddCategory />
                 </ProtectedRoute>
               }
             />
