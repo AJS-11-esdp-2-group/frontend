@@ -130,7 +130,9 @@ const AddSupply = () => {
             label="Откуда"
             name="source_id"
             onChange={(value) => selectChangeHandler('source_id', value)}
-            options={suppliers ? suppliers.map((suppliers) => ({ id: suppliers.id, name: suppliers.name_supplier })) : []}
+            options={
+              suppliers ? suppliers.map((suppliers) => ({ id: suppliers.id, name: suppliers.name_supplier })) : []
+            }
           />
 
           <BasicSelect
