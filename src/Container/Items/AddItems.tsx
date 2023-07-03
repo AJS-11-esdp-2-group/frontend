@@ -23,7 +23,7 @@ const AddItem = () => {
     image_small: string;
     id_user: any;
   }
-  const [form, setForm] = useState<Props>({
+  const initialFormState: Props = {
     item_name: '',
     item_description: '',
     id_category: '',
@@ -31,7 +31,9 @@ const AddItem = () => {
     image_large: '',
     image_small: '',
     id_user: user[0].id,
-  });
+  };
+
+  const [form, setForm] = useState<Props>(initialFormState);
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -72,7 +74,8 @@ const AddItem = () => {
     }
     const data = await addItem(formData);
     if (!(data as { error: object }).error) {
-      navigate('/');
+      navigate('/items');
+      setForm(initialFormState);
     }
   };
   const selectChangeHandler = (name: string, value: string) => {
@@ -84,7 +87,7 @@ const AddItem = () => {
 
   return (
     <form onSubmit={submitFormHandler}>
-      <Container component="section" maxWidth="xs" sx={{ marginTop: '100px' }}>
+      <Container component="section" maxWidth="xs">
         <Snackbar
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           open={open}

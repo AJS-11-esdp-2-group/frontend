@@ -38,16 +38,13 @@ const Suppliers = () => {
     setOpen(isError);
   }, [isError]);
 
-  const handleCloseSnackbar = () => {
+  const handleClose = () => {
     setOpen(false);
+    setOpenModal(false);
   };
 
   const handleClick = (itemId: number) => {
     setOpenItemId(itemId === openItemId ? null : itemId);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
   };
 
   const handleAddButtonClick = () => {
@@ -118,15 +115,15 @@ const Suppliers = () => {
                   anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                   open={open}
                   autoHideDuration={3000}
-                  onClose={handleCloseSnackbar}
+                  onClose={handleClose}
                 >
-                  <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
+                  <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                     {(error as CustomError)?.data?.message}
                   </Alert>
                 </Snackbar>
                 <Modal
                   isOpen={openModal && deleteSupplierId === supplier.id}
-                  onClose={handleCloseModal}
+                  onClose={handleClose}
                   title="Вы действительно хотите удалить этого поставщика?"
                   isLoading={isLoading}
                   actionButtonLabel="Удалить"
