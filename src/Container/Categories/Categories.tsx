@@ -6,6 +6,7 @@ import {
 } from '../../Store/services/categories';
 import { ICategories } from '../../interfaces/ICategories';
 import Modal from '../../Components/UI/Modal/Modal';
+import { CustomError } from '../../interfaces/errors/CustomError';
 import React, { useEffect, useState } from 'react';
 import {
   Container,
@@ -18,6 +19,8 @@ import {
   Collapse,
   Typography,
   Grid,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import {
   Add,
@@ -30,27 +33,34 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import IconButton from '@mui/material/IconButton';
 
 const Categories = () => {
-  const { data, isLoading, isError } = useGetAllcategoriesQuery();
+  const { data, isLoading, isError, error } = useGetAllcategoriesQuery();
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [deleteCategory] = useDeleteCategoryMutation();
   const [deleteCategoryId, setDeleteCategoryId] = useState<number | null>(null);
   const [openItemId, setOpenItemId] = useState<number | null>(null);
   const [uncoverForm, setUncoverForm] = useState(false);
 
-  const handleClick = (itemId: number) => {
-    setOpenItemId(itemId === openItemId ? null : itemId);
-  };
-
   useEffect(() => {
     setOpen(isError);
   }, [isError]);
+
+  const handleCloseSnackbar = () => {
+    setOpen(false);
+  };
+
+  const handleClick = (itemId: number) => {
+    setOpenItemId(itemId === openItemId ? null : itemId);
+  };
 
   const handleCloseModal = () => {
     setOpen(false);
     setOpenModal(false);
   };
 
-  const [deleteCategory] = useDeleteCategoryMutation();
+  const handleAddButtonClick = () => {
+    setUncoverForm(!uncoverForm);
+  };
 
   const handleDeleteCategory = async (categoryId: number) => {
     setDeleteCategoryId(categoryId);
@@ -67,16 +77,12 @@ const Categories = () => {
         } else {
           setOpenModal(false);
         }
+        setDeleteCategoryId(null);
       } catch (error) {
         setOpenModal(true);
         setOpen(true);
       }
-      setDeleteCategoryId(null);
     }
-  };
-
-  const handleAddButtonClick = () => {
-    setUncoverForm(!uncoverForm);
   };
 
   const [categoryId, setCategoryId] = useState(0);
@@ -122,6 +128,16 @@ const Categories = () => {
             const isItemOpen = category.id === openItemId;
             return (
               <Grid key={category.id}>
+                <Snackbar
+                  anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                  open={open}
+                  autoHideDuration={3000}
+                  onClose={handleCloseSnackbar}
+                >
+                  <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
+                    {(error as CustomError)?.data?.message}
+                  </Alert>
+                </Snackbar>
                 <Modal
                   isOpen={openModal && deleteCategoryId === category.id}
                   onClose={handleCloseModal}
