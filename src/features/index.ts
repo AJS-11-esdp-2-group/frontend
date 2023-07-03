@@ -1,14 +1,14 @@
-import { apiUrl } from "../common/constans";
-import { RootState } from "../Store/services/store";
-import { CustomError } from "../interfaces/errors/CustomError";
+import { apiUrl } from '../common/constans'; 
+import { RootState } from '../Store/store';
+import { CustomError } from '../interfaces/errors/CustomError';
 import {
   BaseQueryFn,
   createApi,
   FetchArgs,
   fetchBaseQuery,
   FetchBaseQueryError,
-  FetchBaseQueryMeta
-} from "@reduxjs/toolkit/query/react";
+  FetchBaseQueryMeta,
+} from '@reduxjs/toolkit/query/react';
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
@@ -18,7 +18,7 @@ export const api = createApi({
       if (state.auth.user) {
         const token = state.auth.user[0]?.token;
         if (token) {
-          headers.set("Authorization", token);
+          headers.set('Authorization', token);
         }
       }
     }
@@ -31,14 +31,17 @@ export const api = createApi({
   >,
   endpoints: () => ({}),
   tagTypes: [
-    "Items",
-    "Suppliers",
-    "Supplies",
-    "Storages",
-    "Sources",
-    "Categories",
-    "Subcategories",
-    "Countries",
-    "Cities"
-  ]
+    'Items',
+    'Suppliers',
+    'Supplies',
+    'Storages',
+    'Sources',
+    'Categories',
+    'Subcategories',
+    'Countries',
+    'Cities',
+    'Bouquets',
+    'BouquetsImage',
+    'CompositionBouquets',
+  ],
 });
