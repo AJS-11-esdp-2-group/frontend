@@ -73,16 +73,6 @@ const Navigation = () => {
         <ListItem>
           <ListItemButton>
             <ListItemIcon>
-              <Add />
-            </ListItemIcon>
-            <Typography component={Link} to="/new-supplier">
-              Создать поставщика
-            </Typography>
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
-          <ListItemButton>
-            <ListItemIcon>
               <BlindsClosedOutlinedIcon />
             </ListItemIcon>
             <Typography component={Link} to="/supply">
