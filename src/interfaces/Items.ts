@@ -1,15 +1,14 @@
 export interface Items extends Item {
     id: number;
-    id_category: number | string;
+    id_category: string;
+    create_date: Date;
 };
 
 export interface Item {
     item_name: string;
     item_description: string;
-    category_name: string;
-    category_name_description: string;
-    image_small: string;
-    image_large: string;
+    id_category: string;
+    id_subcategory: string;
+    id_under_subcategory: string;
     id_user: number;
-    create_date: Date;
 };

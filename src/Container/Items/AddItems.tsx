@@ -1,12 +1,11 @@
 import FormElement from '../../Components/UI/Form/FormElement';
-import FileUpload from '../../Components/UI/Form/FileUpload';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import { useAddItemMutation } from '../../Store/services/items';
 import { useGetAllcategoriesQuery } from '../../Store/services/categories';
 import BasicSelect from '../../Components/UI/Form/SelectFormElement';
 import { useAppSelector } from '../../Store/hooks';
 import { useNavigate } from 'react-router';
-import { Grid, Container, Button, Snackbar, Alert } from '@mui/material';
+import { Container, Button, Snackbar, Alert } from '@mui/material';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
 const AddItem = () => {
@@ -18,18 +17,16 @@ const AddItem = () => {
     item_name: string;
     item_description: string;
     id_category: string;
-    category_name_description: string;
-    image_large: string;
-    image_small: string;
+    id_subcategory: string;
+    id_under_subcategory: string;
     id_user: any;
   }
   const initialFormState: Props = {
     item_name: '',
     item_description: '',
     id_category: '',
-    category_name_description: '',
-    image_large: '',
-    image_small: '',
+    id_subcategory: '',
+    id_under_subcategory: '',
     id_user: user[0].id,
   };
 
@@ -55,28 +52,13 @@ const AddItem = () => {
     }));
   };
 
-  const fileChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const name = e.target.name;
-    if (e.target.files) {
-      const file = e.target.files[0];
-      setForm((prevState) => ({
-        ...prevState,
-        [name]: file,
-      }));
-    }
-  };
-
   const submitFormHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData();
-    for (let key in form) {
-      formData.append(key, form[key as keyof typeof form]);
-    }
-    const data = await addItem(formData);
-    if (!(data as { error: object }).error) {
-      navigate('/items');
-      setForm(initialFormState);
-    }
+    const data = await addItem(form);
+        if (!(data as unknown as { error: object }).error) {
+            navigate('/items');
+            setForm(initialFormState);
+        }
   };
   const selectChangeHandler = (name: string, value: string) => {
     setForm((prevState) => ({
@@ -112,9 +94,18 @@ const AddItem = () => {
           onChange={(value) => selectChangeHandler('id_category', value)}
           options={categories ? categories.map((category) => ({ id: category.id, name: category.category_name })) : []}
         />
-        <Grid item xs>
-          <FileUpload label="image" name="image" onChange={fileChangeHandler} />
-        </Grid>
+        <FormElement
+          value={form.id_subcategory}
+          label="Подкатегория"
+          name="id_subcategory"
+          onChange={inputChangeHandler}
+        />
+        <FormElement
+          value={form.id_under_subcategory}
+          label="Подкатегория подкатегории"
+          name="id_under_subcategory"
+          onChange={inputChangeHandler}
+        />
         <Button
           fullWidth
           variant="contained"

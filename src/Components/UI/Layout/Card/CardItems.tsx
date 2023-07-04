@@ -4,19 +4,19 @@ import {Edit, DeleteForever} from '@mui/icons-material';
 
 interface IProps {
   id: number;
-  image: string;
   name: string;
   onClick: MouseEventHandler<HTMLButtonElement>;
   onClickDelete: MouseEventHandler<HTMLButtonElement>;
   description: string;
   create_date: string;
   id_category: number;
+  id_subcategory: number;
+  id_under_subcategory: number;
 }
 
-const CardItems = ({ id, name, description, image, onClick, onClickDelete }: IProps) => {
+const CardItems = ({ id, name, description, onClick, onClickDelete }: IProps) => {
   return (
     <Card key={id} sx={{ width: 280, m: '10px' }}>
-      <CardMedia component="img" height="194" image={image} alt="Items img"  sx={{borderRadius: 1}}/>
       <CardHeader sx={{ height: '120px' }} title={name} subheader={description} />
       <CardActions>
         <Button
