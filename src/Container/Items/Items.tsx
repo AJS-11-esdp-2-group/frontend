@@ -1,18 +1,34 @@
+import AddItem from './AddItems';
 import CardItems from '../../Components/UI/Layout/Card/CardItems';
 import { useGetAllItemsQuery, useDeleteItemMutation } from '../../Store/services/items';
 import image from '../../assets/image.jpeg';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import Modal from '../../Components/UI/Modal/Modal';
 import { useEffect, useState } from 'react';
-import {Alert, Box, Container, Grid, Snackbar, Typography} from '@mui/material';
+import {
+  Alert,
+  Box,
+  Container,
+  Grid,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  Snackbar,
+  Typography
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { Add } from '@mui/icons-material';
 
 const Items = () => {
   const { data, isLoading, isError, error } = useGetAllItemsQuery();
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [deleteItem] = useDeleteItemMutation();
   const [deleteItemId, setDeleteItemId] = useState<number | null>(null);
-
+  const [openItemId, setOpenItemId] = useState<number | null>(null);
+  const [uncoverForm, setUncoverForm] = useState(false);
+  const [itemId, setItemId] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,7 +40,13 @@ const Items = () => {
     setOpenModal(false);
   };
 
-  const [deleteItem] = useDeleteItemMutation();
+  const handleClick = (itemId: number) => {
+    setOpenItemId(itemId === openItemId ? null : itemId);
+  };
+
+  const handleAddButtonClick = () => {
+    setUncoverForm(!uncoverForm);
+  };
 
   const handleDeleteItem = async (itemId: number) => {
     setDeleteItemId(itemId);
@@ -51,10 +73,25 @@ const Items = () => {
 
   if (isLoading) return <h1>Loading...</h1>;
   return (
-      <Container maxWidth={'xl'} sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
-        <Box sx={{display: 'flex', justifyContent: 'center'}}>
-          <Typography sx={{color: 'black'}}>Каталог товаров</Typography>
+    <Container maxWidth={'xl'} sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+      <List>
+        <ListItem>
+          <ListItemButton onClick={handleAddButtonClick}>
+            <ListItemIcon>
+              <Add />
+            </ListItemIcon>
+            <Typography
+              sx={{ color: '#AAAAAA' }}
+            >
+              Добавить товар
+            </Typography>
+          </ListItemButton>
+        </ListItem>
+        {uncoverForm && (<AddItem />)}
+        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+          <Typography sx={{ color: 'black' }} >Каталог товаров</Typography>
         </Box>
+      </List>
       <Grid container columnSpacing={{ xs: -5, sm: -5, md: -15 }} >
         {data &&
           data.map((item: any) => {

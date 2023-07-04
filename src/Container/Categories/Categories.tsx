@@ -1,11 +1,13 @@
+import AddCategory from './AddCategory';
 import {
   useDeleteCategoryMutation,
   useGetAllcategoriesQuery,
   useGetSubcategoriesByIdCategoryQuery,
-} from '../../Store/services/categories'
-import { ICategories } from '../../interfaces/ICategories'
-import Modal from '../../Components/UI/Modal/Modal'
-import React, { useEffect, useState } from 'react'
+} from '../../Store/services/categories';
+import { ICategories } from '../../interfaces/ICategories';
+import Modal from '../../Components/UI/Modal/Modal';
+import { CustomError } from '../../interfaces/errors/CustomError';
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   List,
@@ -16,70 +18,79 @@ import {
   ListItemText,
   Collapse,
   Typography,
-} from '@mui/material'
+  Grid,
+  Snackbar,
+  Alert,
+} from '@mui/material';
 import {
   Add,
   Send as SendIcon,
-  Drafts as DraftsIcon,
   ExpandLess,
   ExpandMore,
   StarBorder,
-} from '@mui/icons-material'
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import IconButton from '@mui/material/IconButton'
-import { Link } from 'react-router-dom'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+} from '@mui/icons-material';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import IconButton from '@mui/material/IconButton';
 
 const Categories = () => {
-  const { data, isLoading, isError, error } = useGetAllcategoriesQuery()
-  const [open, setOpen] = useState(false)
-  const [openModal, setOpenModal] = useState(false)
-  const [deleteCategoryId, setDeleteCategoryId] = useState<number | null>(null)
-  const [openItemId, setOpenItemId] = useState<number | null>(null)
-
-  const handleClick = (itemId: number) => {
-    setOpenItemId(itemId === openItemId ? null : itemId)
-  }
+  const { data, isLoading, isError, error } = useGetAllcategoriesQuery();
+  const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [deleteCategory] = useDeleteCategoryMutation();
+  const [deleteCategoryId, setDeleteCategoryId] = useState<number | null>(null);
+  const [openItemId, setOpenItemId] = useState<number | null>(null);
+  const [uncoverForm, setUncoverForm] = useState(false);
 
   useEffect(() => {
-    setOpen(isError)
-  }, [isError])
+    setOpen(isError);
+  }, [isError]);
+
+  const handleCloseSnackbar = () => {
+    setOpen(false);
+  };
+
+  const handleClick = (itemId: number) => {
+    setOpenItemId(itemId === openItemId ? null : itemId);
+  };
 
   const handleCloseModal = () => {
-    setOpen(false)
-    setOpenModal(false)
-  }
+    setOpen(false);
+    setOpenModal(false);
+  };
 
-  const [deleteCategory] = useDeleteCategoryMutation()
+  const handleAddButtonClick = () => {
+    setUncoverForm(!uncoverForm);
+  };
 
   const handleDeleteCategory = async (categoryId: number) => {
-    setDeleteCategoryId(categoryId)
-    setOpenModal(true)
-  }
+    setDeleteCategoryId(categoryId);
+    setOpenModal(true);
+  };
 
   const handleConfirmDelete = async () => {
     if (deleteCategoryId) {
       try {
-        const result = await deleteCategory(deleteCategoryId)
+        const result = await deleteCategory(deleteCategoryId);
         if ('error' in result && result.error) {
-          setOpenModal(true)
-          setOpen(true)
+          setOpenModal(true);
+          setOpen(true);
         } else {
-          setOpenModal(false)
+          setOpenModal(false);
         }
+        setDeleteCategoryId(null);
       } catch (error) {
-        setOpenModal(true)
-        setOpen(true)
+        setOpenModal(true);
+        setOpen(true);
       }
-      setDeleteCategoryId(null)
     }
-  }
-  const [categoryId, setCategoryId] = useState(0)
+  };
+
+  const [categoryId, setCategoryId] = useState(0);
   const { data: subcategories } = useGetSubcategoriesByIdCategoryQuery(
     categoryId as number,
-  )
+  );
 
-  if (isLoading) return <h1>Loading...</h1>
+  if (isLoading) return <h1>Loading...</h1>;
   return (
     <Container
       maxWidth={'xl'}
@@ -95,29 +106,38 @@ const Categories = () => {
             id="nested-list-subheader"
             sx={{ fontSize: '1.5rem', textAlign: 'center', color: 'white' }}
           >
-            Список категории.
+            Список категорий
           </ListSubheader>
         }
       >
         <ListItem>
-          <ListItemButton>
+          <ListItemButton onClick={handleAddButtonClick}>
             <ListItemIcon>
               <Add />
             </ListItemIcon>
             <Typography
-              component={Link}
-              to="/new-category"
               sx={{ color: '#AAAAAA' }}
             >
               Создать категорию
             </Typography>
           </ListItemButton>
         </ListItem>
+        {uncoverForm && (<AddCategory />)}
         {data &&
           data.map((category: ICategories) => {
-            const isItemOpen = category.id === openItemId
+            const isItemOpen = category.id === openItemId;
             return (
-              <React.Fragment key={category.id}>
+              <Grid key={category.id}>
+                <Snackbar
+                  anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                  open={open}
+                  autoHideDuration={3000}
+                  onClose={handleCloseSnackbar}
+                >
+                  <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
+                    {(error as CustomError)?.data?.message}
+                  </Alert>
+                </Snackbar>
                 <Modal
                   isOpen={openModal && deleteCategoryId === category.id}
                   onClose={handleCloseModal}
@@ -141,13 +161,13 @@ const Categories = () => {
                   {isItemOpen ? (
                     <ExpandLess
                       onClick={() => {
-                        setCategoryId(0)
+                        setCategoryId(0);
                       }}
                     />
                   ) : (
                     <ExpandMore
                       onClick={() => {
-                        setCategoryId(category.id)
+                        setCategoryId(category.id);
                       }}
                     />
                   )}
@@ -160,7 +180,7 @@ const Categories = () => {
                           <ListItemIcon>
                             <SendIcon />
                           </ListItemIcon>
-                          <ListItemText>Нет под категорий</ListItemText>
+                          <ListItemText>Нет подкатегорий</ListItemText>
                         </ListItemButton>
                       ) : (
                         subcategories?.map((sub) => (
@@ -177,11 +197,11 @@ const Categories = () => {
                     </>
                   </List>
                 </Collapse>
-              </React.Fragment>
-            )
+              </Grid>
+            );
           })}
       </List>
     </Container>
-  )
-}
-export default Categories
+  );
+};
+export default Categories;

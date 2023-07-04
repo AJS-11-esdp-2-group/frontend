@@ -71,7 +71,6 @@ const EditSupplier = () => {
             navigate('/suppliers');
         }
     };
-    console.log(data)
 
     return (
         <form onSubmit={submitFormHandler}>

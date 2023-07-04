@@ -16,8 +16,9 @@ const AddSupplier = () => {
         address: string,
         id_country: string,
         id_city: string,
-    }
-    const [form, setForm] = useState<Props>({
+    };
+
+    const initialFormState: Props = {
         name_supplier: '',
         contact_person: '',
         email: '',
@@ -25,7 +26,10 @@ const AddSupplier = () => {
         address: '',
         id_country: '',
         id_city: '',
-    });
+    };
+
+    const [form, setForm] = useState<Props>(initialFormState);
+
     const [open, setOpen] = useState(false);
 
     const navigate = useNavigate();
@@ -52,12 +56,13 @@ const AddSupplier = () => {
         const data = await addSupplier(form);
         if (!(data as unknown as { error: object }).error) {
             navigate('/suppliers');
+            setForm(initialFormState);
         }
     };
 
     return (
         <form onSubmit={submitFormHandler}>
-            <Container component="section" maxWidth="xs" sx={{ marginTop: '100px'}}>
+            <Container component="section" maxWidth="xs">
                 <Snackbar
                     anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                     open={open}
@@ -68,7 +73,6 @@ const AddSupplier = () => {
                         {(error as CustomError)?.data?.message}
                     </Alert>
                 </Snackbar>
-                <Typography sx={{color: 'black'}}>Добавление постащика </Typography>
                 <FormElement
                     value={form.name_supplier}
                     label="Имя поставщика"
