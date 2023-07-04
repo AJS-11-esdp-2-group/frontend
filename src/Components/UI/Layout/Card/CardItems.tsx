@@ -31,7 +31,6 @@ const CardItems = ({ id, name, description, onClick, onClickDelete }: IProps) =>
         <Button onClick={onClick} startIcon={<Edit />} variant="contained" color="secondary" aria-label="settings">
           Изменить
         </Button>
-        ,
       </CardActions>
     </Card>
   );
