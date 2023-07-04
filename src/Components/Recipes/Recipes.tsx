@@ -8,13 +8,19 @@ interface Props extends IBouquets {
   onClick: MouseEventHandler<HTMLDivElement>;
 }
 
-const RecipesComponent = ({ onClick,id, bouquet_description, bouquet_name, author, image }: Props) => { 
+const RecipesComponent = ({ onClick,id, bouquet_description, bouquet_name, author, image }: Props) => {
+
+    let cardImage; 
+    if (image) { 
+      cardImage = `${apiUrl}/uploads/${image}`; 
+    } 
+   
 
   return (
         <ImageListItem key={id}>
           <img
-            src={`${image}?w=248&fit=crop&auto=format`}
-            srcSet={`${image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+            src={`${cardImage}?w=248&fit=crop&auto=format`}
+            srcSet={`${cardImage}?w=248&fit=crop&auto=format&dpr=2 2x`}
             alt={bouquet_name}
             loading="lazy"
           />
