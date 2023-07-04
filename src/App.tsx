@@ -84,14 +84,6 @@ function App() {
               }
             />
             <Route
-              path="/new-item"
-              element={
-                <ProtectedRoute isAllowed={!!user} redirectPath="/">
-                  <AddItem />
-                </ProtectedRoute>
-              }
-            />
-            <Route
               path="/edit-item/:id"
               element={
                 <ProtectedRoute isAllowed={!!user} redirectPath="/">
