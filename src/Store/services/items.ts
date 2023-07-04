@@ -1,7 +1,6 @@
 import { Item, Items } from '../../interfaces/Items';
 import { api } from '../../features/index';
 import { ItemProps } from '../../Container/Items/EditItem';
-;
 
 const itemsApi = api.injectEndpoints({
     endpoints: (build) => ({
@@ -12,7 +11,7 @@ const itemsApi = api.injectEndpoints({
         getItemById: build.query<Items[], number | string>({
             query: (id) => `/items/${id}`,
         }),
-        addItem: build.mutation<Item, FormData>({
+        addItem: build.mutation<Items, Item>({
             query: (item) => ({
                 url: '/items',
                 method: 'POST',

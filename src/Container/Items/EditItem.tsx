@@ -51,7 +51,6 @@ const EditItem = () => {
           item_name: itemById[0].item_name,
           item_description: itemById[0].item_description,
           id_category: itemById[0].id_category as string,
-          image: itemById[0].image_large,
           id_user: user[0].id,
         }));
       }

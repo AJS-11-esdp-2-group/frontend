@@ -119,10 +119,11 @@ const Items = () => {
                 <CardItems
                   id={item.id}
                   name={item.item_name}
-                  image={image}
                   create_date={item.create_date}
                   description={item.item_description}
                   id_category={item.id_category}
+                  id_subcategory={item.subcategory}
+                  id_under_subcategory={item.id_under_subcategory}
                   onClick={() => navigate(`/edit-item/${item.id}`)}
                   onClickDelete={() => handleDeleteItem(item.id)}
                 />

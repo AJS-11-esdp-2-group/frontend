@@ -2,7 +2,7 @@ import FormElement from '../../Components/UI/Form/FormElement';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import { useAddSupplierMutation } from '../../Store/services/suppliers';
 import { useNavigate } from 'react-router';
-import {Container, Button, Snackbar, Alert, Typography} from '@mui/material';
+import {Container, Button, Snackbar, Alert} from '@mui/material';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 const AddSupplier = () => {
@@ -29,7 +29,6 @@ const AddSupplier = () => {
     };
 
     const [form, setForm] = useState<Props>(initialFormState);
-
     const [open, setOpen] = useState(false);
 
     const navigate = useNavigate();
