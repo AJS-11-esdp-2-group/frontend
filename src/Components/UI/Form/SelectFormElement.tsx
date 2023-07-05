@@ -28,7 +28,6 @@ const BasicSelect: React.FC<SelectProps> = ({ value, label, name, onChange, opti
           value={value}
           label={label}
           onChange={handleChange}
-          sx={{color:'black'}}
         >
           {options.map((option) => (
             <MenuItem key={option.id} value={option.id}>

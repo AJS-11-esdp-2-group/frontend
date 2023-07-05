@@ -36,16 +36,6 @@ const FormElement = ({
         variant="outlined"
         fullWidth
         label={label}
-        InputProps={{
-          style: {
-            color: 'black',
-          },
-        }}
-        InputLabelProps={{
-          style: {
-            color: 'primary',
-          },
-        }}
         error={!!error}
         helperText={error}
       />
