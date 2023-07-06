@@ -9,7 +9,6 @@ import {
 	Avatar,
 	Typography,
 	Grid,
-	Button,
 	Link,
 	Box,
 	Snackbar,
