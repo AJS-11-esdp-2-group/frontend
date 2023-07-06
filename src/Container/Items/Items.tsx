@@ -89,7 +89,7 @@ const Items = () => {
         </ListItem>
         {uncoverForm && (<AddItem />)}
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-          <Typography sx={{ color: 'black' }} >Каталог товаров</Typography>
+          <Typography sx={{ color: 'white' }} >Каталог товаров</Typography>
         </Box>
       </List>
       <Grid container columnSpacing={{ xs: -5, sm: -5, md: -15 }} >
@@ -121,9 +121,9 @@ const Items = () => {
                   name={item.item_name}
                   create_date={item.create_date}
                   description={item.item_description}
-                  id_category={item.id_category}
-                  id_subcategory={item.subcategory}
-                  id_under_subcategory={item.id_under_subcategory}
+                  category_name={item.category_name}
+                  subcategory_name={item.subcategory_name}
+                  under_subcategory_name={item.under_subcategory_name}
                   onClick={() => navigate(`/edit-item/${item.id}`)}
                   onClickDelete={() => handleDeleteItem(item.id)}
                 />

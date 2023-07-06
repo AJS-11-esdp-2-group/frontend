@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import { Container, Button, Snackbar, Alert } from '@mui/material';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {Typography} from "@mui/material";
+import {Typography} from '@mui/material';
 interface Props {
     name_supplier: string;
     contact_person: string;
@@ -88,7 +88,7 @@ const EditSupplier = () => {
                 <Typography sx={{color: 'black'}}>Редактирование постащика </Typography>
                 <FormElement
                     value={form.name_supplier}
-                    label="Имя поставщка"
+                    label="Имя поставщика"
                     name="name_supplier"
                     onChange={inputChangeHandler} />
                 <FormElement

@@ -1,6 +1,8 @@
 export interface ISuppliers extends ISupplier {
     id: number;
     create_date: Date;
+    name_country: string;
+    name_city: string;
 };
 
 export interface ISupplier {

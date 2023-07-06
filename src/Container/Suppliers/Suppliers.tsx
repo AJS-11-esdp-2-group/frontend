@@ -132,7 +132,7 @@ const Suppliers = () => {
                 </Modal>
                 <ListItemButton onClick={() => handleClick(supplier.id)}>
                   <ListItemIcon>
-                    <Person/>
+                    <Person />
                   </ListItemIcon>
                   <ListItemText primary={supplier.name_supplier} />
                   <IconButton
@@ -169,27 +169,21 @@ const Suppliers = () => {
                   </List>
                   <List component="div" disablePadding>
                     <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary={supplier.email} />
+                      <ListItemText primary={'Почта: ' + supplier.email} />
                     </ListItemButton>
                   </List>
                   <List component="div" disablePadding>
                     <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary={supplier.phone} />
+                      <ListItemText primary={'Телефон: ' + supplier.phone} />
                     </ListItemButton>
                   </List>
                   <List component="div" disablePadding>
                     <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary={supplier.address} />
-                    </ListItemButton>
-                  </List>
-                  <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary={supplier.id_country} />
-                    </ListItemButton>
-                  </List>
-                  <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary={supplier.id_city} />
+                      <ListItemText
+                        primary={
+                          'Адрес: ' + supplier.name_country + ', ' + supplier.name_city + ', ' + supplier.address
+                        }
+                      />
                     </ListItemButton>
                   </List>
                   <List component="div" disablePadding>
@@ -198,20 +192,6 @@ const Suppliers = () => {
                     </ListItemButton>
                   </List>
                 </Collapse>
-                 {/* <CardSuppliers
-                  id={supplier.id}
-                  key={supplier.id}
-                  name_supplier={supplier.name_supplier}
-                  contact_person={supplier.contact_person}
-                  email={supplier.email}
-                  phone={supplier.phone}
-                  address={supplier.address}
-                  id_country={supplier.id_country}
-                  id_city={supplier.id_city}
-                  create_date={supplier.create_date}
-                  onClick={() => navigate(`/edit-supplier/${supplier.id}`)}
-                  onClickDelete={() => handleDelete(supplier.id)}
-                /> */}
               </Grid>
             );
           })}

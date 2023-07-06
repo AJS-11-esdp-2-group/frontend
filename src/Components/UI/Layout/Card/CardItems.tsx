@@ -1,6 +1,6 @@
 import { MouseEventHandler } from 'react';
-import {Card, CardHeader, CardMedia, CardActions, Button} from '@mui/material';
-import {Edit, DeleteForever} from '@mui/icons-material';
+import { Card, CardHeader, CardActions, Button, CardContent, Typography } from '@mui/material';
+import { Edit, DeleteForever } from '@mui/icons-material';
 
 interface IProps {
   id: number;
@@ -9,15 +9,29 @@ interface IProps {
   onClickDelete: MouseEventHandler<HTMLButtonElement>;
   description: string;
   create_date: string;
-  id_category: number;
-  id_subcategory: number;
-  id_under_subcategory: number;
+  category_name: string;
+  subcategory_name: string;
+  under_subcategory_name: string;
 }
 
-const CardItems = ({ id, name, description, onClick, onClickDelete }: IProps) => {
+const CardItems = ({
+  id,
+  name,
+  description,
+  category_name,
+  subcategory_name,
+  under_subcategory_name,
+  onClick,
+  onClickDelete
+}: IProps) => {
   return (
     <Card key={id} sx={{ width: 280, m: '10px' }}>
       <CardHeader sx={{ height: '120px' }} title={name} subheader={description} />
+      <CardContent>
+        <Typography variant="body2" color="text.secondary">
+          ({category_name}, {subcategory_name}, {under_subcategory_name})
+        </Typography>
+      </CardContent>
       <CardActions>
         <Button
           variant="contained"
