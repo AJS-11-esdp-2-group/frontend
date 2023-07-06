@@ -15,18 +15,15 @@ export const authSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			.addMatcher(authApi.endpoints.signIn.matchPending, (state, action) => {
-				console.log('action.payload matchPending: ', action);
 				state.isAuthenticated = false;
 				state.isLoading = true;
 			})
 			.addMatcher(authApi.endpoints.signIn.matchFulfilled, (state, action) => {
-				console.log('action.payload matchFulfilled: ', action.payload);
 				state.response = action.payload;
 				state.isAuthenticated = true;
 				state.isLoading = false;
 			})
 			.addMatcher(authApi.endpoints.signIn.matchRejected, (state, action) => {
-				console.log('action.payload matchRejected: ', action);
 				state.isAuthenticated = false;
 				state.isLoading = false;
 			})
