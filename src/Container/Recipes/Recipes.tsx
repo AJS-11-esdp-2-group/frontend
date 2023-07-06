@@ -1,7 +1,7 @@
 import AddButton from '../../Components/UI/Button/AddButton';
 import FormElement from '../../Components/UI/Form/FormElement';
 import { useGetAllBouquetsQuery, useCreateBouquetMutation } from '../../Store/services/bouquets';
-import { useGetCompositionBouquetByIdQuery } from '../../Store/services/compositionBouquets';
+import { useGetRecipeByIdQuery } from '../../Store/services/recipes';
 import RecipesComponent from '../../Components/Recipes/Recipes';
 import { useGetAllImagesQuery } from '../../Store/services/bouquetsImages';
 import { useGetAllcategoriesQuery } from '../../Store/services/categories';
@@ -29,7 +29,7 @@ const Recipes = () => {
 
   const [selectedBouquetId, setSelectedBouquetId] = useState<number>(0);
   const { data: bouquets } = useGetAllBouquetsQuery();
-  const { data: compositionBouquets } = useGetCompositionBouquetByIdQuery(selectedBouquetId);
+  const { data: recipes } = useGetRecipeByIdQuery(selectedBouquetId);
   const { data: images } = useGetAllImagesQuery();
   const { data: categories } = useGetAllcategoriesQuery();
   const [createBouquet] = useCreateBouquetMutation();
@@ -143,8 +143,8 @@ const Recipes = () => {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Состав</DialogTitle>
         <DialogContent>
-          {compositionBouquets &&
-            compositionBouquets.map((item) => (
+          {recipes &&
+            recipes.map((item) => (
               <DialogContentText>
                 {item.item_name} : {item.qty} штук(а)
               </DialogContentText>

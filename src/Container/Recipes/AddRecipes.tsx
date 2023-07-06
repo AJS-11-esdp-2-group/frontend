@@ -5,7 +5,7 @@ import { useGetAllItemsQuery } from '../../Store/services/items';
 import { Items } from '../../interfaces/Items';
 import FormElement from '../../Components/UI/Form/FormElement';
 import AddButton from '../../Components/UI/Button/AddButton';
-import { useCreateCompositionBouquetMutation } from '../../Store/services/compositionBouquets';
+import { useCreateRecipeMutation } from '../../Store/services/recipes';
 import { GlobalTheme } from '../..';
 import { Autocomplete, Box, Button, Container, Grid, TextField, Typography, ThemeProvider } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -24,7 +24,7 @@ const AddRecipes = () => {
   const { data: bouquet } = useGetBouquetByIdQuery(id as unknown as number);
   const { data: items } = useGetAllItemsQuery();
   const [createImage, error] = useCreateImageMutation();
-  const [createCompositionBouquet] = useCreateCompositionBouquetMutation();
+  const [createRecipe] = useCreateRecipeMutation();
   const [bouquetName, setBouquetName] = useState({
     bouquet_name: '',
   });
@@ -97,7 +97,7 @@ const AddRecipes = () => {
     if (form.id_item && form.qty) {
       setItemsList((prevState) => [...prevState, { id_item: form.id_item, qty: form.qty }]);
 
-      await createCompositionBouquet({
+      await createRecipe({
         id_bouquet: id as unknown as number,
         id_item: form.id_item,
         qty: form.qty,
