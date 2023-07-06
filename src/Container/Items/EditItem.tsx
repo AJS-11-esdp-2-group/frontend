@@ -13,6 +13,8 @@ export interface ItemProps {
   item_name: string;
   item_description: string;
   id_category: string;
+  id_subcategory: string;
+  id_under_subcategory: string;
   id_user: any;
 }
 
@@ -31,6 +33,8 @@ const EditItem = () => {
     item_name: '',
     item_description: '',
     id_category: '',
+    id_subcategory: '',
+    id_under_subcategory: '',
     id_user: '',
   });
 
@@ -51,6 +55,8 @@ const EditItem = () => {
           item_name: itemById[0].item_name,
           item_description: itemById[0].item_description,
           id_category: itemById[0].id_category as string,
+          id_subcategory: itemById[0].id_subcategory,
+          id_under_subcategory: itemById[0].id_under_subcategory,
           id_user: user[0].id,
         }));
       }
@@ -104,7 +110,7 @@ const EditItem = () => {
         <FormElement value={form.item_name} label="Title" name="item_name" onChange={inputChangeHandler} />
         <FormElement
           value={form.item_description}
-          label="Description"
+          label="Описание"
           name="item_description"
           onChange={inputChangeHandler}
         />
@@ -114,6 +120,18 @@ const EditItem = () => {
           name="id_category"
           onChange={(value) => selectChangeHandler('id_category', value)}
           options={categories ? categories.map((category) => ({ id: category.id, name: category.category_name })) : []}
+        />
+           <FormElement
+          value={form.id_subcategory}
+          label="Подкатегория"
+          name="id_subcategory"
+          onChange={inputChangeHandler}
+        />
+           <FormElement
+          value={form.id_under_subcategory}
+          label="Подкатегория подкатегории"
+          name="id_under_subcategory"
+          onChange={inputChangeHandler}
         />
         <Button fullWidth variant="contained" color="success" type="submit" className="submit">
           Edit
