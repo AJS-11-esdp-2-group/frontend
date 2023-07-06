@@ -1,8 +1,7 @@
 export interface PostgreSQLError {
-    data: {
-      [key: string]: {
-        message: string;
-      };
-    };
-  }
-  
+	data: {
+		[key: string]: {
+			message: string;
+		};
+	};
+}

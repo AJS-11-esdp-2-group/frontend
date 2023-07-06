@@ -1,4 +1,4 @@
 export interface IStorages {
-    id: number;
-    storage: string
-};
+	id: number;
+	storage: string;
+}

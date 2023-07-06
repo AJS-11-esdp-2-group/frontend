@@ -1,4 +1,4 @@
 export interface ISources {
-    id: number;
-    name: string
-};
+	id: number;
+	name: string;
+}
