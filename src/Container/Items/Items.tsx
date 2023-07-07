@@ -4,7 +4,6 @@ import {
 	useGetAllItemsQuery,
 	useDeleteItemMutation,
 } from '../../Store/services/items';
-import image from '../../assets/image.jpeg';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import Modal from '../../Components/UI/Modal/Modal';
 import { useEffect, useState } from 'react';
@@ -29,9 +28,7 @@ const Items = () => {
 	const [openModal, setOpenModal] = useState(false);
 	const [deleteItem] = useDeleteItemMutation();
 	const [deleteItemId, setDeleteItemId] = useState<number | null>(null);
-	const [openItemId, setOpenItemId] = useState<number | null>(null);
 	const [uncoverForm, setUncoverForm] = useState(false);
-	const [itemId, setItemId] = useState(0);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -41,10 +38,6 @@ const Items = () => {
 	const handleClose = () => {
 		setOpen(false);
 		setOpenModal(false);
-	};
-
-	const handleClick = (itemId: number) => {
-		setOpenItemId(itemId === openItemId ? null : itemId);
 	};
 
 	const handleAddButtonClick = () => {
