@@ -1,11 +1,12 @@
 import authApi from '../Store/services/auth';
-import { createSlice } from '@reduxjs/toolkit';
 import { UserState } from '../Store/user/userTypes';
+import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState: UserState = {
 	isAuthenticated: false,
 	isLoading: false,
 	response: {},
+	user: null,
 };
 
 export const authSlice = createSlice({
@@ -35,6 +36,6 @@ export const authSlice = createSlice({
 	},
 });
 
-export const {} = authSlice.actions;
+export const authActions = authSlice.actions;
 
 export default authSlice.reducer;
