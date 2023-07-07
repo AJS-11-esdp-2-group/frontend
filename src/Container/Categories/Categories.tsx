@@ -7,7 +7,7 @@ import {
 import { ICategories } from '../../interfaces/ICategories';
 import Modal from '../../Components/UI/Modal/Modal';
 import { CustomError } from '../../interfaces/errors/CustomError';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	Container,
 	List,
