@@ -1,31 +1,38 @@
-/* eslint-disable no-empty-pattern */
-import { IUser } from "../interfaces/IUser";
-import authApi from "../Store/services/auth";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import authApi from '../Store/services/auth';
+import { createSlice } from '@reduxjs/toolkit';
+import { UserState } from '../Store/user/userTypes';
 
-interface State {
-  user: IUser | null;
-}
-const initialState: State = {
-  user: null
+export const initialState: UserState = {
+	isAuthenticated: false,
+	isLoading: false,
+	response: {},
 };
 
-const authSlice = createSlice({
-  name: "auth",
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addMatcher(
-        authApi.endpoints.signIn.matchFulfilled,
-        (state, action: PayloadAction<IUser>) => {
-          state.user = action.payload;
-        }
-      )
-      .addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
-        state.user = null;
-      });
-  }
+export const authSlice = createSlice({
+	name: 'auth',
+	initialState,
+	reducers: {},
+	extraReducers: (builder) => {
+		builder
+			.addMatcher(authApi.endpoints.signIn.matchPending, (state, action) => {
+				state.isAuthenticated = false;
+				state.isLoading = true;
+			})
+			.addMatcher(authApi.endpoints.signIn.matchFulfilled, (state, action) => {
+				state.response = action.payload;
+				state.isAuthenticated = true;
+				state.isLoading = false;
+			})
+			.addMatcher(authApi.endpoints.signIn.matchRejected, (state, action) => {
+				state.isAuthenticated = false;
+				state.isLoading = false;
+			})
+			.addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
+				state.isAuthenticated = false;
+				state.isLoading = false;
+				state.response = {};
+			});
+	},
 });
 
 export const {} = authSlice.actions;
