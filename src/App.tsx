@@ -13,6 +13,7 @@ import Supply from './Container/Supply/Supply';
 import AddSupply from './Container/Supply/AddSupply';
 import Recipes from './Container/Recipes/Recipes';
 import AddRecipes from './Container/Recipes/AddRecipes';
+import { getUser } from './Store/user/userSelectors';
 import { Routes, Route } from 'react-router-dom';
 import {
 	CssBaseline,
@@ -21,7 +22,6 @@ import {
 	ThemeProvider,
 } from '@mui/material';
 import { grey, blue, blueGrey } from '@mui/material/colors';
-import { getUser } from './Store/user/userSelectors';
 
 const getDesignTokens = (mode: PaletteMode) => ({
 	palette: {
