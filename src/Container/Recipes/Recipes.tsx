@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import AddButton from '../../Components/UI/Button/AddButton';
 import FormElement from '../../Components/UI/Form/FormElement';
 import {
@@ -50,7 +48,7 @@ const Recipes = () => {
 	const [form, setForm] = useState<Props>({
 		bouquet_name: '',
 		bouquet_description: '',
-		author: user[0].first_name as string,
+		author: user[0].first_name,
 		id_category: '',
 		image: '',
 	});

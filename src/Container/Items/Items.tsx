@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/await-thenable */
 import AddItem from './AddItems';
 import CardItems from '../../Components/UI/Layout/Card/CardItems';
 import {
@@ -46,7 +45,7 @@ const Items = () => {
 	};
 
 	const handleDeleteItem = async (itemId: number) => {
-		await setDeleteItemId(itemId);
+		setDeleteItemId(itemId);
 		setOpenModal(true);
 	};
 
