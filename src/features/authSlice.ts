@@ -10,6 +10,8 @@ const initialState: UserState = storedState ? JSON.parse(storedState) : {
 	isLoading: false,
 	user: {},
   };
+};
+
 export const authSlice = createSlice({
 	name: 'auth',
 	initialState,
@@ -39,6 +41,6 @@ export const authSlice = createSlice({
 	},
 });
 
-export const {} = authSlice.actions;
+export const authActions = authSlice.actions;
 
 export default authSlice.reducer;
