@@ -7,8 +7,6 @@ import { Link } from 'react-router-dom';
 
 const AppToolBar = () => {
 	const user = useAppSelector(getUser);
-	console.log(user);
-	
 
 	return (
 		<>
@@ -28,7 +26,7 @@ const AppToolBar = () => {
 					>
 						<Link to="/">Flower Shop</Link>
 					</Typography>
-					{user.isAuthenticated? (
+					{user ? (
 						<Typography
 							variant="subtitle1"
 							sx={{
