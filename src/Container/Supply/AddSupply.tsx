@@ -40,7 +40,7 @@ const AddSupply = () => {
 	const { data: storages } = useGetAllStorageQuery();
 	const { data: suppliers } = useGetAllSuppliersQuery();
 	const { data: items } = useGetAllItemsQuery();
-	const user = useAppSelector(getUser);
+	const {user} = useAppSelector(getUser);
 
 	const [addsupply, { error, isError }] = useAddsupplyMutation();
 	const [form, setForm] = useState<Supply>({
@@ -52,7 +52,7 @@ const AddSupply = () => {
 		price: '',
 		total_price: 0,
 		date: new Date(),
-		user: user.user.id,
+		user: user[0].id,
 	});
 	const [open, setOpen] = useState(false);
 

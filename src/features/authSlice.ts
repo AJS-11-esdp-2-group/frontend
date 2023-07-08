@@ -21,7 +21,7 @@ export const authSlice = createSlice({
 				state.isLoading = true;
 			})
 			.addMatcher(authApi.endpoints.signIn.matchFulfilled, (state, action) => {
-				state.user = action.payload;
+				state.user[0] = action.payload;
 				state.isAuthenticated = true;
 				state.isLoading = false;
 				localStorage.setItem('authState', JSON.stringify(state));
@@ -33,7 +33,7 @@ export const authSlice = createSlice({
 			.addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
 				state.isAuthenticated = false;
 				state.isLoading = false;
-				state.user = {};
+				state.user[0] = {};
 				localStorage.removeItem('authState');
 			});
 	},
