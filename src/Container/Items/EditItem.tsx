@@ -63,7 +63,7 @@ const EditItem = () => {
 					id_category: itemById[0].id_category,
 					id_subcategory: itemById[0].id_subcategory,
 					id_under_subcategory: itemById[0].id_under_subcategory,
-					id_user: user.id,
+					id_user: user[0].id,
 				}));
 			}
 		};
