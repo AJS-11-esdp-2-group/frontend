@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import FormElement from '../../Components/UI/Form/FormElement';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import { useAddItemMutation } from '../../Store/services/items';
@@ -20,7 +19,7 @@ const AddItem = () => {
 		id_category: string;
 		id_subcategory: string;
 		id_under_subcategory: string;
-		id_user: number;
+		id_user: any;
 	}
 	const initialFormState: Props = {
 		item_name: '',

@@ -4,9 +4,9 @@ import Navigation from '../Navigation/Navigation';
 import { getUser } from '../../../../Store/user/userSelectors';
 import { Typography, Toolbar, AppBar, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
+
 const AppToolBar = () => {
 	const user = useAppSelector(getUser);
-	
 
 	return (
 		<>
@@ -26,7 +26,7 @@ const AppToolBar = () => {
 					>
 						<Link to="/">Flower Shop</Link>
 					</Typography>
-					{user.isAuthenticated? (
+					{user ? (
 						<Typography
 							variant="subtitle1"
 							sx={{

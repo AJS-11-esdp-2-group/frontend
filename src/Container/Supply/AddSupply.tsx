@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import { GlobalTheme } from '../..';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import { useGetAllItemsQuery } from '../../Store/services/items';
@@ -10,7 +8,6 @@ import FormElement from '../../Components/UI/Form/FormElement';
 import { useAppSelector } from '../../Store/hooks';
 import BasicSelect from '../../Components/UI/Form/SelectFormElement';
 import { Items } from '../../interfaces/Items';
-import { getUser } from '../../Store/user/userSelectors';
 import { useNavigate } from 'react-router';
 import {
 	Container,
@@ -22,6 +19,7 @@ import {
 	ThemeProvider,
 } from '@mui/material';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { getUser } from '../../Store/user/userSelectors';
 
 export interface Supply {
 	operation_type_id: number;

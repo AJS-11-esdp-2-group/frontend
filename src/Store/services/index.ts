@@ -1,6 +1,5 @@
 import { apiUrl } from '../../common/constans';
 import { CustomError } from '../../interfaces/errors/CustomError';
-import { UserState } from '../user/userTypes';
 import {
 	BaseQueryFn,
 	createApi,
@@ -9,6 +8,7 @@ import {
 	FetchBaseQueryError,
 	FetchBaseQueryMeta,
 } from '@reduxjs/toolkit/query/react';
+import { UserState } from '../user/userTypes';
 
 export const api = createApi({
 	baseQuery: fetchBaseQuery({

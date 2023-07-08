@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/await-thenable */
 import AddItem from './AddItems';
 import CardItems from '../../Components/UI/Layout/Card/CardItems';
 import {
@@ -29,7 +28,6 @@ const Items = () => {
 	const [openModal, setOpenModal] = useState(false);
 	const [deleteItem] = useDeleteItemMutation();
 	const [deleteItemId, setDeleteItemId] = useState<number | null>(null);
-	const [openItemId, setOpenItemId] = useState<number | null>(null);
 	const [uncoverForm, setUncoverForm] = useState(false);
 	const navigate = useNavigate();
 
@@ -42,16 +40,12 @@ const Items = () => {
 		setOpenModal(false);
 	};
 
-	const handleClick = (itemId: number) => {
-		setOpenItemId(itemId === openItemId ? null : itemId);
-	};
-
 	const handleAddButtonClick = () => {
 		setUncoverForm(!uncoverForm);
 	};
 
 	const handleDeleteItem = async (itemId: number) => {
-		await setDeleteItemId(itemId);
+		setDeleteItemId(itemId);
 		setOpenModal(true);
 	};
 

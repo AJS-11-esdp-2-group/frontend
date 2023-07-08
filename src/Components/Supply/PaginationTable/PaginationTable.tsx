@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import EnhancedTableToolbar from './TableToolbar/TableToolbar';
 import EnhancedTableHead from './TableHead/TableHead';
 import { useGetSuppliesBetweenMutation } from '../../../Store/services/supply';

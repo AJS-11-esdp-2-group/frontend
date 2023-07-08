@@ -55,14 +55,24 @@ function App() {
 						<Route
 							path="/register"
 							element={
+								<ProtectedRoute
+									isAllowed={!user.isAuthenticated}
+									redirectPath="/"
+								>
 									<Register />
+								</ProtectedRoute>
 							}
 						/>
 						<Route path="/" element={<HomePage />} />
 						<Route
 							path="/login"
 							element={
+								<ProtectedRoute
+									isAllowed={!user.isAuthenticated}
+									redirectPath="/"
+								>
 									<Login />
+								</ProtectedRoute>
 							}
 						/>
 						<Route
