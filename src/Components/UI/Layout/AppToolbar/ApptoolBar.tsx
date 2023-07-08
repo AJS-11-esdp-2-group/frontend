@@ -1,11 +1,12 @@
 import { useAppSelector } from '../../../../Store/hooks';
 import AnonymousMenu from '../../Menu/AnonymousMenu';
 import Navigation from '../Navigation/Navigation';
+import { getUser } from '../../../../Store/user/userSelectors';
 import { Typography, Toolbar, AppBar, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { getUser } from '../../../../Store/user/userSelectors';
 const AppToolBar = () => {
 	const user = useAppSelector(getUser);
+	
 
 	return (
 		<>
@@ -25,7 +26,7 @@ const AppToolBar = () => {
 					>
 						<Link to="/">Flower Shop</Link>
 					</Typography>
-					{user ? (
+					{user.isAuthenticated? (
 						<Typography
 							variant="subtitle1"
 							sx={{

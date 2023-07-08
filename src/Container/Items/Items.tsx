@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/await-thenable */
 import AddItem from './AddItems';
 import CardItems from '../../Components/UI/Layout/Card/CardItems';
 import {
 	useGetAllItemsQuery,
 	useDeleteItemMutation,
 } from '../../Store/services/items';
-import image from '../../assets/image.jpeg';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import Modal from '../../Components/UI/Modal/Modal';
 import { useEffect, useState } from 'react';
@@ -31,7 +31,6 @@ const Items = () => {
 	const [deleteItemId, setDeleteItemId] = useState<number | null>(null);
 	const [openItemId, setOpenItemId] = useState<number | null>(null);
 	const [uncoverForm, setUncoverForm] = useState(false);
-	const [itemId, setItemId] = useState(0);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -52,7 +51,7 @@ const Items = () => {
 	};
 
 	const handleDeleteItem = async (itemId: number) => {
-		setDeleteItemId(itemId);
+		await setDeleteItemId(itemId);
 		setOpenModal(true);
 	};
 

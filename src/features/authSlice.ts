@@ -1,13 +1,15 @@
+/* eslint-disable no-empty-pattern */
 import authApi from '../Store/services/auth';
-import { createSlice } from '@reduxjs/toolkit';
 import { UserState } from '../Store/user/userTypes';
+import { createSlice } from '@reduxjs/toolkit';
 
-export const initialState: UserState = {
+const storedState = localStorage.getItem('authState');
+
+const initialState: UserState = storedState ? JSON.parse(storedState) : {
 	isAuthenticated: false,
 	isLoading: false,
-	response: {},
-};
-
+	user: {},
+  };
 export const authSlice = createSlice({
 	name: 'auth',
 	initialState,
@@ -19,9 +21,10 @@ export const authSlice = createSlice({
 				state.isLoading = true;
 			})
 			.addMatcher(authApi.endpoints.signIn.matchFulfilled, (state, action) => {
-				state.response = action.payload;
+				state.user = action.payload;
 				state.isAuthenticated = true;
 				state.isLoading = false;
+				localStorage.setItem('authState', JSON.stringify(state));
 			})
 			.addMatcher(authApi.endpoints.signIn.matchRejected, (state, action) => {
 				state.isAuthenticated = false;
@@ -30,7 +33,8 @@ export const authSlice = createSlice({
 			.addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
 				state.isAuthenticated = false;
 				state.isLoading = false;
-				state.response = {};
+				state.user = {};
+				localStorage.removeItem('authState');
 			});
 	},
 });

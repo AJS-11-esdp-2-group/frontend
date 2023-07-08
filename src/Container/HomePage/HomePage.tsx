@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../Store/hooks';
+import { getUser } from '../../Store/user/userSelectors';
 import { Container, Typography, Button, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { getUser } from '../../Store/user/userSelectors';
 
 const HomePage = () => {
 	const user = useAppSelector(getUser);
