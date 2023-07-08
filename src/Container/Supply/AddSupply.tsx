@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { GlobalTheme } from '../..';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import { useGetAllItemsQuery } from '../../Store/services/items';
@@ -8,6 +10,7 @@ import FormElement from '../../Components/UI/Form/FormElement';
 import { useAppSelector } from '../../Store/hooks';
 import BasicSelect from '../../Components/UI/Form/SelectFormElement';
 import { Items } from '../../interfaces/Items';
+import { getUser } from '../../Store/user/userSelectors';
 import { useNavigate } from 'react-router';
 import {
 	Container,
@@ -19,7 +22,6 @@ import {
 	ThemeProvider,
 } from '@mui/material';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { getUser } from '../../Store/user/userSelectors';
 
 export interface Supply {
 	operation_type_id: number;
@@ -31,15 +33,15 @@ export interface Supply {
 	total_price: number;
 	date: Date;
 	update_date?: Date;
-	user: string | any;
+	user: number | any;
 }
 
 const AddSupply = () => {
 	const { data: storages } = useGetAllStorageQuery();
 	const { data: suppliers } = useGetAllSuppliersQuery();
 	const { data: items } = useGetAllItemsQuery();
-	const user = useAppSelector(getUser);
-
+	const {user} = useAppSelector(getUser);
+	
 	const [addsupply, { error, isError }] = useAddsupplyMutation();
 	const [form, setForm] = useState<Supply>({
 		operation_type_id: 1,
@@ -50,7 +52,7 @@ const AddSupply = () => {
 		price: '',
 		total_price: 0,
 		date: new Date(),
-		user: user.response.id,
+		user: user[0].id,
 	});
 	const [open, setOpen] = useState(false);
 
