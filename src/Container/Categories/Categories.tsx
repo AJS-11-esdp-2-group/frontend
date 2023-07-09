@@ -56,6 +56,7 @@ const Categories = () => {
 
 	const handleClick = (itemId: number) => {
 		setOpenItemId(itemId === openItemId ? null : itemId);
+		setCategoryId(itemId)
 	};
 
 	const handleCloseModal = () => {
