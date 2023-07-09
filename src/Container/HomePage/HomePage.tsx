@@ -29,7 +29,7 @@ const HomePage = () => {
 					Flowers Shop CRM
 				</Typography>
 			</Box>
-			{user ? (
+			{user.isAuthenticated ? (
 				<Container
 					sx={{
 						flexGrow: 1,
