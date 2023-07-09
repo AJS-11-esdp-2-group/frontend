@@ -10,7 +10,7 @@ const initialState: UserState = storedState ? JSON.parse(storedState) : {
 	isLoading: false,
 	user: {},
   };
-};
+
 
 export const authSlice = createSlice({
 	name: 'auth',

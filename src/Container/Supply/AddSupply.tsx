@@ -40,7 +40,7 @@ const AddSupply = () => {
 	const { data: storages } = useGetAllStorageQuery();
 	const { data: suppliers } = useGetAllSuppliersQuery();
 	const { data: items } = useGetAllItemsQuery();
-	const {user} = useAppSelector(getUser);
+	const user = useAppSelector(getUser);
 	
 	const [addsupply, { error, isError }] = useAddsupplyMutation();
 	const [form, setForm] = useState<Supply>({
