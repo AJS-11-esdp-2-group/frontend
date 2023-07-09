@@ -28,7 +28,7 @@ const AddItem = () => {
 		id_category: '',
 		id_subcategory: '',
 		id_under_subcategory: '',
-		id_user: user.id as number,
+		id_user: user[0].id as number,
 	};
 
 	const [form, setForm] = useState<Props>(initialFormState);

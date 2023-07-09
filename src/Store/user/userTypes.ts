@@ -19,5 +19,5 @@ export type UserResponse = {
 export type UserState = {
 	isAuthenticated: boolean;
 	isLoading: boolean;
-	user: UserResponse;
+	user: UserResponse[];
 };
