@@ -9,7 +9,8 @@ import {
 import { ICategories } from '../../interfaces/ICategories';
 import Modal from '../../Components/UI/Modal/Modal';
 import { CustomError } from '../../interfaces/errors/CustomError';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { ISubcategories } from '../../interfaces/ISubcategories';
 import {
 	Container,
 	List,
@@ -24,6 +25,7 @@ import {
 	Snackbar,
 	Alert,
 } from '@mui/material';
+
 import {
 	Add,
 	Send as SendIcon,
@@ -37,6 +39,7 @@ import IconButton from '@mui/material/IconButton';
 const Categories = () => {
 	const { data, isLoading, isError, error } = useGetAllcategoriesQuery();
 	const [open, setOpen] = useState(false);
+	const [openUnder, setUnder] = useState<number | null>(null);
 	const [openModal, setOpenModal] = useState(false);
 	const [deleteCategory] = useDeleteCategoryMutation();
 	const [deleteCategoryId, setDeleteCategoryId] = useState<number | null>(null);
@@ -88,8 +91,11 @@ const Categories = () => {
 	};
 
 	const [categoryId, setCategoryId] = useState(0);
-	const { data: subcategories } =
-		useGetSubcategoriesByIdCategoryQuery(categoryId);
+	const {
+		data: subcategories,
+		refetch,
+		isFetching,
+	} = useGetSubcategoriesByIdCategoryQuery(categoryId);
 
 	if (isLoading) return <h1>Loading...</h1>;
 	return (
@@ -147,8 +153,11 @@ const Categories = () => {
 									actionButtonLabel="Удалить"
 									onActionButtonClick={handleConfirmDelete}
 									children={undefined}
-								></Modal>
-								<ListItemButton onClick={() => handleClick(category.id)}>
+								/>
+								<ListItemButton
+									onClick={() => handleClick(category.id)}
+									key={category.id}
+								>
 									<ListItemIcon>
 										<StarBorder />
 									</ListItemIcon>
@@ -173,10 +182,21 @@ const Categories = () => {
 										/>
 									)}
 								</ListItemButton>
-								<Collapse in={isItemOpen} timeout="auto" unmountOnExit>
-									<List component="div" disablePadding>
+								<Collapse
+									in={isItemOpen}
+									timeout="auto"
+									unmountOnExit
+									sx={{ flexDirection: 'column' }}
+								>
+									<List
+										component="div"
+										disablePadding
+										sx={{ flexDirection: 'column' }}
+									>
 										<>
-											{subcategories?.length === 0 ? (
+											{isFetching ? (
+												<ListItemText sx={{ pl: 9 }}>Loading...</ListItemText>
+											) : subcategories?.length === 0 ? (
 												<ListItemButton sx={{ pl: 4 }}>
 													<ListItemIcon>
 														<SendIcon />
@@ -184,16 +204,22 @@ const Categories = () => {
 													<ListItemText>Нет подкатегорий</ListItemText>
 												</ListItemButton>
 											) : (
-												subcategories?.map((sub) => (
-													<ListItemButton sx={{ pl: 4 }}>
-														<ListItemIcon>
-															<SendIcon />
-														</ListItemIcon>
-														<ListItemText key={sub.id}>
-															{sub.subcategory_name}
-														</ListItemText>
-													</ListItemButton>
-												))
+												subcategories?.map((sub: ISubcategories) => {
+													const isUnderOpen = sub.id === openUnder;
+													return (
+														<ListItemButton key={sub.id} sx={{ pl: 4 }}>
+															<ListItemIcon>
+																<SendIcon />
+															</ListItemIcon>
+															<ListItemText key={sub.id}>
+																{sub.subcategory_name}
+															</ListItemText>
+															<IconButton>
+																<DeleteForeverIcon />
+															</IconButton>
+														</ListItemButton>
+													);
+												})
 											)}
 										</>
 									</List>
