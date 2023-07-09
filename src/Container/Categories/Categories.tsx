@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-shadow */
 import AddCategory from './AddCategory';
-import AddSubCategory from './AddSubCategory';
 import {
 	useDeleteCategoryMutation,
 	useGetAllcategoriesQuery,
 	useGetSubcategoriesByIdCategoryQuery,
-	useDeleteSubCategoryMutation
 } from '../../Store/services/categories';
 import { ICategories } from '../../interfaces/ICategories';
 import Modal from '../../Components/UI/Modal/Modal';
@@ -44,11 +42,9 @@ const Categories = () => {
 	const [openUnder, setUnder] = useState<number | null>(null);
 	const [openModal, setOpenModal] = useState(false);
 	const [deleteCategory] = useDeleteCategoryMutation();
-	const [deleteSubCategory] = useDeleteSubCategoryMutation();
 	const [deleteCategoryId, setDeleteCategoryId] = useState<number | null>(null);
 	const [openItemId, setOpenItemId] = useState<number | null>(null);
 	const [uncoverForm, setUncoverForm] = useState(false);
-	const [uncoverSubForm, setSubUncoverForm] = useState(false);
 
 	useEffect(() => {
 		setOpen(isError);
@@ -72,25 +68,11 @@ const Categories = () => {
 		setUncoverForm(!uncoverForm);
 	};
 
-	const handleAddButtonClickSub = () => {
-		setSubUncoverForm(!uncoverSubForm);
-	};
-
-	const closeHandleAddButtonClickSub = async() => {
-		await setCategoryId(categoryId);
-		refetch();
-		// Необходио перерендрить страницу после добавления сейчас не сразу добавляется подкатегория
-	};
-
 	const handleDeleteCategory = async (categoryId: number) => {
 		setDeleteCategoryId(categoryId);
 		setOpenModal(true);
 	};
 
-	const deleteSub = async (id: number) => {
-		await deleteSubCategory(id)
-		refetch()
-	  }
 	const handleConfirmDelete = async () => {
 		if (deleteCategoryId) {
 			try {
@@ -213,15 +195,6 @@ const Categories = () => {
 										sx={{ flexDirection: 'column' }}
 									>
 										<>
-														<ListItem>
-					<ListItemButton onClick={handleAddButtonClickSub}>
-						<ListItemIcon>
-							<Add />
-						</ListItemIcon>
-						<Typography sx={{ color: '#AAAAAA' }}>Создать подкатегорию</Typography>
-					</ListItemButton>
-				</ListItem>
-				{uncoverSubForm && <AddSubCategory id_category={category.id} onSend={closeHandleAddButtonClickSub} />}
 											{isFetching ? (
 												<ListItemText sx={{ pl: 9 }}>Loading...</ListItemText>
 											) : subcategories?.length === 0 ? (
@@ -243,12 +216,7 @@ const Categories = () => {
 																{sub.subcategory_name}
 															</ListItemText>
 															<IconButton>
-																{/* Добавить всплывающее окно надо о том что действительно ли хотите удалить */}
-																<DeleteForeverIcon 
-																                onClick={() => {
-																					deleteSub(sub.id)
-																				  }}
-																/>
+																<DeleteForeverIcon />
 															</IconButton>
 														</ListItemButton>
 													);
