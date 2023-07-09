@@ -4,8 +4,10 @@ import Navigation from '../Navigation/Navigation';
 import { getUser } from '../../../../Store/user/userSelectors';
 import { Typography, Toolbar, AppBar, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
+
 const AppToolBar = () => {
 	const user = useAppSelector(getUser);
+	console.log(user);
 	
 
 	return (

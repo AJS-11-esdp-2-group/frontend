@@ -29,7 +29,6 @@ const Items = () => {
 	const [openModal, setOpenModal] = useState(false);
 	const [deleteItem] = useDeleteItemMutation();
 	const [deleteItemId, setDeleteItemId] = useState<number | null>(null);
-	const [openItemId, setOpenItemId] = useState<number | null>(null);
 	const [uncoverForm, setUncoverForm] = useState(false);
 	const navigate = useNavigate();
 
@@ -40,10 +39,6 @@ const Items = () => {
 	const handleClose = () => {
 		setOpen(false);
 		setOpenModal(false);
-	};
-
-	const handleClick = (itemId: number) => {
-		setOpenItemId(itemId === openItemId ? null : itemId);
 	};
 
 	const handleAddButtonClick = () => {
