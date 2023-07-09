@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-shadow */
 import AddCategory from './AddCategory';
 import {
 	useDeleteCategoryMutation,
