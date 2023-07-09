@@ -1,5 +1,5 @@
 import { ICategories, ICategory } from '../../interfaces/ICategories';
-import { ISubcategories,ISubcategory } from '../../interfaces/ISubcategories';
+import { ISubcategories } from '../../interfaces/ISubcategories';
 import { api } from '../../features/index';
 
 const categoryApi = api.injectEndpoints({
@@ -22,24 +22,9 @@ const categoryApi = api.injectEndpoints({
 			}),
 			invalidatesTags: ['Categories'],
 		}),
-		addSubCategory: build.mutation<ISubcategories, ISubcategory>({
-			query: (items_subcategory) => ({
-				url: '/items_subcategory',
-				method: 'POST',
-				body: items_subcategory,
-			}),
-			invalidatesTags: ['Categories'],
-		}),
 		deleteCategory: build.mutation<void, number>({
 			query: (categoryId) => ({
 				url: `/items_category/${categoryId}`,
-				method: 'DELETE',
-			}),
-			invalidatesTags: ['Categories'],
-		}),
-		deleteSubCategory: build.mutation<void, number>({
-			query: (subCategoryId) => ({
-				url: `/items_subcategory/${subCategoryId}`,
 				method: 'DELETE',
 			}),
 			invalidatesTags: ['Categories'],
@@ -53,6 +38,4 @@ export const {
 	useGetSubcategoriesByIdCategoryQuery,
 	useAddCategoryMutation,
 	useDeleteCategoryMutation,
-	useAddSubCategoryMutation,
-	useDeleteSubCategoryMutation,
 } = categoryApi;
