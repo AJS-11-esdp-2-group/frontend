@@ -26,6 +26,15 @@ const RecipesComponent = ({
 				loading="lazy"
 			/>
 			<ImageListItemBar
+              sx={{
+                background:
+                  'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
+                  'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+              }}
+              title={parseInt(sum).toFixed().toString() === 'NaN' ? '0 т': `${parseInt(sum).toFixed()} т`}
+              position="top"
+            />
+			<ImageListItemBar
 				key={id}
 				title={bouquet_name}
 				subtitle={bouquet_description}
