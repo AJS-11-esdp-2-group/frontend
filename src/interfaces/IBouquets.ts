@@ -4,6 +4,7 @@ export interface IBouquet {
 	author: string;
 	id_category: number | string;
 	image: string;
+	sum: string;
 }
 
 export interface IBouquets extends IBouquet {

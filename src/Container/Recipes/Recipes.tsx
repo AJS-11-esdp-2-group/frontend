@@ -46,6 +46,7 @@ const Recipes = () => {
 		author: string;
 		id_category: string;
 		image: string;
+		sum: string;
 	}
 	const [form, setForm] = useState<Props>({
 		bouquet_name: '',
@@ -53,6 +54,7 @@ const Recipes = () => {
 		author: user[0].first_name as string,
 		id_category: '',
 		image: '',
+		sum: ''
 	});
 
 	const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -172,6 +174,7 @@ const Recipes = () => {
 								author={bouquet.author}
 								id_category={bouquet.id}
 								image={bouquet.image?.image as string}
+								sum= {bouquet.sum}
 							/>
 						))}
 				</ImageList>

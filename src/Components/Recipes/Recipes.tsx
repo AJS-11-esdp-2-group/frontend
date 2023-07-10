@@ -15,17 +15,13 @@ const RecipesComponent = ({
 	bouquet_name,
 	author,
 	image,
+	sum
 }: Props) => {
-	let cardImage;
-	if (image) {
-		cardImage = `${apiUrl}/uploads/${image}`;
-	}
-
 	return (
 		<ImageListItem key={id}>
 			<img
-				src={`${cardImage}?w=248&fit=crop&auto=format`}
-				srcSet={`${cardImage}?w=248&fit=crop&auto=format&dpr=2 2x`}
+				src={`${image}?w=248&fit=crop&auto=format`}
+				srcSet={`${image}?w=248&fit=crop&auto=format&dpr=2 2x`}
 				alt={bouquet_name}
 				loading="lazy"
 			/>
