@@ -28,11 +28,11 @@ export default function CustomPaginationActionsTable() {
 	const [page, setPage] = React.useState(0);
 	const [orderBy, setOrderBy] = React.useState<keyof ISupplies>('target');
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
-	const [dense, setDense] = React.useState(false);
-	const [selected, setSelected] = React.useState<readonly string[]>([]);
+	const [dense] = React.useState(false);
+	const [selected] = React.useState<readonly string[]>([]);
 	const [rows, setRows] = React.useState<ISupplies[] | []>([]);
-	const [supplierID, setSupplierID] = React.useState('');
-	const { data, isLoading } = useGetAllSuppliersQuery();
+	const [supplierID] = React.useState('');
+	const { data } = useGetAllSuppliersQuery();
 	const [getSuppliesSupplier] = useGetSuppliesSupplierMutation();
 
 	const handleRequestSort = (
@@ -62,7 +62,7 @@ export default function CustomPaginationActionsTable() {
 		setPage(newPage);
 	};
 
-	const handleChangeRowsPerPage: any = (
+	const handleChangeRowsPerPage = (
 		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
 	) => {
 		setRowsPerPage(parseInt(event.target.value, 10));

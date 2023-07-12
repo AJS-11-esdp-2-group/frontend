@@ -3,14 +3,15 @@ import authApi from '../Store/services/auth';
 import { UserState } from '../Store/user/userTypes';
 import { createSlice } from '@reduxjs/toolkit';
 
-const storedState = localStorage.getItem('authState');
-
-const initialState: UserState = storedState ? JSON.parse(storedState) : {
+const initialState: UserState = {
 	isAuthenticated: false,
 	isLoading: false,
-	user: {},
-  };
+	user: [],
+};
 
+const storedState: UserState = localStorage.getItem('authState')
+	? (localStorage.getItem('authState') as unknown as UserState)
+	: initialState;
 
 export const authSlice = createSlice({
 	name: 'auth',

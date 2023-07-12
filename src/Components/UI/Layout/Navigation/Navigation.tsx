@@ -16,28 +16,20 @@ import { Link } from 'react-router-dom';
 import {
 	LocalFlorist,
 	LocalShipping,
-	Add,
 	Logout,
 	CategoryRounded,
 	EmojiNatureTwoTone,
 } from '@mui/icons-material';
-
-type Anchor = 'left';
+import { useState } from 'react';
 
 const Navigation = () => {
-	const [state, setState] = React.useState({
+	const [leftState, setLeftState] = useState({
 		left: false,
 	});
 
 	const [logout] = useLogoutMutation();
-	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
 
 	const logoutHandler = async () => {
-		handleClose();
 		await logout();
 	};
 
@@ -52,10 +44,10 @@ const Navigation = () => {
 				return;
 			}
 
-			setState({ ...state, left: open });
+			setLeftState({ ...leftState, left: open });
 		};
 
-	const left = (anchor: Anchor) => (
+	const left = (left1: string) => (
 		<Box
 			sx={{ width: 250, color: 'white' }}
 			role="presentation"
@@ -125,7 +117,7 @@ const Navigation = () => {
 			<Button sx={{ color: 'secondary' }} onClick={toggleDrawer(true)}>
 				Menu
 			</Button>
-			<Drawer anchor="left" open={state.left} onClose={toggleDrawer(false)}>
+			<Drawer anchor="left" open={leftState.left} onClose={toggleDrawer(false)}>
 				{left('left')}
 			</Drawer>
 		</div>

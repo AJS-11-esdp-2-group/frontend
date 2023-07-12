@@ -60,7 +60,7 @@ const Items = () => {
 				} else {
 					setOpenModal(false);
 				}
-			} catch (error) {
+			} catch (deleteError) {
 				setOpenModal(true);
 				setOpen(true);
 			}
@@ -92,7 +92,7 @@ const Items = () => {
 			</List>
 			<Grid container columnSpacing={{ xs: -5, sm: -5, md: -15 }}>
 				{data &&
-					data.map((item: any) => {
+					data.map((item) => {
 						return (
 							<Grid item key={item.id}>
 								<Snackbar
@@ -120,7 +120,6 @@ const Items = () => {
 								<CardItems
 									id={item.id}
 									name={item.item_name}
-									create_date={item.create_date}
 									description={item.item_description}
 									category_name={item.category_name}
 									subcategory_name={item.subcategory_name}

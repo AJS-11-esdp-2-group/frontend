@@ -1,5 +1,5 @@
 import { Item, Items } from '../../interfaces/Items';
-import { api } from '../../features/index';
+import { api } from '../../features';
 import { ItemProps } from '../../Container/Items/EditItem';
 
 const itemsApi = api.injectEndpoints({

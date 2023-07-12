@@ -55,8 +55,8 @@ const Suppliers = () => {
 		setUncoverForm(!uncoverForm);
 	};
 
-	const handleDelete = async (supplierId: number): Promise<void> => {
-		setDeleteSupplierId(supplierId);
+	const handleDelete = (selectedSupplierId: number): void => {
+		setDeleteSupplierId(selectedSupplierId);
 		setOpenModal(true);
 	};
 
@@ -73,7 +73,7 @@ const Suppliers = () => {
 				}
 				setDeleteSupplierId(null);
 				refetch();
-			} catch (error) {
+			} catch (deleteError) {
 				setOpen(true);
 			}
 		}

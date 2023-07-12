@@ -16,7 +16,7 @@ const RecipesComponent = ({
 	author,
 	image,
 }: Props) => {
-	let cardImage;
+	let cardImage = 'Icon from MUI for default image';
 	if (image) {
 		cardImage = `${apiUrl}/uploads/${image}`;
 	}

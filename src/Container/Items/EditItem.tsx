@@ -21,7 +21,7 @@ export interface ItemProps {
 	id_category: string;
 	id_subcategory: string;
 	id_under_subcategory: string;
-	id_user: any;
+	id_user?: number;
 }
 
 const EditItem = () => {
@@ -41,7 +41,6 @@ const EditItem = () => {
 		id_category: '',
 		id_subcategory: '',
 		id_under_subcategory: '',
-		id_user: '',
 	});
 
 	const [open, setOpen] = useState(false);

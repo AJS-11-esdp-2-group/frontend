@@ -52,19 +52,9 @@ function App() {
 				</header>
 				<main>
 					<Routes>
-						<Route
-							path="/register"
-							element={
-									<Register />
-							}
-						/>
+						<Route path="/register" element={<Register />} />
 						<Route path="/" element={<HomePage />} />
-						<Route
-							path="/login"
-							element={
-									<Login />
-							}
-						/>
+						<Route path="/login" element={<Login />} />
 						<Route
 							path="/items"
 							element={

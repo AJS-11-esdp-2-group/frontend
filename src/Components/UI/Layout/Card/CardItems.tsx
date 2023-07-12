@@ -15,7 +15,6 @@ interface IProps {
 	onClick: MouseEventHandler<HTMLButtonElement>;
 	onClickDelete: MouseEventHandler<HTMLButtonElement>;
 	description: string;
-	create_date: string;
 	category_name: string;
 	subcategory_name: string;
 	under_subcategory_name: string;

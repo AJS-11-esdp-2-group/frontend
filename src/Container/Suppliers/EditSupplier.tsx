@@ -22,7 +22,7 @@ const EditSupplier = () => {
 	const { id } = useParams();
 	const { data } = useGetSupplierByIdQuery(id as unknown as number);
 
-	const [editSupplier, { error, isError }] = useEditSupplierMutation();
+	const [editSupplier, { error }] = useEditSupplierMutation();
 
 	const [form, setForm] = useState<Props>({
 		name_supplier: '',
@@ -66,8 +66,8 @@ const EditSupplier = () => {
 
 	const submitFormHandler = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const data = await editSupplier({ id: Number(id), supplier: form });
-		if (!(data as { error: object }).error) {
+		const dataSupplier = await editSupplier({ id: Number(id), supplier: form });
+		if (!(dataSupplier as { error: object }).error) {
 			navigate('/suppliers');
 		}
 	};

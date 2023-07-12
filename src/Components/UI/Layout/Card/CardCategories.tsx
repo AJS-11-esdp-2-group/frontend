@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -39,7 +39,7 @@ const CardCategories = ({
 	onClick,
 	onClickDelete,
 }: IProps) => {
-	const [expanded, setExpanded] = React.useState(false);
+	const [expanded, setExpanded] = useState(false);
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
@@ -51,13 +51,14 @@ const CardCategories = ({
 				key={id}
 				sx={{ height: '80px' }}
 				action={[
-					<IconButton onClick={onClickDelete} aria-label="settings">
+					<IconButton key={id} onClick={onClickDelete} aria-label="settings">
 						<DeleteForeverIcon />
 					</IconButton>,
-					<IconButton onClick={onClick} aria-label="settings">
+					<IconButton key={id} onClick={onClick} aria-label="settings">
 						<EditIcon />
 					</IconButton>,
 					<ExpandMore
+						key={id}
 						expand={expanded}
 						onClick={handleExpandClick}
 						aria-expanded={expanded}

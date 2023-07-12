@@ -11,4 +11,7 @@ export interface Item {
 	id_subcategory: string;
 	id_under_subcategory: string;
 	id_user: number;
+	category_name: string;
+	subcategory_name: string;
+	under_subcategory_name: string;
 }

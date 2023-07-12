@@ -39,7 +39,7 @@ import IconButton from '@mui/material/IconButton';
 const Categories = () => {
 	const { data, isLoading, isError, error } = useGetAllcategoriesQuery();
 	const [open, setOpen] = useState(false);
-	const [openUnder, setUnder] = useState<number | null>(null);
+	const [openUnder] = useState<number | null>(null);
 	const [openModal, setOpenModal] = useState(false);
 	const [deleteCategory] = useDeleteCategoryMutation();
 	const [deleteCategoryId, setDeleteCategoryId] = useState<number | null>(null);
@@ -56,7 +56,7 @@ const Categories = () => {
 
 	const handleClick = (itemId: number) => {
 		setOpenItemId(itemId === openItemId ? null : itemId);
-		setCategoryId(itemId)
+		setCategoryId(itemId);
 	};
 
 	const handleCloseModal = () => {

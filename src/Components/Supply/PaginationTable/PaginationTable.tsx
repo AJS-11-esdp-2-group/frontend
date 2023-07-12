@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import EnhancedTableToolbar from './TableToolbar/TableToolbar';
 import EnhancedTableHead from './TableHead/TableHead';
 import { useGetSuppliesBetweenMutation } from '../../../Store/services/supply';
@@ -23,7 +23,7 @@ type Order = 'asc' | 'desc';
 export default function PaginationTable() {
 	const [order, setOrder] = React.useState<Order>('asc');
 	const [orderBy, setOrderBy] = React.useState<keyof ISupplies>('target');
-	const [selected, setSelected] = React.useState<readonly string[]>([]);
+	const [selected] = React.useState<readonly string[]>([]);
 	const [page, setPage] = React.useState(0);
 	const [dense, setDense] = React.useState(false);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -47,10 +47,6 @@ export default function PaginationTable() {
 		setOrder(isAsc ? 'desc' : 'asc');
 		setOrderBy(property);
 	};
-
-	const handleSelectAllClick = (
-		event: React.ChangeEvent<HTMLInputElement>,
-	) => {};
 
 	const handleChangePage = async (event: unknown, newPage: number) => {
 		if (newPage > page && newPage * rowsPerPage === rows.length) {
@@ -81,11 +77,6 @@ export default function PaginationTable() {
 		setDense(event.target.checked);
 	};
 
-	const onClickDelete = (
-		event: React.ChangeEvent<HTMLButtonElement>,
-		id: number,
-	) => {};
-
 	const emptyRows =
 		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
@@ -108,9 +99,9 @@ export default function PaginationTable() {
 							numSelected={selected.length}
 							order={order}
 							orderBy={orderBy}
-							onSelectAllClick={handleSelectAllClick}
 							onRequestSort={handleRequestSort}
 							rowCount={rows.length}
+							onSelectAllClick={() => {}}
 						/>
 						<TableBody>
 							{rows.length > 0

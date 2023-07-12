@@ -75,14 +75,7 @@ const headCells: readonly HeadCell[] = [
 ];
 
 export default function EnhancedTableHead(props: EnhancedTableProps) {
-	const {
-		onSelectAllClick,
-		order,
-		orderBy,
-		numSelected,
-		rowCount,
-		onRequestSort,
-	} = props;
+	const { order, orderBy, onRequestSort } = props;
 	const createSortHandler =
 		(property: keyof ISupplies) => (event: React.MouseEvent<unknown>) => {
 			onRequestSort(event, property);

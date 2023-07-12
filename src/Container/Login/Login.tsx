@@ -5,7 +5,13 @@ import FormElement from '../../Components/UI/Form/FormElement';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import { useAppSelector } from '../../Store/hooks';
 import { getUser } from '../../Store/user/userSelectors';
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import React, {
+	ChangeEvent,
+	FormEvent,
+	forwardRef,
+	useEffect,
+	useState,
+} from 'react';
 import {
 	Container,
 	Avatar,
@@ -21,7 +27,7 @@ import { LockOpen } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
 	props,
 	ref,
 ) {
