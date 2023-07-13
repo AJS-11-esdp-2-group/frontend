@@ -13,6 +13,7 @@ const persistConfig = {
 	stateReconciler: autoMergeLevel2,
 };
 
+
 const rootReducer = combineReducers({
 	auth: authReducer,
 	[api.reducerPath]: api.reducer,

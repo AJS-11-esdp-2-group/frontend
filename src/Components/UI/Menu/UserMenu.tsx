@@ -18,7 +18,7 @@ interface Props {
 	user: IUser;
 }
 
-const UserMenu = ({ logout, user, displayName }: Props) => {
+const UserMenu = ({ logout, user }: Props) => {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {

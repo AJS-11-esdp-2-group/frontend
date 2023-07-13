@@ -9,7 +9,7 @@ import {
 import { ICategories } from '../../interfaces/ICategories';
 import Modal from '../../Components/UI/Modal/Modal';
 import { CustomError } from '../../interfaces/errors/CustomError';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ISubcategories } from '../../interfaces/ISubcategories';
 import {
 	Container,
@@ -45,6 +45,7 @@ const Categories = () => {
 	const [deleteCategoryId, setDeleteCategoryId] = useState<number | null>(null);
 	const [openItemId, setOpenItemId] = useState<number | null>(null);
 	const [uncoverForm, setUncoverForm] = useState(false);
+	const [categoryId, setCategoryId] = useState(0);
 
 	useEffect(() => {
 		setOpen(isError);
@@ -68,7 +69,7 @@ const Categories = () => {
 		setUncoverForm(!uncoverForm);
 	};
 
-	const handleDeleteCategory = async (categoryId: number) => {
+	const handleDeleteCategory = (categoryId: number) => {
 		setDeleteCategoryId(categoryId);
 		setOpenModal(true);
 	};
@@ -91,7 +92,6 @@ const Categories = () => {
 		}
 	};
 
-	const [categoryId, setCategoryId] = useState(0);
 	const {
 		data: subcategories,
 		refetch,
@@ -153,7 +153,6 @@ const Categories = () => {
 									isLoading={isLoading}
 									actionButtonLabel="Удалить"
 									onActionButtonClick={handleConfirmDelete}
-									children={undefined}
 								/>
 								<ListItemButton
 									onClick={() => handleClick(category.id)}
@@ -206,7 +205,6 @@ const Categories = () => {
 												</ListItemButton>
 											) : (
 												subcategories?.map((sub: ISubcategories) => {
-													const isUnderOpen = sub.id === openUnder;
 													return (
 														<ListItemButton key={sub.id} sx={{ pl: 4 }}>
 															<ListItemIcon>

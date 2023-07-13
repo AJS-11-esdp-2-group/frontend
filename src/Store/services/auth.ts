@@ -1,6 +1,6 @@
 import { api } from '../../features';
 import { UserForm } from '../../interfaces/RegisterForm';
-import { loginForm } from '../../interfaces/loginForm';
+import { LoginForm } from '../../interfaces/loginForm';
 import { UserResponse } from '../user/userTypes';
 
 const authApi = api.injectEndpoints({
@@ -12,7 +12,7 @@ const authApi = api.injectEndpoints({
 				body,
 			}),
 		}),
-		signIn: build.mutation<UserResponse, loginForm>({
+		signIn: build.mutation<UserResponse, LoginForm>({
 			query: (body) => ({
 				url: 'users/login',
 				method: 'post',

@@ -32,7 +32,7 @@ const AddRecipes = () => {
 	const { id } = useParams();
 	const { data: bouquet } = useGetBouquetByIdQuery(id as unknown as number);
 	const { data: items } = useGetAllItemsQuery();
-	const [createImage, error] = useCreateImageMutation();
+	const [createImage] = useCreateImageMutation();
 	const [createRecipe] = useCreateRecipeMutation();
 	const [bouquetName, setBouquetName] = useState({
 		bouquet_name: '',
@@ -137,7 +137,6 @@ const AddRecipes = () => {
 		formData.append('id_bouquet', newImage.id_bouquet as string);
 
 		if (!newImage.image) {
-			console.log('Пожалуйста, выберите изображение');
 			return;
 		} else {
 			await createImage(formData);

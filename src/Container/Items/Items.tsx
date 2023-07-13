@@ -45,8 +45,8 @@ const Items = () => {
 		setUncoverForm(!uncoverForm);
 	};
 
-	const handleDeleteItem = async (itemId: number) => {
-		await setDeleteItemId(itemId);
+	const handleDeleteItem = (itemId: number) => {
+		setDeleteItemId(itemId);
 		setOpenModal(true);
 	};
 

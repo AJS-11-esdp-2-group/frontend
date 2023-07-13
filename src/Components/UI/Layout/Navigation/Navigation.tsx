@@ -29,8 +29,8 @@ const Navigation = () => {
 
 	const [logout] = useLogoutMutation();
 
-	const logoutHandler = async () => {
-		await logout();
+	const logoutHandler = () => {
+		logout();
 	};
 
 	const toggleDrawer =

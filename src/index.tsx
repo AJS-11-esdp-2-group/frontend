@@ -1,9 +1,8 @@
 import App from './App';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
-// eslint-disable-next-line import/order
 import store from './Store/store';
 import { Provider } from 'react-redux';
 import { createTheme } from '@mui/material';
@@ -35,7 +34,7 @@ export const GlobalTheme = createTheme({
 	},
 });
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
 		<Provider store={store}>
 			<BrowserRouter>

@@ -1,11 +1,11 @@
 import { GlobalTheme } from '../..';
-import { loginForm } from '../../interfaces/loginForm';
+import { LoginForm } from '../../interfaces/loginForm';
 import { useSignInMutation } from '../../Store/services/auth';
 import FormElement from '../../Components/UI/Form/FormElement';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import { useAppSelector } from '../../Store/hooks';
 import { getUser } from '../../Store/user/userSelectors';
-import React, {
+import  {
 	ChangeEvent,
 	FormEvent,
 	forwardRef,
@@ -35,7 +35,7 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 const Login = () => {
-	const [form, setForm] = useState<loginForm>({
+	const [form, setForm] = useState<LoginForm>({
 		username: '',
 		password: '',
 	});

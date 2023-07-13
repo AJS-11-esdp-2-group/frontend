@@ -21,8 +21,6 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 type Order = 'asc' | 'desc';
 
-const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {};
-
 export default function CustomPaginationActionsTable() {
 	const [order, setOrder] = React.useState<Order>('asc');
 	const [page, setPage] = React.useState(0);
@@ -44,7 +42,7 @@ export default function CustomPaginationActionsTable() {
 		setOrderBy(property);
 	};
 
-	const handleChange = async (event: SelectChangeEvent) => {
+	const handleChange = async (event: SelectChangeEvent): Promise<void> => {
 		const result = await getSuppliesSupplier(parseInt(event.target.value));
 
 		if (!(result as { error: object }).error) {
@@ -103,7 +101,7 @@ export default function CustomPaginationActionsTable() {
 							numSelected={selected.length}
 							order={order}
 							orderBy={orderBy}
-							onSelectAllClick={handleSelectAllClick}
+							onSelectAllClick={() => {}}
 							onRequestSort={handleRequestSort}
 							rowCount={rows.length}
 						/>

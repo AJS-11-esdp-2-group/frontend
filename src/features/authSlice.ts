@@ -19,7 +19,7 @@ export const authSlice = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
-			.addMatcher(authApi.endpoints.signIn.matchPending, (state, action) => {
+			.addMatcher(authApi.endpoints.signIn.matchPending, (state) => {
 				state.isAuthenticated = false;
 				state.isLoading = true;
 			})
@@ -29,7 +29,7 @@ export const authSlice = createSlice({
 				state.isLoading = false;
 				localStorage.setItem('authState', JSON.stringify(state));
 			})
-			.addMatcher(authApi.endpoints.signIn.matchRejected, (state, action) => {
+			.addMatcher(authApi.endpoints.signIn.matchRejected, (state) => {
 				state.isAuthenticated = false;
 				state.isLoading = false;
 			})

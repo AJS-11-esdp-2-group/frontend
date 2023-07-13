@@ -36,7 +36,7 @@ export default function PaginationTable() {
 	};
 
 	useEffect(() => {
-		initialRows();
+		void initialRows();
 	}, []);
 
 	const handleRequestSort = (
