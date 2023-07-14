@@ -1,7 +1,6 @@
 import { IBouquets } from '../../interfaces/IBouquets';
-import { apiUrl } from '../../common/constans';
-import { IconButton, ImageListItem, ImageListItemBar } from '@mui/material';
-import { Info } from '@mui/icons-material';
+import { GlobalTheme } from '../..';
+import { ImageListItem, ImageListItemBar, ThemeProvider } from '@mui/material';
 import { MouseEventHandler } from 'react';
 
 interface Props extends IBouquets {
@@ -15,36 +14,29 @@ const RecipesComponent = ({
 	bouquet_name,
 	author,
 	image,
+	sum
 }: Props) => {
-	let cardImage;
-	if (image) {
-		cardImage = `${apiUrl}/uploads/${image}`;
-	}
-
 	return (
-		<ImageListItem key={id}>
-			<img
-				src={`${cardImage}?w=248&fit=crop&auto=format`}
-				srcSet={`${cardImage}?w=248&fit=crop&auto=format&dpr=2 2x`}
-				alt={bouquet_name}
-				loading="lazy"
-			/>
-			<ImageListItemBar
-				key={id}
-				title={bouquet_name}
-				subtitle={bouquet_description}
-				onClick={onClick}
-				actionIcon={
-					<IconButton
-						key={id}
-						sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-						aria-label={`info about ${author}`}
-					>
-						<Info />
-					</IconButton>
-				}
-			/>
-		</ImageListItem>
+		<ThemeProvider theme={GlobalTheme}>
+			<ImageListItem key={id}>
+				<img
+					src={image}
+					srcSet={image}
+					alt={bouquet_name}
+					loading="lazy"
+				/>
+				<ImageListItemBar
+				title={parseInt(sum).toFixed().toString() === 'NaN' ? '0 т': `${parseInt(sum).toFixed()} т`}
+				position="top"
+				/>
+				<ImageListItemBar
+					key={id}
+					title={bouquet_name}
+					subtitle={bouquet_description}
+					onClick={onClick}
+				/>
+			</ImageListItem>
+		</ThemeProvider>
 	);
 };
 

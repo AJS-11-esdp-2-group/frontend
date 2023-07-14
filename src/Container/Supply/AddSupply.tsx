@@ -51,7 +51,7 @@ const AddSupply = () => {
 		price: '',
 		total_price: 0,
 		date: new Date(),
-		user: user[0].id,
+		user: user.id,
 	});
 	const [open, setOpen] = useState(false);
 
