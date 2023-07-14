@@ -8,4 +8,5 @@ export interface IUser {
 	last_name: string;
 	address: string;
 	country: number;
+	token: string;
 }

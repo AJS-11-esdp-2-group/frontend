@@ -51,7 +51,7 @@ const Recipes = () => {
 	const [form, setForm] = useState<Props>({
 		bouquet_name: '',
 		bouquet_description: '',
-		author: user[0].first_name as string,
+		author: user.first_name as string,
 		id_category: '',
 		image: '',
 		sum: ''
