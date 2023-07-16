@@ -57,7 +57,7 @@ const HomePage = () => {
 							</Typography>
 						</Button>
 						<Button sx={{ width: '100%' }} variant="contained" color="success">
-							<Typography variant="body1" component={Link} to="/supply">
+							<Typography variant="body1" component={Link} to="/invoices">
 								Приходы
 							</Typography>
 						</Button>

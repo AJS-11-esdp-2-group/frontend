@@ -1,6 +1,7 @@
 import { ISupplies } from '../../interfaces/ISupply';
 import { api } from '../../features';
 import { Supply } from '../../Container/Supply/AddSupply';
+import { IInvoice } from '../../interfaces/IInvoice'
 
 interface limit {
 	start: number;
@@ -9,6 +10,10 @@ interface limit {
 
 const suppliesApi = api.injectEndpoints({
 	endpoints: (build) => ({
+		getAllActions: build.query<IInvoice[], void>({
+			query: () => '/supply/invoices',
+			providesTags: () => [{ type: 'Suppliers', id: 'LIST' }],
+		}),
 		getSuppliesBetween: build.mutation<Array<ISupplies>, limit>({
 			query: (limit) =>
 				`/supply/pagination?start=${limit.start}&end=${limit.end}`,
@@ -30,4 +35,5 @@ export const {
 	useGetSuppliesBetweenMutation,
 	useGetSuppliesSupplierMutation,
 	useAddsupplyMutation,
+	useGetAllActionsQuery
 } = suppliesApi;

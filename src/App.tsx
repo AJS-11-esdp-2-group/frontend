@@ -13,6 +13,7 @@ import Supply from './Container/Supply/Supply';
 import AddSupply from './Container/Supply/AddSupply';
 import Recipes from './Container/Recipes/Recipes';
 import AddRecipes from './Container/Recipes/AddRecipes';
+import Invoices from './Components/Invoices/Invoices';
 import { getUser } from './Store/user/userSelectors';
 import { Routes, Route } from 'react-router-dom';
 import {
@@ -31,7 +32,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
 			main: mode === 'light' ? blue[500] : blue[400],
 		},
 		background: {
-			default: mode === 'light' ? 'white' : '#383b48',
+			default: mode === 'light' ? '#fff' : '#383b48',
 			paper: mode === 'light' ? '#383b48' : blueGrey[900],
 		},
 		text: {
@@ -164,6 +165,18 @@ function App() {
 								</ProtectedRoute>
 							}
 						/>
+						<Route
+							path="/invoices"
+							element={
+								<ProtectedRoute
+									isAllowed={user.isAuthenticated}
+									redirectPath="/"
+								>
+									<Invoices />
+								</ProtectedRoute>
+							}
+						/>
+
 					</Routes>
 				</main>
 			</CssBaseline>
