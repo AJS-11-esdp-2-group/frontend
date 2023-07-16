@@ -1,4 +1,3 @@
-import * as React from 'react'
 import Box from '@mui/material/Box'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import { useGetAllActionsQuery } from '../../Store/services/supply'
@@ -13,33 +12,29 @@ const columns: GridColDef[] = [
     field: 'date',
     headerName: 'Дата',
     width: 250,
-    editable: true,
+    valueFormatter: (date) => new Date(date?.value).toLocaleString(),
   },
   {
     field: 'total_sum',
     headerName: 'Сумма',
     type: 'number',
     width: 150,
-    editable: true,
   },
   {
     field: 'total_items',
     headerName: 'Товаров',
     type: 'number',
     width: 150,
-    editable: true,
   },
   {
     field: 'supplier_name',
     headerName: 'Поставщик',
     width: 150,
-    editable: true,
   },
   {
     field: 'storage_name',
     headerName: 'Точка продаж',
     width: 150,
-    editable: true,
   },
 ]
 
@@ -72,7 +67,7 @@ const Invoices = () => {
             initialState={{
               pagination: {
                 paginationModel: {
-                  pageSize: 10,
+                  pageSize: 5,
                 },
               },
             }}
