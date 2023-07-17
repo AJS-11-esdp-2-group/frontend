@@ -26,6 +26,8 @@ const AddItem = () => {
 		id_subcategory: string;
 		id_under_subcategory: string;
 		id_user: number;
+		price: number;
+		image_small: string
 	}
 	const initialFormState: Props = {
 		item_name: '',
@@ -34,6 +36,8 @@ const AddItem = () => {
 		id_subcategory: '',
 		id_under_subcategory: '',
 		id_user: user.id as number,
+		price: 0,
+		image_small: '',
 	};
 
   const { data: subcategory } = useGetSubcategoriesByIdCategoryQuery(categoryId);
@@ -175,9 +179,8 @@ const AddItem = () => {
           color="success"
           type="submit"
           className="submit"
-          sx={{ marginBottom: 2, marginTop: 3 }}
         >
-          Add
+          Добавить
         </Button>
       </Container>
     </form>
