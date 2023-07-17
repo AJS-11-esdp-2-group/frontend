@@ -16,11 +16,10 @@ export interface ItemProps {
   id_category: string;
   id_subcategory: string;
   id_under_subcategory: string;
-  id_user: any;
+  id_user: number | string;
 }
 
 const EditItem = () => {
-
   const { id } = useParams();
   const { data: itemById, refetch } = useGetItemByIdQuery(id as string, {
     refetchOnMountOrArgChange: false,
@@ -74,7 +73,7 @@ const EditItem = () => {
           id_category: itemById[0].id_category,
           id_subcategory: itemById[0].id_subcategory,
           id_under_subcategory: itemById[0].id_under_subcategory,
-          id_user: user[0].id,
+          id_user: user.id,
         }));
       }
     };
@@ -183,7 +182,7 @@ const EditItem = () => {
         />
 
         <Button fullWidth variant="contained" color="success" type="submit" className="submit">
-          Edit
+          Изменить
         </Button>
       </Container>
     </form>

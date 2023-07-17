@@ -26,7 +26,7 @@ const FileUpload = ({ name, label, onChange }: Props) => {
 				{label}
 			</Typography>
 			<Button color={'secondary'} variant="contained" component="label">
-				Browse
+				Загрузить файл
 				<input
 					name={name}
 					hidden
