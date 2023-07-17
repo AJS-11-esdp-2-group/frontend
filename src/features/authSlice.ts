@@ -2,6 +2,7 @@
 import authApi from '../Store/services/auth';
 import { UserState } from '../Store/user/userTypes';
 import { createSlice } from '@reduxjs/toolkit';
+import { IUser } from '../interfaces/IUser';
 
 const storedState = localStorage.getItem('authState');
 
@@ -23,7 +24,7 @@ export const authSlice = createSlice({
 				state.isLoading = true;
 			})
 			.addMatcher(authApi.endpoints.signIn.matchFulfilled, (state, action) => {
-				state.user[0] = action.payload;
+				state.user = action.payload;
 				state.isAuthenticated = true;
 				state.isLoading = false;
 				localStorage.setItem('authState', JSON.stringify(state));
@@ -35,7 +36,7 @@ export const authSlice = createSlice({
 			.addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
 				state.isAuthenticated = false;
 				state.isLoading = false;
-				state.user[0] = {};
+				state.user = {} as IUser;
 				localStorage.removeItem('authState');
 			});
 	},

@@ -72,6 +72,16 @@ export const GlobalTheme = createTheme({
 		  },
 		},
 	  },
+		MuiImageListItemBar: {
+			styleOverrides: {
+				root: ({theme}) => 
+					theme.unstable_sx({
+						background: 
+						'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
+						'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+					})
+			}
+		}
 	},
   });
   

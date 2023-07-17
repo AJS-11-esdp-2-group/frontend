@@ -14,10 +14,27 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 const AddItem = () => {
   const [addItem, { error, isError }] = useAddItemMutation();
   const { user } = useAppSelector((state) => state.auth);
-  const { data: categories } = useGetAllcategoriesQuery();
 
   const [categoryId, setCategoryId] = useState(0);
   const [subCategoryId, setSubCategoryId] = useState(0);
+
+	const { data: categories } = useGetAllcategoriesQuery();
+	interface Props {
+		item_name: string;
+		item_description: string;
+		id_category: string;
+		id_subcategory: string;
+		id_under_subcategory: string;
+		id_user: number;
+	}
+	const initialFormState: Props = {
+		item_name: '',
+		item_description: '',
+		id_category: '',
+		id_subcategory: '',
+		id_under_subcategory: '',
+		id_user: user.id as number,
+	};
 
   const { data: subcategory } = useGetSubcategoriesByIdCategoryQuery(categoryId);
   const { data: underSubcategory } = useGetUnderSubcategoriesByIdCategoryQuery(subCategoryId);
@@ -33,26 +50,6 @@ const AddItem = () => {
     setSubCategoryId(itemId);
   };
 
-  interface Props {
-    item_name: string;
-    item_description: string;
-    price: number;
-    id_category: string;
-    id_subcategory: string;
-    id_under_subcategory: string;
-    image_small: string;
-    id_user: number;
-  }
-  const initialFormState: Props = {
-    item_name: '',
-    item_description: '',
-    price: 0,
-    id_category: '',
-    id_subcategory: '',
-    id_under_subcategory: '',
-    image_small: '',
-    id_user: user[0].id as number,
-  };
 
   const [form, setForm] = useState<Props>(initialFormState);
   const [open, setOpen] = useState(false);
