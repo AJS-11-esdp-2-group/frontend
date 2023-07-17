@@ -10,28 +10,68 @@ import { createTheme } from '@mui/material';
 
 export const GlobalTheme = createTheme({
 	components: {
-		MuiContainer: {
-			styleOverrides: {
-				root: ({ theme }) => theme.unstable_sx({}),
-			},
+	  MuiContainer: {
+		styleOverrides: {
+		  root: ({ theme }) => theme.unstable_sx({}),
 		},
-		MuiButtonBase: {
-			styleOverrides: {
-				root: ({ theme }) =>
-					theme.unstable_sx({
-						marginBottom: 3,
-					}),
-			},
+	  },
+	  MuiButtonBase: {
+		styleOverrides: {
+		  root: ({ theme }) =>
+			theme.unstable_sx({
+			  marginBottom: 3,
+			}),
 		},
-		MuiButton: {
-			styleOverrides: {
-				root: ({ theme }) =>
-					theme.unstable_sx({
-						marginBottom: 3,
-						marginTop: 3,
-					}),
-			},
+	  },
+	  MuiButton: {
+		styleOverrides: {
+		  root: ({ theme }) =>
+			theme.unstable_sx({
+			  marginBottom: 3,
+			  marginTop: 3,
+			}),
 		},
+	  },
+	  MuiListItem: {
+		styleOverrides: {
+		  root: ({ theme }) =>
+			theme.unstable_sx({
+			  display: 'block',
+			  width: '100%', 
+			  maxWidth: 360,
+			}),
+		},
+	  },
+	  MuiSvgIcon: {
+		styleOverrides: {
+		  root: ({ theme }) =>
+			theme.unstable_sx({
+			  margin: '0 8px',
+			}),
+		},
+	  },
+	  MuiListItemText: {
+		styleOverrides: {
+		  root: ({ theme }) =>
+			theme.unstable_sx({
+			  width: '75%',
+			}),
+		},
+	  },
+	  MuiGrid: {
+		styleOverrides: {
+		  container: {
+			display: 'flex',
+			alignItems:'stretch',
+			flexDirection:'column',
+			alignContent:'space-around',
+			justifyContent:'space-between',
+			'@media (max-width: 600px)': {
+			  display: 'block',
+			},
+		  },
+		},
+	  },
 		MuiImageListItemBar: {
 			styleOverrides: {
 				root: ({theme}) => 
@@ -43,7 +83,8 @@ export const GlobalTheme = createTheme({
 			}
 		}
 	},
-});
+  });
+  
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
