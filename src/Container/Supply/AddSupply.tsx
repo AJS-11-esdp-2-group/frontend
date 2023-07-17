@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { GlobalTheme } from '../..';
-import { CustomError } from '../../interfaces/errors/CustomError';
 import { useGetAllItemsQuery } from '../../Store/services/items';
 import { useAddsupplyMutation } from '../../Store/services/supply';
 import { useGetAllSuppliersQuery } from '../../Store/services/suppliers';
@@ -15,11 +14,11 @@ import { useNavigate } from 'react-router';
 import {
 	Container,
 	Button,
-	Snackbar,
-	Alert,
 	Autocomplete,
 	TextField,
 	ThemeProvider,
+	Box,
+	Typography,
 } from '@mui/material';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
@@ -40,7 +39,7 @@ const AddSupply = () => {
 	const { data: storages } = useGetAllStorageQuery();
 	const { data: suppliers } = useGetAllSuppliersQuery();
 	const { data: items } = useGetAllItemsQuery();
-	const {user} = useAppSelector(getUser);	
+	const { user } = useAppSelector(getUser);
 	const [addsupply, { error, isError }] = useAddsupplyMutation();
 	const [form, setForm] = useState<Supply>({
 		operation_type_id: 1,
@@ -133,92 +132,96 @@ const AddSupply = () => {
 	return (
 		<ThemeProvider theme={GlobalTheme}>
 			<form onSubmit={submitFormHandler}>
-				<Container
-					component="section"
-					maxWidth="xs"
-					sx={{ marginTop: '100px' }}
-				>
-					<Snackbar
-						anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-						open={open}
-						autoHideDuration={3000}
-						onClose={handleClose}
-					>
-						<Alert severity="error" onClose={handleClose}>
-							{(error as CustomError)?.data?.message}
-						</Alert>
-					</Snackbar>
-					<BasicSelect
-						value={form.source_id}
-						label="Откуда"
-						name="source_id"
-						onChange={(value) => selectChangeHandler('source_id', value)}
-						options={
-							suppliers
-								? suppliers.map((suppliers) => ({
-										id: suppliers.id,
-										name: suppliers.name_supplier,
-								  }))
-								: []
-						}
-					/>
-
-					<BasicSelect
-						value={form.target_id}
-						label="Куда"
-						name="target"
-						onChange={(value) => selectChangeHandler('target_id', value)}
-						options={
-							storages
-								? storages.map((storage) => ({
-										id: storage.id,
-										name: storage.storage,
-								  }))
-								: []
-						}
-					/>
-					<Autocomplete
-						disablePortal
-						options={items ? items : []}
-						getOptionLabel={(option) => option.item_name}
-						onChange={autocompleteChangeHandler}
-						value={
-							items?.find((item) => item.id.toString() === form.item_id) || null
-						}
-						renderInput={(params) => (
-							<TextField name="item_id" {...params} label="Товар" />
-						)}
-					/>
-
-					<FormElement
-						type="number"
-						value={form.qty}
-						label="Количество"
-						name="qty"
-						onChange={inputChangeHandler}
-					/>
-					<FormElement
-						type="number"
-						value={form.price}
-						label="Цена за штуку"
-						name="price"
-						onChange={inputChangeHandler}
-					/>
-					<FormElement
-						value={form.total_price.toString()}
-						label="Общая цена"
-						name="total_price"
-					/>
-					<Button
-						fullWidth
-						variant="contained"
-						color="success"
-						type="submit"
-						className="submit"
-						disabled={!isFormValid()}
-					>
-						Создать Приход
-					</Button>
+				<Container>
+					<Box display="flex" alignItems="center" >
+						<div style={{ width: '300px' }}>
+							<Typography variant="h6">Контрагент</Typography>
+							<BasicSelect
+								value={form.source_id}
+								label="Контрагент"
+								name="source_id"
+								onChange={(value) => selectChangeHandler('source_id', value)}
+								options={
+									suppliers
+										? suppliers.map((suppliers) => ({
+											id: suppliers.id,
+											name: suppliers.name_supplier,
+										}))
+										: []
+								}
+							/>
+						</div>
+					</Box>
+					<Box display="flex" alignItems="center">
+						<div style={{ width: '300px' }}>
+						<Typography variant="h6">Торговая точка</Typography>
+							<BasicSelect
+								value={form.target_id}
+								label="Торговая точка"
+								name="target"
+								onChange={(value) => selectChangeHandler('target_id', value)}
+								options={
+									storages
+										? storages
+											.filter((storage) => storage.id === 3)
+											.map((storage) => ({
+												id: storage.id,
+												name: storage.storage,
+											}))
+										: []
+								}
+							/>
+						</div>
+					</Box>
+					<Box display="flex" alignItems="center" justifyContent="space-between">
+						<Box marginRight={2}>
+							<Autocomplete
+								disablePortal
+								options={items ? items : []}
+								getOptionLabel={(option) => option.item_name}
+								onChange={autocompleteChangeHandler}
+								value={
+									items?.find((item) => item.id.toString() === form.item_id) || null
+								}
+								renderInput={(params) => <TextField name="item_id" {...params} label="Товар" />}
+								style={{ width: 300 }}
+							/>
+						</Box>
+						<Box marginRight={2}>
+							<FormElement
+								type="number"
+								value={form.qty}
+								label="Количество"
+								name="qty"
+								onChange={inputChangeHandler}
+							/>
+						</Box>
+						<Box marginRight={2}>
+							<FormElement
+								type="number"
+								value={form.price}
+								label="Закупочная цена"
+								name="price"
+								onChange={inputChangeHandler}
+							/>
+						</Box>
+						<Box marginRight={2}>
+							<FormElement
+								value={form.total_price.toString()}
+								label="Сумма"
+								name="total_price"
+							/>
+						</Box>
+						<Button
+							variant="contained"
+							color="success"
+							type="submit"
+							className="submit"
+							disabled={!isFormValid()}
+						>
+							Создать приход
+						</Button>
+					</Box>
 				</Container>
 			</form>
 		</ThemeProvider>
