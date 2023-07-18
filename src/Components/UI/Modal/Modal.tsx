@@ -5,7 +5,11 @@ import {
 	DialogContent,
 	DialogActions,
 	CircularProgress,
+	Alert,
+	AlertTitle,
 } from '@mui/material';
+import React from 'react';
+import { LoadingButton } from '@mui/lab';
 
 interface Props {
 	isOpen: boolean;
@@ -15,6 +19,10 @@ interface Props {
 	isLoading: boolean;
 	actionButtonLabel: string;
 	onActionButtonClick: () => void;
+	isError?: boolean;
+	successMessage?: string;
+	isSuccess?: boolean;
+	errorMessage?: string;
 }
 
 const Modal = ({
@@ -25,22 +33,38 @@ const Modal = ({
 	isLoading,
 	actionButtonLabel,
 	onActionButtonClick,
+	isError,
+	isSuccess,
+	successMessage,
+	errorMessage,
 }: Props) => {
 	return (
 		<Dialog open={isOpen} onClose={onClose}>
 			<DialogTitle>{title}</DialogTitle>
 			<DialogContent>{children}</DialogContent>
+			{isError && (
+				<Alert severity="error">
+					<AlertTitle>Error</AlertTitle>
+					{errorMessage}
+				</Alert>
+			)}
+			{isSuccess && (
+				<Alert severity="success">
+					<AlertTitle>success</AlertTitle>
+					{successMessage}
+				</Alert>
+			)}
 			<DialogActions>
 				<Button onClick={onClose} disabled={isLoading}>
 					Отмена
 				</Button>
-				<Button
+				<LoadingButton
 					onClick={onActionButtonClick}
-					disabled={isLoading}
-					color="error"
+					loading={isLoading}
+					disabled={isError}
 				>
-					{isLoading ? <CircularProgress size={20} /> : actionButtonLabel}
-				</Button>
+					{actionButtonLabel}
+				</LoadingButton>
 			</DialogActions>
 		</Dialog>
 	);

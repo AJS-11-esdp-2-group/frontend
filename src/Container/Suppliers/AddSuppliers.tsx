@@ -1,6 +1,6 @@
 import FormElement from '../../Components/UI/Form/FormElement';
 import { CustomError } from '../../interfaces/errors/CustomError';
-import { useAddSupplierMutation } from '../../Store/services/suppliers';
+import { useAddSupplierMutation } from '../../Store/supplier/suppliers';
 import { useNavigate } from 'react-router';
 import { Container, Button, Snackbar, Alert } from '@mui/material';
 import { ChangeEvent, useEffect, useState } from 'react';

@@ -2,7 +2,7 @@ import AddSupplier from './AddSuppliers';
 import {
 	useDeleteSupplierMutation,
 	useGetAllSuppliersQuery,
-} from '../../Store/services/suppliers';
+} from '../../Store/supplier/suppliers';
 import { ISuppliers } from '../../interfaces/ISuppliers';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import Modal from '../../Components/UI/Modal/Modal';
@@ -20,6 +20,7 @@ import {
 	ListItemText,
 	IconButton,
 	Collapse,
+	CircularProgress,
 } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
@@ -27,15 +28,13 @@ import { useEffect, useState } from 'react';
 import { Add, ExpandLess, ExpandMore, Edit, Person } from '@mui/icons-material';
 
 const Suppliers = () => {
-	const { data, isLoading, refetch, isError, error } =
-		useGetAllSuppliersQuery();
+	const { data, isLoading, isError, error } = useGetAllSuppliersQuery();
 	const [open, setOpen] = useState(false);
 	const [openModal, setOpenModal] = useState(false);
-	const [deleteSupplier] = useDeleteSupplierMutation();
+	const [deleteSupplier, result] = useDeleteSupplierMutation();
 	const [deleteSupplierId, setDeleteSupplierId] = useState<number | null>(null);
 	const [openItemId, setOpenItemId] = useState<number | null>(null);
 	const [uncoverForm, setUncoverForm] = useState(false);
-	const [supplierId, setSupplierId] = useState(0);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -45,6 +44,7 @@ const Suppliers = () => {
 	const handleClose = () => {
 		setOpen(false);
 		setOpenModal(false);
+		result.reset();
 	};
 
 	const handleClick = (itemId: number) => {
@@ -60,31 +60,14 @@ const Suppliers = () => {
 		setOpenModal(true);
 	};
 
-	const handleConfirmDelete = async () => {
-		if (deleteSupplierId) {
-			try {
-				const result = await deleteSupplier(deleteSupplierId);
-				if ('error' in result && result.error) {
-					setOpenModal(true);
-					setOpen(true);
-				} else {
-					setOpenModal(false);
-					setOpen(false);
-				}
-				setDeleteSupplierId(null);
-				refetch();
-			} catch (deleteError) {
-				setOpen(true);
-			}
-		}
+	const handleConfirmDelete = () => {
+		void deleteSupplier(deleteSupplierId || 0);
 	};
-
-	if (isLoading) return <h1>Loading...</h1>;
 
 	return (
 		<Container maxWidth={'xs'} sx={{ verticalAlign: 'center', m: '0 auto' }}>
 			<List
-				sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+				sx={{ width: '100%', maxWidth: 360 }}
 				component="nav"
 				aria-labelledby="nested-list-subheader"
 				subheader={
@@ -108,6 +91,7 @@ const Suppliers = () => {
 					</ListItemButton>
 				</ListItem>
 				{uncoverForm && <AddSupplier />}
+				{isLoading && <CircularProgress color="success" />}
 				{data &&
 					data.map((supplier: ISuppliers) => {
 						const isItemOpen = supplier.id === openItemId;
@@ -130,10 +114,13 @@ const Suppliers = () => {
 								<Modal
 									isOpen={openModal && deleteSupplierId === supplier.id}
 									onClose={handleClose}
-									title="Вы действительно хотите удалить этого поставщика?"
-									isLoading={isLoading}
+									title={`Вы действительно хотите удалить поставщика ${supplier.id}?`}
 									actionButtonLabel="Удалить"
 									onActionButtonClick={handleConfirmDelete}
+									isError={result.isError}
+									isLoading={result.isLoading}
+									successMessage="Поставщик удален"
+									errorMessage={'Произошла ошибка попробуйте позже'}
 								></Modal>
 								<ListItemButton onClick={() => handleClick(supplier.id)}>
 									<ListItemIcon>
@@ -153,17 +140,9 @@ const Suppliers = () => {
 										<DeleteForeverIcon />
 									</IconButton>
 									{isItemOpen ? (
-										<ExpandLess
-											onClick={() => {
-												setSupplierId(0);
-											}}
-										/>
+										<ExpandLess onClick={() => {}} />
 									) : (
-										<ExpandMore
-											onClick={() => {
-												setSupplierId(supplier.id);
-											}}
-										/>
+										<ExpandMore onClick={() => {}} />
 									)}
 								</ListItemButton>
 								<Collapse in={isItemOpen} timeout="auto" unmountOnExit>

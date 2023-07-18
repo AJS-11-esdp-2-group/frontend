@@ -6,7 +6,6 @@ import { Items } from '../../interfaces/Items';
 import FormElement from '../../Components/UI/Form/FormElement';
 import AddButton from '../../Components/UI/Button/AddButton';
 import { useCreateRecipeMutation } from '../../Store/services/recipes';
-import { GlobalTheme } from '../..';
 import {
 	Autocomplete,
 	Box,
@@ -15,7 +14,6 @@ import {
 	Grid,
 	TextField,
 	Typography,
-	ThemeProvider,
 } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
@@ -145,73 +143,71 @@ const AddRecipes = () => {
 	};
 
 	return (
-		<ThemeProvider theme={GlobalTheme}>
-			<Container
-				style={{
-					display: 'flex',
-					justifyContent: 'center',
-					flexDirection: 'column',
-				}}
-			>
-				<Box>
-					<Typography variant="h4">{bouquetName.bouquet_name}</Typography>
-				</Box>
-				<Grid container spacing={2}>
-					<Grid item xs={12}>
-						<Autocomplete
-							disablePortal
-							options={items ? items : []}
-							getOptionLabel={(option) => option.item_name}
-							onChange={autocompleteChangeHandler}
-							value={items?.find((item) => item.id.toString() === form.id_item)}
-							renderInput={(params) => (
-								<TextField name="id_item" {...params} label="Товар" />
-							)}
-							noOptionsText="Вариантов нет"
-						/>
-						<FormElement
-							type="number"
-							value={form.qty}
-							label="Количество"
-							name="qty"
-							onChange={inputChangeHandler}
-						/>
-						<AddButton
-							onClick={addButtonClickHandler}
-							buttonText="Добавить Товар"
-						/>
-					</Grid>
-				</Grid>
-				<form onSubmit={submitFormHandler}>
-					<FileUpload
-						onChange={fileChangeHandler}
-						label="Фото букета"
-						name="newImage"
+		<Container
+			style={{
+				display: 'flex',
+				justifyContent: 'center',
+				flexDirection: 'column',
+			}}
+		>
+			<Box>
+				<Typography variant="h4">{bouquetName.bouquet_name}</Typography>
+			</Box>
+			<Grid container spacing={2}>
+				<Grid item xs={12}>
+					<Autocomplete
+						disablePortal
+						options={items ? items : []}
+						getOptionLabel={(option) => option.item_name}
+						onChange={autocompleteChangeHandler}
+						value={items?.find((item) => item.id.toString() === form.id_item)}
+						renderInput={(params) => (
+							<TextField name="id_item" {...params} label="Товар" />
+						)}
+						noOptionsText="Вариантов нет"
 					/>
-					{itemsList.map((item, index) => {
-						const selectedItem = items?.find(
-							(i) => i.id.toString() === item.id_item,
-						);
-						const itemName = selectedItem ? selectedItem.item_name : '';
-						return (
-							<div key={index}>
-								<Typography>Товар: {itemName}</Typography>
-								<Typography>Количество: {item.qty}</Typography>
-							</div>
-						);
-					})}
-					<Button
-						fullWidth
-						variant="contained"
-						color="success"
-						type="submit"
-						className="submit"
-					>
-						Создать Букет
-					</Button>
-				</form>
-			</Container>
-		</ThemeProvider>
+					<FormElement
+						type="number"
+						value={form.qty}
+						label="Количество"
+						name="qty"
+						onChange={inputChangeHandler}
+					/>
+					<AddButton
+						onClick={addButtonClickHandler}
+						buttonText="Добавить Товар"
+					/>
+				</Grid>
+			</Grid>
+			<form onSubmit={submitFormHandler}>
+				<FileUpload
+					onChange={fileChangeHandler}
+					label="Фото букета"
+					name="newImage"
+				/>
+				{itemsList.map((item, index) => {
+					const selectedItem = items?.find(
+						(i) => i.id.toString() === item.id_item,
+					);
+					const itemName = selectedItem ? selectedItem.item_name : '';
+					return (
+						<div key={index}>
+							<Typography>Товар: {itemName}</Typography>
+							<Typography>Количество: {item.qty}</Typography>
+						</div>
+					);
+				})}
+				<Button
+					fullWidth
+					variant="contained"
+					color="success"
+					type="submit"
+					className="submit"
+				>
+					Создать Букет
+				</Button>
+			</form>
+		</Container>
 	);
 };
 

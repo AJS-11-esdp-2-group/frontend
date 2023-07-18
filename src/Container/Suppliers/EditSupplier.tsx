@@ -3,7 +3,7 @@ import { CustomError } from '../../interfaces/errors/CustomError';
 import {
 	useEditSupplierMutation,
 	useGetSupplierByIdQuery,
-} from '../../Store/services/suppliers';
+} from '../../Store/supplier/suppliers';
 import { useNavigate } from 'react-router';
 import { Container, Button, Snackbar, Alert, Typography } from '@mui/material';
 import { ChangeEvent, useEffect, useState } from 'react';

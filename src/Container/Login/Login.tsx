@@ -1,17 +1,10 @@
-import { GlobalTheme } from '../..';
 import { LoginForm } from '../../interfaces/loginForm';
 import { useSignInMutation } from '../../Store/services/auth';
 import FormElement from '../../Components/UI/Form/FormElement';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import { useAppSelector } from '../../Store/hooks';
 import { getUser } from '../../Store/user/userSelectors';
-import  {
-	ChangeEvent,
-	FormEvent,
-	forwardRef,
-	useEffect,
-	useState,
-} from 'react';
+import { ChangeEvent, FormEvent, forwardRef, useEffect, useState } from 'react';
 import {
 	Container,
 	Avatar,
@@ -20,7 +13,6 @@ import {
 	Link,
 	Box,
 	Snackbar,
-	ThemeProvider,
 } from '@mui/material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { LockOpen } from '@mui/icons-material';
@@ -74,69 +66,67 @@ const Login = () => {
 		}
 	};
 	return (
-		<ThemeProvider theme={GlobalTheme}>
-			<Container component="section" maxWidth="xs">
-				<Snackbar
-					anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-					open={open}
-					autoHideDuration={3000}
-					onClose={handleClose}
+		<Container component="section" maxWidth="xs">
+			<Snackbar
+				anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+				open={open}
+				autoHideDuration={3000}
+				onClose={handleClose}
+			>
+				<Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+					{(error as CustomError)?.data?.message}
+				</Alert>
+			</Snackbar>
+			<Box>
+				<Avatar sx={{ marginTop: 3, marginBottom: 2, marginLeft: 22 }}>
+					<LockOpen />
+				</Avatar>
+				<Typography
+					component="h1"
+					variant="h5"
+					sx={{ marginTop: 3, marginBottom: 2, marginLeft: 20 }}
 				>
-					<Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-						{(error as CustomError)?.data?.message}
-					</Alert>
-				</Snackbar>
+					Войти
+				</Typography>
 				<Box>
-					<Avatar sx={{ marginTop: 3, marginBottom: 2, marginLeft: 22 }}>
-						<LockOpen />
-					</Avatar>
-					<Typography
-						component="h1"
-						variant="h5"
-						sx={{ marginTop: 3, marginBottom: 2, marginLeft: 20 }}
-					>
-						Войти
-					</Typography>
-					<Box>
-						<form onSubmit={submitFormHandler}>
-							<Grid container spacing={2}>
-								<FormElement
-									required
-									value={form.username}
-									onChange={inputChangeHandler}
-									name="username"
-									label="Имя пользователя"
-								/>
-								<FormElement
-									required
-									value={form.password}
-									onChange={inputChangeHandler}
-									type="password"
-									name="password"
-									label="Пароль"
-								/>
+					<form onSubmit={submitFormHandler}>
+						<Grid container spacing={2}>
+							<FormElement
+								required
+								value={form.username}
+								onChange={inputChangeHandler}
+								name="username"
+								label="Имя пользователя"
+							/>
+							<FormElement
+								required
+								value={form.password}
+								onChange={inputChangeHandler}
+								type="password"
+								name="password"
+								label="Пароль"
+							/>
+						</Grid>
+						<LoadingButton
+							type="submit"
+							fullWidth
+							variant="contained"
+							color="primary"
+							loading={user.isLoading}
+						>
+							Войти
+						</LoadingButton>
+						<Grid container>
+							<Grid item sx={{ marginLeft: 6 }}>
+								<Link component={RouterLink} to="/register">
+									У вас нет аккаунта? Зарегистрироваться
+								</Link>
 							</Grid>
-							<LoadingButton
-								type="submit"
-								fullWidth
-								variant="contained"
-								color="primary"
-								loading={user.isLoading}
-							>
-								Войти
-							</LoadingButton>
-							<Grid container>
-								<Grid item sx={{ marginLeft: 6 }}>
-									<Link component={RouterLink} to="/register">
-										У вас нет аккаунта? Зарегистрироваться
-									</Link>
-								</Grid>
-							</Grid>
-						</form>
-					</Box>
+						</Grid>
+					</form>
 				</Box>
-			</Container>
-		</ThemeProvider>
+			</Box>
+		</Container>
 	);
 };
 

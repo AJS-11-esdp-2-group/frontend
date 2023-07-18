@@ -1,7 +1,7 @@
 import EnhancedTableHead from './StaticTableHead/StaticTableHead';
 import TablePaginationActions from './StaticPaginationActions/StaticPaginationActions';
 import { ISupplies } from '../../../interfaces/ISupply';
-import { useGetAllSuppliersQuery } from '../../../Store/services/suppliers';
+import { useGetAllSuppliersQuery } from '../../../Store/supplier/suppliers';
 import { useGetSuppliesSupplierMutation } from '../../../Store/services/supply';
 import * as React from 'react';
 import {

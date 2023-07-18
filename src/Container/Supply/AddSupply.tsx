@@ -1,10 +1,7 @@
-/* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable @typescript-eslint/no-misused-promises */
-import { GlobalTheme } from '../..';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import { useGetAllItemsQuery } from '../../Store/services/items';
 import { useAddsupplyMutation } from '../../Store/services/supply';
-import { useGetAllSuppliersQuery } from '../../Store/services/suppliers';
+import { useGetAllSuppliersQuery } from '../../Store/supplier/suppliers';
 import { useGetAllStorageQuery } from '../../Store/services/storages';
 import FormElement from '../../Components/UI/Form/FormElement';
 import { useAppSelector } from '../../Store/hooks';
@@ -19,7 +16,6 @@ import {
 	Alert,
 	Autocomplete,
 	TextField,
-	ThemeProvider,
 } from '@mui/material';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
@@ -131,97 +127,91 @@ const AddSupply = () => {
 	};
 
 	return (
-		<ThemeProvider theme={GlobalTheme}>
-			<form onSubmit={submitFormHandler}>
-				<Container
-					component="section"
-					maxWidth="xs"
-					sx={{ marginTop: '100px' }}
+		<form onSubmit={submitFormHandler}>
+			<Container component="section" maxWidth="xs" sx={{ marginTop: '100px' }}>
+				<Snackbar
+					anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+					open={open}
+					autoHideDuration={3000}
+					onClose={handleClose}
 				>
-					<Snackbar
-						anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-						open={open}
-						autoHideDuration={3000}
-						onClose={handleClose}
-					>
-						<Alert severity="error" onClose={handleClose}>
-							{(error as CustomError)?.data?.message}
-						</Alert>
-					</Snackbar>
-					<BasicSelect
-						value={form.source_id}
-						label="Откуда"
-						name="source_id"
-						onChange={(value) => selectChangeHandler('source_id', value)}
-						options={
-							suppliers
-								? suppliers.map((suppliers) => ({
-										id: suppliers.id,
-										name: suppliers.name_supplier,
-								  }))
-								: []
-						}
-					/>
+					<Alert severity="error" onClose={handleClose}>
+						{(error as CustomError)?.data?.message}
+					</Alert>
+				</Snackbar>
+				<BasicSelect
+					value={form.source_id}
+					label="Откуда"
+					name="source_id"
+					onChange={(value) => selectChangeHandler('source_id', value)}
+					options={
+						suppliers
+							? suppliers.map((ssuppliers) => ({
+									id: ssuppliers.id,
+									name: ssuppliers.name_supplier,
+							  }))
+							: []
+					}
+				/>
 
-					<BasicSelect
-						value={form.target_id}
-						label="Куда"
-						name="target"
-						onChange={(value) => selectChangeHandler('target_id', value)}
-						options={
-							storages
-								? storages.map((storage) => ({
-										id: storage.id,
-										name: storage.storage,
-								  }))
-								: []
-						}
-					/>
-					<Autocomplete
-						disablePortal
-						options={items ? items : []}
-						getOptionLabel={(option) => option.item_name}
-						onChange={autocompleteChangeHandler}
-						value={
-							items?.find((item) => item.id.toString() === form.item_id) || null
-						}
-						renderInput={(params) => (
-							<TextField name="item_id" {...params} label="Товар" />
-						)}
-					/>
+				<BasicSelect
+					value={form.target_id}
+					label="Куда"
+					name="target"
+					onChange={(value) => selectChangeHandler('target_id', value)}
+					options={
+						storages
+							? storages.map((storage) => ({
+									id: storage.id,
+									name: storage.storage,
+							  }))
+							: []
+					}
+				/>
+				<Autocomplete
+					disablePortal
+					options={items ? items : []}
+					getOptionLabel={(option) => option.item_name}
+					onChange={autocompleteChangeHandler}
+					value={
+						items?.find((item) => item.id.toString() === form.item_id) || null
+					}
+					renderInput={(params) => (
+						<TextField name="item_id" {...params} label="Товар" />
+					)}
+				/>
 
-					<FormElement
-						type="number"
-						value={form.qty}
-						label="Количество"
-						name="qty"
-						onChange={inputChangeHandler}
-					/>
-					<FormElement
-						type="number"
-						value={form.price}
-						label="Цена за штуку"
-						name="price"
-						onChange={inputChangeHandler}
-					/>
-					<FormElement
-						value={form.total_price.toString()}
-						label="Общая цена"
-						name="total_price"
-					/>
-					<Button
-						fullWidth
-						variant="contained"
-						color="success"
-						type="submit"
-						className="submit"
-						disabled={!isFormValid()}
-					>
-						Создать Приход
-					</Button>
-				</Container>
-			</form>
-		</ThemeProvider>
+				<FormElement
+					type="number"
+					value={form.qty}
+					label="Количество"
+					name="qty"
+					onChange={inputChangeHandler}
+				/>
+				<FormElement
+					type="number"
+					value={form.price}
+					label="Цена за штуку"
+					name="price"
+					onChange={inputChangeHandler}
+				/>
+				<FormElement
+					value={form.total_price.toString()}
+					label="Общая цена"
+					name="total_price"
+				/>
+				<Button
+					fullWidth
+					variant="contained"
+					color="success"
+					type="submit"
+					className="submit"
+					disabled={!isFormValid()}
+				>
+					Создать Приход
+				</Button>
+			</Container>
+		</form>
 	);
 };
 

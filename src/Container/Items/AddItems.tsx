@@ -55,6 +55,7 @@ const AddItem = () => {
 
 	const submitFormHandler = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		// @ts-ignore
 		const data = await addItem(form);
 		if (!(data as unknown as { error: object }).error) {
 			navigate('/items');

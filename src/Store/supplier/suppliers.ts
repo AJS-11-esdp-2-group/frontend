@@ -1,4 +1,4 @@
-import { api } from '../../features/index';
+import { api } from '../../features';
 import { ISupplier, ISuppliers } from '../../interfaces/ISuppliers';
 
 const suppliersApi = api.injectEndpoints({
