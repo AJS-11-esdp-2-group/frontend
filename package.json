@@ -9,7 +9,6 @@
     "@mui/lab": "^5.0.0-alpha.88",
     "@mui/material": "^5.8.6",
     "@mui/x-data-grid": "^6.10.0",
-    "@mui/x-data-grid-generator": "^6.10.0",
     "@mui/x-date-pickers": "^6.10.0",
     "@react-spring/web": "^9.7.3",
     "@reduxjs/toolkit": "^1.9.5",
