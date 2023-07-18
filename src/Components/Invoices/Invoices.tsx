@@ -1,10 +1,23 @@
-import Box from '@mui/material/Box'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import { useGetAllActionsQuery } from '../../Store/services/supply'
-import { Link, useNavigate } from 'react-router-dom'
-import { Button, Container, Typography } from '@mui/material'
-import Skeleton from '@mui/material/Skeleton'
-import { IInvoice } from '../../interfaces/IInvoice'
+import { useGetAllActionsQuery } from '../../Store/services/supply';
+import { IInvoice } from '../../interfaces/IInvoice';
+import Box from '@mui/material/Box';
+import {
+  DataGrid,
+  GridColDef,
+  GridToolbarContainer,
+  GridToolbarExport,
+} from '@mui/x-data-grid';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button, Container, Typography } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
+
+function CustomToolbar() {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarExport />
+    </GridToolbarContainer>
+  );
+};
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: '№ накладной', width: 200 },
@@ -36,14 +49,14 @@ const columns: GridColDef[] = [
     headerName: 'Точка продаж',
     width: 150,
   },
-]
+];
 
 const Invoices = () => {
   const navigate = useNavigate()
-  const { data: rows } = useGetAllActionsQuery()
+  const { data: rows } = useGetAllActionsQuery();
   const handleOnCellClick = (params: any) => {
-    navigate(`/invoices/${params.row.id}`)
-  }
+    navigate(`/invoices/${params.row.id}`);
+  };
 
   return (
     <Container>
@@ -74,6 +87,9 @@ const Invoices = () => {
             pageSizeOptions={[5, 10]}
             checkboxSelection
             disableRowSelectionOnClick
+            slots={{
+              toolbar: CustomToolbar,
+            }}
           />
         ) : (
           <Box sx={{ width: '100%' }}>
@@ -84,7 +100,7 @@ const Invoices = () => {
         )}
       </Box>
     </Container>
-  )
-}
+  );
+};
 
-export default Invoices
+export default Invoices;
