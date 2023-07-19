@@ -6,10 +6,8 @@ import { useGetAllItemsQuery } from '../../Store/services/items';
 import { useAddsupplyMutation } from '../../Store/services/supply';
 import { useGetAllSuppliersQuery } from '../../Store/services/suppliers';
 import { useGetAllStorageQuery } from '../../Store/services/storages';
-import { useAppSelector } from '../../Store/hooks';
 import BasicSelect from '../../Components/UI/Form/SelectFormElement';
 import { Items } from '../../interfaces/Items';
-import { getUser } from '../../Store/user/userSelectors';
 import { useNavigate } from 'react-router';
 import {
 	Container,
@@ -48,7 +46,6 @@ const AddSupply = () => {
 	const { data: storages } = useGetAllStorageQuery();
 	const { data: suppliers } = useGetAllSuppliersQuery();
 	const { data: items } = useGetAllItemsQuery();
-	const {user} = useAppSelector(getUser);	
 	const [addsupply, { error, isError }] = useAddsupplyMutation();
 	const [form, setForm] = useState<Supply>({
 		operation_type_id: 1,
@@ -58,8 +55,6 @@ const AddSupply = () => {
 		items: []
 	});
 	const [open, setOpen] = useState(false);
-	const [selected, setSelected] = useState<readonly string[]>([]);
-	const [rows, setRows] = useState<[]>([]);
 	const navigate = useNavigate();
 
 	const handleClose = () => {
@@ -216,7 +211,6 @@ const AddSupply = () => {
 							: []
 					}
 				/>
-
 				<BasicSelect
 					value={form.target_id}
 					label="Торговая точка"
@@ -236,9 +230,6 @@ const AddSupply = () => {
 					options={items ? items : []}
 					getOptionLabel={(option) => option.item_name}
 					onChange={autocompleteChangeHandler}
-					// value={
-					// 	items?.find((item) => item.id.toString() === form.items[0].item_id) || null
-					// }
 					renderInput={(params) => (
 						<TextField name="item_id" {...params} label="Выберите товар" />
 					)}
