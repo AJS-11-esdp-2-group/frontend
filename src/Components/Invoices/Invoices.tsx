@@ -10,6 +10,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Container, Typography } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
+import { useEffect } from 'react';
 
 function CustomToolbar() {
   return (
@@ -53,7 +54,10 @@ const columns: GridColDef[] = [
 
 const Invoices = () => {
   const navigate = useNavigate()
-  const { data: rows } = useGetAllActionsQuery();
+  const { data: rows, refetch } = useGetAllActionsQuery();
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
   const handleOnCellClick = (params: any) => {
     navigate(`/invoices/${params.row.id}`);
   };
