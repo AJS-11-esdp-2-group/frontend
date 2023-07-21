@@ -46,7 +46,7 @@ const AddSupply = () => {
 	const { data: storages } = useGetAllStorageQuery();
 	const { data: suppliers } = useGetAllSuppliersQuery();
 	const { data: items } = useGetAllItemsQuery();
-	const [addsupply, { error, isError }] = useAddsupplyMutation();
+	const [addsupply,  { error, isError }] = useAddsupplyMutation();
 	const [form, setForm] = useState<Supply>({
 		operation_type_id: 1,
 		source_id: '',
@@ -110,7 +110,7 @@ const AddSupply = () => {
 					}
 		
 					const stateItems = form.items;
-					stateItems.push(newItem);
+					stateItems.unshift(newItem);
 		
 					setForm((prevState) => ({
 						...prevState,
@@ -126,7 +126,6 @@ const AddSupply = () => {
 	const deleteItem = (index: number): void => {
 		const items = form.items;
 		items.splice(index, 1);
-		console.log(items);
 		
 		setForm((prevState) => ({
 			...prevState,
@@ -152,12 +151,11 @@ const AddSupply = () => {
 		);
 	};
 
-	const submitFormHandler = async () => {
+	const submitFormHandler = () => {
 		if (isFormValid()) {
-			const data = await addsupply(form);
-			if (!(data as { error: object }).error) {
-				navigate('/invoices');
-			}
+			addsupply(form);
+			
+			if (!isError) navigate('/invoices');
 		}
 	};
 
@@ -249,6 +247,35 @@ const AddSupply = () => {
 				<TableContainer sx = {{maxHeight: 500}}>
 					<EnhancedTableHead/>
 					<TableBody>
+						<TableRow>
+							<TableCell></TableCell>
+							<TableCell ></TableCell>
+							<TableCell align='center'></TableCell>
+							<TableCell align='center'>
+								{
+									form.items.length > 0 && 
+									form.items[form.items.length-1]?.qty !== '' && 
+									form.items[form.items.length-1]?.price !== '' ?
+									form.items.reduce((acc, item) => {
+										if(item.qty === '') return acc
+										return acc + parseInt(item.qty)
+									}, 0) : null
+								}
+							</TableCell>
+							<TableCell align='center'></TableCell>
+							<TableCell align='center'>
+								{
+									form.items.length > 0 && 
+									form.items[form.items.length-1]?.qty !== '' && 
+									form.items[form.items.length-1]?.price !== '' ?
+									form.items.reduce((acc, item) => {
+										if(item.price === '' && item.qty === '') return acc
+										if(item.price === '') return acc
+										return acc + (parseInt(item.qty) *parseInt(item.price)) 
+									}, 0) : null
+								}
+							</TableCell>
+						</TableRow>
 						{
 							form.items.length > 0 ? 
 							form.items.map((item, i) => {
@@ -299,32 +326,6 @@ const AddSupply = () => {
 								)
 							}) : <Typography >Нет выбранных товаров</Typography>
 						}
-						<TableRow>
-							<TableCell></TableCell>
-							<TableCell ></TableCell>
-							<TableCell align='center'></TableCell>
-							<TableCell align='center'>
-								{
-									form.items.length > 0 && 
-									form.items[form.items.length-1]?.qty !== '' && 
-									form.items[form.items.length-1]?.price !== '' ?
-									form.items.reduce((acc, item) => {
-										return acc + parseInt(item.qty)
-									}, 0) : null
-								}
-							</TableCell>
-							<TableCell align='center'></TableCell>
-							<TableCell align='center'>
-								{
-									form.items.length > 0 && 
-									form.items[form.items.length-1]?.qty !== '' && 
-									form.items[form.items.length-1]?.price !== '' ?
-									form.items.reduce((acc, item) => {
-										return acc + (parseInt(item.qty) *parseInt(item.price)) 
-									}, 0) : null
-								}
-							</TableCell>
-						</TableRow>
 					</TableBody>
 				</TableContainer>
 			</Container>
