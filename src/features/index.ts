@@ -45,5 +45,6 @@ export const api = createApi({
 		'Bouquets',
 		'BouquetsImage',
 		'Recipes',
+		'AvailableBouquets',
 	],
 });
