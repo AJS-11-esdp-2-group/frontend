@@ -1,7 +1,8 @@
 import { ListItem, ListItemText, ListItemIcon, Button, TextField, Grid, ThemeProvider, ImageListItem } from '@mui/material';
-import { Delete, ModeEdit, Done, Clear } from '@mui/icons-material';
+import { Clear } from '@mui/icons-material';
 import { GlobalTheme } from '../..';
-import { MouseEventHandler, ChangeEventHandler } from 'react';
+import { MouseEventHandler} from 'react';
+
 
 interface Props {
   id: number;
@@ -20,12 +21,13 @@ const AvailableBouquetsList = ({
   name_bouquet,
   actual_price,
   image_bouquet,
+  added_date,
   isEditing,
   editingPrice,
   changePrice,
   handleCancelClick,
 }: Props) => {
-
+  
   return (
     <>
       <ThemeProvider theme={GlobalTheme}>
@@ -49,6 +51,7 @@ const AvailableBouquetsList = ({
           />
           <ListItem>
             <ListItemText primary={name_bouquet} style={{ textAlign: 'center' }} />
+            <ListItemText primary={new Date(added_date).toLocaleString()} style={{ textAlign: 'center' }} />
           </ListItem>
           {isEditing ? (
             <Grid>
