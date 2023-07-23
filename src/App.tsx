@@ -23,6 +23,7 @@ import {
 	ThemeProvider,
 } from '@mui/material';
 import { grey, blue, blueGrey } from '@mui/material/colors';
+import AvailableBouquets from './Container/AvailableBouquets/AvailableBouquets';
 
 const getDesignTokens = (mode: PaletteMode) => ({
 	palette: {
@@ -56,14 +57,14 @@ function App() {
 						<Route
 							path="/register"
 							element={
-									<Register />
+								<Register />
 							}
 						/>
 						<Route path="/" element={<HomePage />} />
 						<Route
 							path="/login"
 							element={
-									<Login />
+								<Login />
 							}
 						/>
 						<Route
@@ -176,7 +177,17 @@ function App() {
 								</ProtectedRoute>
 							}
 						/>
-
+						<Route
+							path="/available_bouquets"
+							element={
+								<ProtectedRoute
+									isAllowed={user.isAuthenticated}
+									redirectPath="/"
+								>
+									<AvailableBouquets />
+								</ProtectedRoute>
+							}
+						/>
 					</Routes>
 				</main>
 			</CssBaseline>

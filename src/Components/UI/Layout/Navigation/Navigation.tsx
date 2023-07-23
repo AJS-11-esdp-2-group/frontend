@@ -20,6 +20,7 @@ import {
 	Logout,
 	CategoryRounded,
 	EmojiNatureTwoTone,
+	FilterVintage,
 } from '@mui/icons-material';
 
 type Anchor = 'left';
@@ -72,6 +73,14 @@ const Navigation = () => {
 					</ListItemButton>
 				</ListItem>
 				<ListItem>
+					<ListItemButton component={Link} to="/available_bouquets">
+						<ListItemIcon>
+							<FilterVintage />
+						</ListItemIcon>
+						<Typography>Букеты в наличии</Typography>
+					</ListItemButton>
+				</ListItem>
+				<ListItem>
 					<ListItemButton component={Link} to="/suppliers">
 						<ListItemIcon>
 							<LocalShipping />
@@ -97,12 +106,14 @@ const Navigation = () => {
 						<Typography>Категории товаров</Typography>
 					</ListItemButton>
 				</ListItem>
-				<ListItemButton component={Link} to="/recipes">
-					<ListItemIcon>
-						<EmojiNatureTwoTone />
-					</ListItemIcon>
-					<Typography>Рецепты</Typography>
-				</ListItemButton>
+				<ListItem>
+					<ListItemButton component={Link} to="/recipes">
+						<ListItemIcon>
+							<EmojiNatureTwoTone />
+						</ListItemIcon>
+						<Typography>Рецепты</Typography>
+					</ListItemButton>
+				</ListItem>
 			</List>
 			<Divider />
 			<List>
