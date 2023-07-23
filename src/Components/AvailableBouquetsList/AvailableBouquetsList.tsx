@@ -33,12 +33,12 @@ const AvailableBouquetsList = ({
   return (
     <>
       <ThemeProvider theme={GlobalTheme}>
-        <div onClick={onClick}>
-          <ImageListItem
-            key={id}
-            style={{
-              border: '1px solid #ccc', borderRadius: '5px', padding: '5px'
-            }}>
+        <ImageListItem
+          key={id}
+          style={{
+            border: '1px solid #ccc', borderRadius: '5px', padding: '5px'
+          }}>
+          <div onClick={onClick}>
             <img
               src={image_bouquet}
               srcSet={image_bouquet}
@@ -52,31 +52,30 @@ const AvailableBouquetsList = ({
                 maxWidth: '300px',
               }}
             />
-            <ListItem>
-              <ListItemText primary={name_bouquet} style={{ textAlign: 'center' }} />
-              <ListItemText primary={new Date(added_date).toLocaleString()} style={{ textAlign: 'center' }} />
-            </ListItem>
-            {isEditing ? (
-              <Grid>
-                <TextField
-                  value={editingPrice}
-                  id="outlined-basic"
-                  label="Цена"
-                  variant="outlined"
-                  type="number"
-                />
+          <ListItem>
+            <ListItemText primary={name_bouquet}/>
+            <ListItemText secondary={'Собран ' + new Date(added_date).toLocaleString()}/>
+            <ListItemText secondary={actual_price + ' тенге'}/>
+          </ListItem>
+          </div>
+          {isEditing ? (
+            <Grid>
+              <TextField
+                value={editingPrice}
+                id="outlined-basic"
+                label="Цена"
+                variant="outlined"
+                type="number"
+              />
 
-                <ListItemIcon onClick={handleCancelClick}>
-                  <Clear />
-                </ListItemIcon>
-              </Grid>
-            ) : (
-              <ListItem key={id} disableGutters secondaryAction={<Button onClick={changePrice}>Изменить Цену</Button>}>
-                <ListItemText secondary={actual_price} />
-              </ListItem>
-            )}
-          </ImageListItem>
-        </div>
+              <ListItemIcon onClick={handleCancelClick}>
+                <Clear />
+              </ListItemIcon>
+            </Grid>
+          ) : (
+            <ListItem key={id} disableGutters secondaryAction={<Button onClick={changePrice}>Изменить Цену</Button>}></ListItem>
+          )}
+        </ImageListItem>
       </ThemeProvider>
     </>
   );
