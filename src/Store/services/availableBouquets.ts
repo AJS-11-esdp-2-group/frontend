@@ -1,5 +1,6 @@
 import { api } from '../../features/index';
-import { IAvailableBouquet, IAvailableBouquets } from '../../interfaces/IAvailableBouquets';
+import { IActions } from '../../interfaces/IActions';
+import { IAvailableBouquets } from '../../interfaces/IAvailableBouquets';
 
 const availableBouquetsApi = api.injectEndpoints({
 	endpoints: (build) => ({
@@ -7,7 +8,7 @@ const availableBouquetsApi = api.injectEndpoints({
 			query: () => '/sales/showcase',
 			providesTags: () => [{ type: 'AvailableBouquets', id: 'LIST' }],
 		}),
-		getAvailableBouquetById: build.query<IAvailableBouquet[], number>({
+		getAvailableBouquetById: build.query<IActions[], number | string>({
 			query: (id) => `/sales/showcase/${id}`,
 		}),
 	}),

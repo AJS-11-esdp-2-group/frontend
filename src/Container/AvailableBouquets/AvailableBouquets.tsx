@@ -1,11 +1,22 @@
 /* eslint-disable @typescript-eslint/await-thenable */
-import { useGetAllAvailableBouquetsQuery } from '../../Store/services/availableBouquets';
+import { useGetAllAvailableBouquetsQuery, useGetAvailableBouquetByIdQuery } from '../../Store/services/availableBouquets';
 import { IAvailableBouquets } from '../../interfaces/IAvailableBouquets';
 import AvailableBouquetsList from '../../Components/AvailableBouquetsList/AvailableBouquetsList';
-import { CustomError } from '../../interfaces/errors/CustomError';
-import { GlobalTheme } from '../..';
 import { useEffect, useState } from 'react';
-import { Alert, Container, Grid, ImageList, ImageListItem, List, ListSubheader, Snackbar, ThemeProvider } from '@mui/material';
+import {
+    Button,
+    Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Grid,
+    ImageList,
+    ImageListItem,
+    List,
+    ListSubheader,
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const AvailableBouquets = () => {
@@ -15,6 +26,8 @@ const AvailableBouquets = () => {
     const [bouquets, setBouquets] = useState<IAvailableBouquets[]>([]);
     const [editingPriceId, setEditingPriceId] = useState<number | null>(null);
     const [editingPrice, setEditingPrice] = useState(0);
+    const [selectedBouquetId, setSelectedBouquetId] = useState<number>(0);
+    const { data: recipes } = useGetAvailableBouquetByIdQuery(selectedBouquetId);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -28,8 +41,9 @@ const AvailableBouquets = () => {
         }
     }, [data]);
 
-    const onClick = () => {
-
+    const onClick = (id: number) => {
+        setSelectedBouquetId(id);
+        setOpen(true);
     };
 
     const handleClose = () => {
@@ -41,7 +55,6 @@ const AvailableBouquets = () => {
         setEditingPrice(actual_price);
         setEditingPriceId(bouquetId);
     };
-
 
     if (isLoading) return <h1>Loading...</h1>;
     return (
@@ -59,16 +72,6 @@ const AvailableBouquets = () => {
                         bouquets.map((bouquet) => {
                             return (
                                 <Grid item key={bouquet.id}>
-                                    <Snackbar
-                                        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                                        open={open}
-                                        autoHideDuration={3000}
-                                        onClose={handleClose}
-                                    >
-                                        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-                                            {(error as CustomError)?.data?.message}
-                                        </Alert>
-                                    </Snackbar>
                                     <List>
                                         <AvailableBouquetsList
                                             id={bouquet.id}
@@ -76,12 +79,11 @@ const AvailableBouquets = () => {
                                             image_bouquet={bouquet.image_bouquet}
                                             added_date={bouquet.added_date}
                                             actual_price={editingPriceId === bouquet.id ? editingPrice : bouquet.actual_price}
+                                            onClick={() => onClick(bouquet.id)}
                                             changePrice={() => handleEditPrice(bouquet.id, bouquet.actual_price)}
                                             handleCancelClick={() => setEditingPriceId(null)}
                                             isEditing={editingPriceId === bouquet.id}
-
                                             editingPrice={editingPrice}
-
                                         />
                                     </List>
                                     <List />
@@ -90,7 +92,21 @@ const AvailableBouquets = () => {
                         })}
                 </ImageList>
             </Grid>
-            </Container>
+            <Dialog open={open} onClose={handleClose} PaperProps={{ style: { backgroundColor: '#F0F0F0' } }}>
+                <DialogTitle >Состав букета</DialogTitle>
+                <DialogContent>
+                    {recipes &&
+                        recipes.map((item) => (
+                            <DialogContentText key={item.id} style={{ color: 'black' }}>
+                                {item.item_name}: {item.qty} штук(-а) по {item.price} тенге
+                            </DialogContentText>
+                        ))}
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Закрыть</Button>
+                </DialogActions>
+            </Dialog>
+        </Container>
     );
 };
 
