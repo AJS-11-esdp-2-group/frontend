@@ -27,7 +27,7 @@ const AvailableBouquets = () => {
     const [editingPriceId, setEditingPriceId] = useState<number | null>(null);
     const [editingPrice, setEditingPrice] = useState(0);
     const [selectedBouquetId, setSelectedBouquetId] = useState<number>(0);
-    const { data: recipes } = useGetAvailableBouquetByIdQuery(selectedBouquetId);
+    const { data: items } = useGetAvailableBouquetByIdQuery(selectedBouquetId);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -86,7 +86,6 @@ const AvailableBouquets = () => {
                                             editingPrice={editingPrice}
                                         />
                                     </List>
-                                    <List />
                                 </Grid>
                             );
                         })}
@@ -95,8 +94,8 @@ const AvailableBouquets = () => {
             <Dialog open={open} onClose={handleClose} PaperProps={{ style: { backgroundColor: '#F0F0F0' } }}>
                 <DialogTitle >Состав букета</DialogTitle>
                 <DialogContent>
-                    {recipes &&
-                        recipes.map((item) => (
+                    {items &&
+                        items.map((item) => (
                             <DialogContentText key={item.id} style={{ color: 'black' }}>
                                 {item.item_name}: {item.qty} штук(-а) по {item.price} тенге
                             </DialogContentText>
