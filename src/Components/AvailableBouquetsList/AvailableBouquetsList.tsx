@@ -1,7 +1,8 @@
 import { ListItem, ListItemText, ListItemIcon, Button, TextField, Grid, ThemeProvider, ImageListItem } from '@mui/material';
-import { Delete, ModeEdit, Done, Clear } from '@mui/icons-material';
+import { Clear } from '@mui/icons-material';
 import { GlobalTheme } from '../..';
-import { MouseEventHandler, ChangeEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
+
 
 interface Props {
   id: number;
@@ -9,6 +10,7 @@ interface Props {
   actual_price: number;
   image_bouquet: string;
   added_date: Date;
+  onClick: MouseEventHandler<HTMLDivElement>;
   isEditing: boolean;
   editingPrice: number;
   changePrice: MouseEventHandler<HTMLButtonElement>;
@@ -20,6 +22,8 @@ const AvailableBouquetsList = ({
   name_bouquet,
   actual_price,
   image_bouquet,
+  added_date,
+  onClick,
   isEditing,
   editingPrice,
   changePrice,
@@ -34,22 +38,26 @@ const AvailableBouquetsList = ({
           style={{
             border: '1px solid #ccc', borderRadius: '5px', padding: '5px'
           }}>
-          <img
-            src={image_bouquet}
-            srcSet={image_bouquet}
-            alt={name_bouquet}
-            loading="lazy"
-            style={{
-              objectFit: 'cover',
-              width: '100%',
-              height: '100%',
-              maxHeight: '200px',
-              maxWidth: '300px',
-            }}
-          />
+          <div onClick={onClick}>
+            <img
+              src={image_bouquet}
+              srcSet={image_bouquet}
+              alt={name_bouquet}
+              loading="lazy"
+              style={{
+                objectFit: 'cover',
+                width: '100%',
+                height: '100%',
+                maxHeight: '200px',
+                maxWidth: '300px',
+              }}
+            />
           <ListItem>
-            <ListItemText primary={name_bouquet} style={{ textAlign: 'center' }} />
+            <ListItemText primary={name_bouquet}/>
+            <ListItemText secondary={'Собран ' + new Date(added_date).toLocaleString()}/>
+            <ListItemText secondary={actual_price + ' тенге'}/>
           </ListItem>
+          </div>
           {isEditing ? (
             <Grid>
               <TextField
@@ -65,9 +73,7 @@ const AvailableBouquetsList = ({
               </ListItemIcon>
             </Grid>
           ) : (
-            <ListItem key={id} disableGutters secondaryAction={<Button onClick={changePrice}>Изменить Цену</Button>}>
-              <ListItemText secondary={actual_price} />
-            </ListItem>
+            <ListItem key={id} disableGutters secondaryAction={<Button onClick={changePrice}>Изменить Цену</Button>}></ListItem>
           )}
         </ImageListItem>
       </ThemeProvider>
