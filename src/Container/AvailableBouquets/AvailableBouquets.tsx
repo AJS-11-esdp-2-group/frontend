@@ -4,6 +4,7 @@ import { IAvailableBouquets } from '../../interfaces/IAvailableBouquets';
 import AvailableBouquetsList from '../../Components/AvailableBouquetsList/AvailableBouquetsList';
 import { useEffect, useState } from 'react';
 import {
+    Box,
     Button,
     Container,
     Dialog,
@@ -63,33 +64,33 @@ const AvailableBouquets = () => {
             justifyContent: 'center',
             flexDirection: 'column',
         }}>
-            <Grid container sx={{ maxWidth: '600px', margin: '0 auto', my: 2 }}>
-                <ImageList sx={{ width: '100%', height: 450 }}>
-                    <ImageListItem key="Subheader" cols={2}>
+            <Grid container sx={{ maxWidth: '400px', margin: '0 auto', my: 2 }}>
+                <Grid item xs={12}>
+                    <Box>
                         <ListSubheader component="div">Букеты в наличии</ListSubheader>
-                    </ImageListItem>
-                    {bouquets &&
-                        bouquets.map((bouquet) => {
-                            return (
-                                <Grid item key={bouquet.id}>
-                                    <List>
-                                        <AvailableBouquetsList
-                                            id={bouquet.id}
-                                            name_bouquet={bouquet.name_bouquet}
-                                            image_bouquet={bouquet.image_bouquet}
-                                            added_date={bouquet.added_date}
-                                            actual_price={editingPriceId === bouquet.id ? editingPrice : bouquet.actual_price}
-                                            onClick={() => onClick(bouquet.id)}
-                                            changePrice={() => handleEditPrice(bouquet.id, bouquet.actual_price)}
-                                            handleCancelClick={() => setEditingPriceId(null)}
-                                            isEditing={editingPriceId === bouquet.id}
-                                            editingPrice={editingPrice}
-                                        />
-                                    </List>
-                                </Grid>
-                            );
-                        })}
-                </ImageList>
+                        {bouquets &&
+                            bouquets.map((bouquet) => {
+                                return (
+                                    <Grid item key={bouquet.id}>
+                                        <List>
+                                            <AvailableBouquetsList
+                                                id={bouquet.id}
+                                                name_bouquet={bouquet.name_bouquet}
+                                                image_bouquet={bouquet.image_bouquet}
+                                                added_date={bouquet.added_date}
+                                                actual_price={editingPriceId === bouquet.id ? editingPrice : bouquet.actual_price}
+                                                onClick={() => onClick(bouquet.id)}
+                                                changePrice={() => handleEditPrice(bouquet.id, bouquet.actual_price)}
+                                                handleCancelClick={() => setEditingPriceId(null)}
+                                                isEditing={editingPriceId === bouquet.id}
+                                                editingPrice={editingPrice}
+                                            />
+                                        </List>
+                                    </Grid>
+                                );
+                            })}
+                    </Box>
+                </Grid>
             </Grid>
             <Dialog open={open} onClose={handleClose} PaperProps={{ style: { backgroundColor: '#F0F0F0' } }}>
                 <DialogTitle >Состав букета</DialogTitle>
