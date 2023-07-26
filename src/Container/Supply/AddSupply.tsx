@@ -197,7 +197,7 @@ const AddSupply = () => {
 				</Snackbar>
 				<BasicSelect
 					value={form.source_id}
-					label="Контрагент"
+					label="контрагент"
 					name="source_id"
 					onChange={(value) => selectChangeHandler('source_id', value)}
 					options={

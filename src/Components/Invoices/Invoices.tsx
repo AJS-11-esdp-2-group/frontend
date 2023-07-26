@@ -55,9 +55,11 @@ const columns: GridColDef[] = [
 const Invoices = () => {
   const navigate = useNavigate()
   const { data: rows, refetch } = useGetAllActionsQuery();
+  
   useEffect(() => {
     refetch();
   }, [refetch]);
+
   const handleOnCellClick = (params: any) => {
     navigate(`/invoices/${params.row.id}`);
   };
