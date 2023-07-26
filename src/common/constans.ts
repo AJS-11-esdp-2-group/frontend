@@ -1,1 +1,1 @@
-export const apiUrl = 'http://localhost:8000';
+export const apiUrl = 'https://backend-jgq01cyer-ajs-11-12.vercel.app/';
