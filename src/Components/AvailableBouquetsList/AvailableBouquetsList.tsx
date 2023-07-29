@@ -16,6 +16,7 @@ export interface AvailableBouquetsProps {
   handleSaveClick: (itemId: string, newPrice: number) => void;
   handleCancelClick: MouseEventHandler<HTMLDivElement>;
   handlePriceChange: ChangeEventHandler<HTMLInputElement>;
+  sellBouquet: (id: string, totalSum: number) => void;
 }
 
 const AvailableBouquetsList = ({
@@ -29,6 +30,7 @@ const AvailableBouquetsList = ({
   changePrice,
   handleSaveClick,
   handleCancelClick,
+  sellBouquet,
 }: AvailableBouquetsProps) => {
   const [totalSum, setTotalSum] = useState(actual_price);
 
@@ -40,8 +42,8 @@ const AvailableBouquetsList = ({
     handleSaveClick(id, totalSum || actual_price);
   };
 
-  const sellBouquet = () => {
-
+  const handleSellButtonClick = () => {
+    sellBouquet(id, totalSum || actual_price);
   };
 
   return (
@@ -93,7 +95,7 @@ const AvailableBouquetsList = ({
           ) : (
             <Button onClick={changePrice}>Изменить цену продажи</Button>
           )}
-          <Button onClick={sellBouquet}>Продать букет</Button>
+          <Button onClick={handleSellButtonClick}>Продать букет</Button>
         </ImageListItem>
       </ThemeProvider>
     </>

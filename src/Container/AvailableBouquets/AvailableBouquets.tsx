@@ -58,22 +58,25 @@ const AvailableBouquets = () => {
         setEditingPrice(Number(event.target.value));
     };
 
-    const handleSaveClick = async (id: string, newBouquet: number) => {
+    const handleSaveClick = (id: string, newBouquet: number) => {
         const newPrice = newBouquet || editingPrice;
-        await changePrice({
-          id: id,
-          bouquet: { total_sum: newPrice },
-        });
         const updatedBouquets = bouquets.map((bouquet) => {
-          if (id === bouquet.id) {
-            return { ...bouquet, total_sum: newPrice };
-          }
-          return bouquet;
+            if (id === bouquet.id) {
+                return { ...bouquet, total_sum: newPrice };
+            }
+            return bouquet;
         });
-    
+
         setBouquets(updatedBouquets);
         setEditingPriceId(null);
-      };
+    };
+
+    const sellBouquet = async (id: string, totalSum: number) => {
+        await changePrice({
+            id: id,
+            bouquet: { total_sum: totalSum },
+        });
+    };
 
     if (isLoading) return <h1>Loading...</h1>;
     return (
@@ -103,8 +106,8 @@ const AvailableBouquets = () => {
                                                 isEditing={editingPriceId === bouquet.id}
                                                 handleSaveClick={() => handleSaveClick(bouquet.id, editingPrice)}
                                                 editingPrice={editingPrice}
-                                                // totalSum={editingPriceId === bouquet.id ? editingPrice : bouquet.actual_price}
                                                 handlePriceChange={handlePriceChange}
+                                                sellBouquet={sellBouquet}
                                             />
                                         </List>
                                     </Grid>
