@@ -1,11 +1,10 @@
 import { ListItem, ListItemText, ListItemIcon, Button, TextField, Grid, ThemeProvider, ImageListItem } from '@mui/material';
-import { Clear } from '@mui/icons-material';
+import { Clear, Done } from '@mui/icons-material';
 import { GlobalTheme } from '../..';
-import { MouseEventHandler } from 'react';
+import { MouseEventHandler, ChangeEventHandler, useState } from 'react';
 
-
-interface Props {
-  id: number;
+export interface AvailableBouquetsProps {
+  id: string;
   name_bouquet: string;
   actual_price: number;
   image_bouquet: string;
@@ -14,7 +13,9 @@ interface Props {
   isEditing: boolean;
   editingPrice: number;
   changePrice: MouseEventHandler<HTMLButtonElement>;
+  handleSaveClick: (itemId: string, newPrice: number) => void;
   handleCancelClick: MouseEventHandler<HTMLDivElement>;
+  handlePriceChange: ChangeEventHandler<HTMLInputElement>;
 }
 
 const AvailableBouquetsList = ({
@@ -25,10 +26,23 @@ const AvailableBouquetsList = ({
   added_date,
   onClick,
   isEditing,
-  editingPrice,
   changePrice,
+  handleSaveClick,
   handleCancelClick,
-}: Props) => {
+}: AvailableBouquetsProps) => {
+  const [totalSum, setTotalSum] = useState(actual_price);
+
+  const handlePriceInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTotalSum(Number(event.target.value));
+  };
+
+  const handleSaveButtonClick = () => {
+    handleSaveClick(id, totalSum || actual_price);
+  };
+
+  const sellBouquet = () => {
+
+  };
 
   return (
     <>
@@ -51,29 +65,35 @@ const AvailableBouquetsList = ({
                 maxHeight: '300px',
               }}
             />
-          <ListItem>
-            <ListItemText primary={name_bouquet}/>
-            <ListItemText secondary={'Собран ' + new Date(added_date).toLocaleString()}/>
-            <ListItemText secondary={actual_price + ' тенге'}/>
-          </ListItem>
+            <ListItem>
+              <ListItemText primary={name_bouquet} />
+              <ListItemText secondary={'Собран ' + new Date(added_date).toLocaleString()} />
+              <ListItemText secondary={'Цена букета по прайсу ' + actual_price + ' тенге'} />
+              <ListItemText secondary={'Цена продажи ' + totalSum + ' тенге'} />
+
+            </ListItem>
           </div>
           {isEditing ? (
             <Grid>
               <TextField
-                value={editingPrice}
+                value={totalSum}
                 id="outlined-basic"
                 label="Цена"
                 variant="outlined"
                 type="number"
+                onChange={handlePriceInputChange}
               />
-
+              <ListItemIcon onClick={handleSaveButtonClick}>
+                <Done />
+              </ListItemIcon>
               <ListItemIcon onClick={handleCancelClick}>
                 <Clear />
               </ListItemIcon>
             </Grid>
           ) : (
-            <ListItem key={id} disableGutters secondaryAction={<Button onClick={changePrice}>Изменить Цену</Button>}></ListItem>
+            <Button onClick={changePrice}>Изменить цену продажи</Button>
           )}
+          <Button onClick={sellBouquet}>Продать букет</Button>
         </ImageListItem>
       </ThemeProvider>
     </>
