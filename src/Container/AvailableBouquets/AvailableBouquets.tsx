@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/await-thenable */
 import { useEditAvailableBouquetMutation, useGetAllAvailableBouquetsQuery, useGetAvailableBouquetByIdQuery } from '../../Store/services/availableBouquets';
 import { IAvailableBouquets } from '../../interfaces/IAvailableBouquets';
-import AvailableBouquetsList, { AvailableBouquetsProps } from '../../Components/AvailableBouquetsList/AvailableBouquetsList';
+import AvailableBouquetsList from '../../Components/AvailableBouquetsList/AvailableBouquetsList';
 import { useEffect, useState } from 'react';
 import {
     Box,
