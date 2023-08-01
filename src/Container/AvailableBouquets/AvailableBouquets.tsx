@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/await-thenable */
-import { useGetAllAvailableBouquetsQuery, useGetAvailableBouquetByIdQuery } from '../../Store/services/availableBouquets';
+import { useEditAvailableBouquetMutation, useGetAllAvailableBouquetsQuery, useGetAvailableBouquetByIdQuery } from '../../Store/services/availableBouquets';
 import { IAvailableBouquets } from '../../interfaces/IAvailableBouquets';
 import AvailableBouquetsList from '../../Components/AvailableBouquetsList/AvailableBouquetsList';
 import { useEffect, useState } from 'react';
@@ -13,23 +13,20 @@ import {
     DialogContentText,
     DialogTitle,
     Grid,
-    ImageList,
-    ImageListItem,
     List,
     ListSubheader,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 
 const AvailableBouquets = () => {
     const { data, isLoading, isError, error } = useGetAllAvailableBouquetsQuery();
     const [open, setOpen] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [bouquets, setBouquets] = useState<IAvailableBouquets[]>([]);
-    const [editingPriceId, setEditingPriceId] = useState<number | null>(null);
+    const [editingPriceId, setEditingPriceId] = useState<string | null>(null);
     const [editingPrice, setEditingPrice] = useState(0);
-    const [selectedBouquetId, setSelectedBouquetId] = useState<number>(0);
+    const [selectedBouquetId, setSelectedBouquetId] = useState<string>('');
     const { data: items } = useGetAvailableBouquetByIdQuery(selectedBouquetId);
-    const navigate = useNavigate();
+    const [changePrice] = useEditAvailableBouquetMutation();
 
     useEffect(() => {
         setOpen(isError);
@@ -42,7 +39,7 @@ const AvailableBouquets = () => {
         }
     }, [data]);
 
-    const onClick = (id: number) => {
+    const onClick = (id: string) => {
         setSelectedBouquetId(id);
         setOpen(true);
     };
@@ -52,9 +49,33 @@ const AvailableBouquets = () => {
         setOpenModal(false);
     };
 
-    const handleEditPrice = (bouquetId: number, actual_price: number) => {
-        setEditingPrice(actual_price);
+    const handleEditPrice = (bouquetId: string, total_sum: number) => {
+        setEditingPrice(total_sum);
         setEditingPriceId(bouquetId);
+    };
+
+    const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEditingPrice(Number(event.target.value));
+    };
+
+    const handleSaveClick = (id: string, newBouquet: number) => {
+        const newPrice = newBouquet || editingPrice;
+        const updatedBouquets = bouquets.map((bouquet) => {
+            if (id === bouquet.id) {
+                return { ...bouquet, total_sum: newPrice };
+            }
+            return bouquet;
+        });
+
+        setBouquets(updatedBouquets);
+        setEditingPriceId(null);
+    };
+
+    const sellBouquet = async (id: string, totalSum: number) => {
+        await changePrice({
+            id: id,
+            bouquet: { total_sum: totalSum },
+        });
     };
 
     if (isLoading) return <h1>Loading...</h1>;
@@ -78,12 +99,15 @@ const AvailableBouquets = () => {
                                                 name_bouquet={bouquet.name_bouquet}
                                                 image_bouquet={bouquet.image_bouquet}
                                                 added_date={bouquet.added_date}
-                                                actual_price={editingPriceId === bouquet.id ? editingPrice : bouquet.actual_price}
+                                                actual_price={bouquet.actual_price}
                                                 onClick={() => onClick(bouquet.id)}
                                                 changePrice={() => handleEditPrice(bouquet.id, bouquet.actual_price)}
                                                 handleCancelClick={() => setEditingPriceId(null)}
                                                 isEditing={editingPriceId === bouquet.id}
+                                                handleSaveClick={() => handleSaveClick(bouquet.id, editingPrice)}
                                                 editingPrice={editingPrice}
+                                                handlePriceChange={handlePriceChange}
+                                                sellBouquet={sellBouquet}
                                             />
                                         </List>
                                     </Grid>
