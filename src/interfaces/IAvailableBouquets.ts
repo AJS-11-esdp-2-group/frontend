@@ -11,3 +11,6 @@ export interface IAvailableBouquet {
 export interface IAvailableBouquets extends IAvailableBouquet {
 	id: number;
 };
+export interface ISendToShowCase {
+	bouquets: number[]
+}
