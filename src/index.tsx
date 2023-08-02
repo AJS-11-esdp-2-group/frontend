@@ -27,8 +27,7 @@ export const GlobalTheme = createTheme({
 		styleOverrides: {
 		  root: ({ theme }) =>
 			theme.unstable_sx({
-			  marginBottom: 3,
-			  marginTop: 3,
+			  margin:1,	  
 			}),
 		},
 	  },
@@ -79,9 +78,21 @@ export const GlobalTheme = createTheme({
 						background: 
 						'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
 						'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-					})
-			}
-		}
+					}),
+			},
+		},
+		MuiCheckbox: {
+            styleOverrides: {
+                root: ({ theme }) =>
+                    theme.unstable_sx({
+                        position: 'absolute',
+                        top: 0,
+                        right: 0,
+                        zIndex: 1,
+						color: 'Highlight',
+                    }),
+            },
+        },
 	},
   });
   
