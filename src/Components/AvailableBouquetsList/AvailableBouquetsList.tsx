@@ -4,27 +4,27 @@ import { GlobalTheme } from '../..';
 import { MouseEventHandler, ChangeEventHandler, useState } from 'react';
 
 export interface AvailableBouquetsProps {
-  id: string;
+  id: number;
+  count: number;
   name_bouquet: string;
   actual_price: number;
   image_bouquet: string;
-  added_date: Date;
   onClick: MouseEventHandler<HTMLDivElement>;
   isEditing: boolean;
   editingPrice: number;
   changePrice: MouseEventHandler<HTMLButtonElement>;
-  handleSaveClick: (itemId: string, newPrice: number) => void;
-  handleCancelClick: MouseEventHandler<HTMLDivElement>;
+  handleSaveClick: (itemId: number, newPrice: number) => void;
+  handleCancelClick: () => void;
   handlePriceChange: ChangeEventHandler<HTMLInputElement>;
-  sellBouquet: (id: string, totalSum: number) => void;
+  sellBouquet: (id: number, totalSum: number, qty: number) => void;
 }
 
 const AvailableBouquetsList = ({
   id,
+  count,
   name_bouquet,
   actual_price,
   image_bouquet,
-  added_date,
   onClick,
   isEditing,
   changePrice,
@@ -33,6 +33,8 @@ const AvailableBouquetsList = ({
   sellBouquet,
 }: AvailableBouquetsProps) => {
   const [totalSum, setTotalSum] = useState(actual_price);
+  const [previousTotalSum, setPreviousTotalSum] = useState(actual_price);
+  const [qty, setQty] = useState(1);
 
   const handlePriceInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTotalSum(Number(event.target.value));
@@ -40,10 +42,20 @@ const AvailableBouquetsList = ({
 
   const handleSaveButtonClick = () => {
     handleSaveClick(id, totalSum || actual_price);
+    setPreviousTotalSum(totalSum);
+  };
+
+  const handleCancelClickInternal = () => {
+    setTotalSum(previousTotalSum);
+    handleCancelClick();
+  };
+
+  const handleQtyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQty(Number(event.target.value));
   };
 
   const handleSellButtonClick = () => {
-    sellBouquet(id, totalSum || actual_price);
+    sellBouquet(id, totalSum || actual_price, qty); 
   };
 
   return (
@@ -69,10 +81,9 @@ const AvailableBouquetsList = ({
             />
             <ListItem>
               <ListItemText primary={name_bouquet} />
-              <ListItemText secondary={'Собран ' + new Date(added_date).toLocaleString()} />
+              <ListItemText secondary={'Количество букетов в наличии: ' + count} />
               <ListItemText secondary={'Цена букета по прайсу ' + actual_price + ' тенге'} />
               <ListItemText secondary={'Цена продажи ' + totalSum + ' тенге'} />
-
             </ListItem>
           </div>
           {isEditing ? (
@@ -88,14 +99,22 @@ const AvailableBouquetsList = ({
               <ListItemIcon onClick={handleSaveButtonClick}>
                 <Done />
               </ListItemIcon>
-              <ListItemIcon onClick={handleCancelClick}>
+              <ListItemIcon onClick={handleCancelClickInternal}>
                 <Clear />
               </ListItemIcon>
             </Grid>
           ) : (
             <Button onClick={changePrice}>Изменить цену продажи</Button>
           )}
-          <Button onClick={handleSellButtonClick}>Продать букет</Button>
+          <TextField
+            value={qty}
+            id="outlined-basic"
+            label="Количество"
+            variant="outlined"
+            type="number"
+            onChange={handleQtyChange}
+          />
+          <Button onClick={handleSellButtonClick}>Продать букет(-ы)</Button>
         </ImageListItem>
       </ThemeProvider>
     </>
@@ -103,3 +122,7 @@ const AvailableBouquetsList = ({
 };
 
 export default AvailableBouquetsList;
+function qty(id: number, arg1: number, qty: any) {
+  throw new Error('Function not implemented.');
+}
+

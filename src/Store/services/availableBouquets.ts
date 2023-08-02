@@ -12,11 +12,14 @@ const availableBouquetsApi = api.injectEndpoints({
 		getAvailableBouquetById: build.query<IActions[], number | string>({
 			query: (id) => `/sales/showcase/${id}`,
 		}),
-		editAvailableBouquet: build.mutation<IAvailableBouquet, { id: string; bouquet: Partial<IAvailableBouquet> }>({
+		editAvailableBouquet: build.mutation<IAvailableBouquet, { id: number; bouquet: Partial<IAvailableBouquet> }>({
 			query: ({ id, bouquet }) => ({
 				url: `/sales/${id}`,
 				method: 'PUT',
-				body: bouquet,
+				body: {
+					total_sum: bouquet.total_sum,
+					count: bouquet.count,
+				},
 			}),
 			invalidatesTags: ['AvailableBouquets'],
 		}),
