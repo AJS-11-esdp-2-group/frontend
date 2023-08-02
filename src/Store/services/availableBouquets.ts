@@ -1,7 +1,6 @@
-import { AvailableBouquetsProps } from '../../Components/AvailableBouquetsList/AvailableBouquetsList';
 import { api } from '../../features/index';
 import { IActions } from '../../interfaces/IActions';
-import { IAvailableBouquet, IAvailableBouquets } from '../../interfaces/IAvailableBouquets';
+import { IAvailableBouquet, IAvailableBouquets, ISendToShowCase } from '../../interfaces/IAvailableBouquets';
 
 const availableBouquetsApi = api.injectEndpoints({
 	endpoints: (build) => ({
@@ -23,6 +22,13 @@ const availableBouquetsApi = api.injectEndpoints({
 			}),
 			invalidatesTags: ['AvailableBouquets'],
 		}),
+		createAvailableBouquet: build.mutation<IAvailableBouquets[], ISendToShowCase>({
+			query: (bouquet) =>({
+				url: '/sales/showcase',
+				method: 'POST',
+				body: bouquet,
+			}),
+		}),
 	}),
 });
 
@@ -30,4 +36,5 @@ export const {
 	useGetAllAvailableBouquetsQuery,
 	useGetAvailableBouquetByIdQuery,
 	useEditAvailableBouquetMutation,
+	useCreateAvailableBouquetMutation,
 } = availableBouquetsApi;
