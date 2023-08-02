@@ -4,7 +4,7 @@ import { GlobalTheme } from '../..';
 import { MouseEventHandler, ChangeEventHandler, useState } from 'react';
 
 export interface AvailableBouquetsProps {
-  id: string;
+  id: number;
   count: number;
   name_bouquet: string;
   actual_price: number;
@@ -14,10 +14,10 @@ export interface AvailableBouquetsProps {
   isEditing: boolean;
   editingPrice: number;
   changePrice: MouseEventHandler<HTMLButtonElement>;
-  handleSaveClick: (itemId: string, newPrice: number) => void;
-  handleCancelClick: MouseEventHandler<HTMLDivElement>;
+  handleSaveClick: (itemId: number, newPrice: number) => void;
+  handleCancelClick: () => void;
   handlePriceChange: ChangeEventHandler<HTMLInputElement>;
-  sellBouquet: (id: string, totalSum: number, count: number) => void;
+  sellBouquet: (id: number, totalSum: number, count: number) => void;
 }
 
 const AvailableBouquetsList = ({
@@ -35,6 +35,7 @@ const AvailableBouquetsList = ({
   sellBouquet,
 }: AvailableBouquetsProps) => {
   const [totalSum, setTotalSum] = useState(actual_price);
+  const [previousTotalSum, setPreviousTotalSum] = useState(actual_price);
 
   const handlePriceInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTotalSum(Number(event.target.value));
@@ -42,6 +43,12 @@ const AvailableBouquetsList = ({
 
   const handleSaveButtonClick = () => {
     handleSaveClick(id, totalSum || actual_price);
+    setPreviousTotalSum(totalSum);
+  };
+
+  const handleCancelClickInternal = () => {
+    setTotalSum(previousTotalSum);
+    handleCancelClick();
   };
 
   const handleSellButtonClick = () => {
@@ -72,7 +79,6 @@ const AvailableBouquetsList = ({
             <ListItem>
               <ListItemText primary={name_bouquet} />
               <ListItemText secondary={'Количество букетов в наличии: ' + count} />
-              {/* <ListItemText secondary={'Собран ' + new Date(added_date).toLocaleString()} /> */}
               <ListItemText secondary={'Цена букета по прайсу ' + actual_price + ' тенге'} />
               <ListItemText secondary={'Цена продажи ' + totalSum + ' тенге'} />
             </ListItem>
@@ -90,7 +96,7 @@ const AvailableBouquetsList = ({
               <ListItemIcon onClick={handleSaveButtonClick}>
                 <Done />
               </ListItemIcon>
-              <ListItemIcon onClick={handleCancelClick}>
+              <ListItemIcon onClick={handleCancelClickInternal}>
                 <Clear />
               </ListItemIcon>
             </Grid>

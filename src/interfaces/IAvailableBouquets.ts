@@ -1,5 +1,5 @@
 export interface IAvailableBouquet {
-	id: string;
+	id: number;
 	count: number;
 	name_bouquet: string;
 	actual_price: number;
@@ -9,5 +9,5 @@ export interface IAvailableBouquet {
 };
 
 export interface IAvailableBouquets extends IAvailableBouquet {
-	id: string;
+	id: number;
 };

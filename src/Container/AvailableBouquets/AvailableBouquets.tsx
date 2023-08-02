@@ -22,9 +22,9 @@ const AvailableBouquets = () => {
     const [open, setOpen] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [bouquets, setBouquets] = useState<IAvailableBouquets[]>([]);
-    const [editingPriceId, setEditingPriceId] = useState<string | null>(null);
+    const [editingPriceId, setEditingPriceId] = useState<number | null>(null);
     const [editingPrice, setEditingPrice] = useState(0);
-    const [selectedBouquetId, setSelectedBouquetId] = useState<string>('');
+    const [selectedBouquetId, setSelectedBouquetId] = useState<number>(0);
     const { data: items } = useGetAvailableBouquetByIdQuery(selectedBouquetId);
     const [changePrice] = useEditAvailableBouquetMutation();
 
@@ -39,7 +39,7 @@ const AvailableBouquets = () => {
         }
     }, [data]);
 
-    const onClick = (id: string) => {
+    const onClick = (id: number) => {
         setSelectedBouquetId(id);
         setOpen(true);
     };
@@ -49,7 +49,7 @@ const AvailableBouquets = () => {
         setOpenModal(false);
     };
 
-    const handleEditPrice = (bouquetId: string, total_sum: number) => {
+    const handleEditPrice = (bouquetId: number, total_sum: number) => {
         setEditingPrice(total_sum);
         setEditingPriceId(bouquetId);
     };
@@ -58,7 +58,7 @@ const AvailableBouquets = () => {
         setEditingPrice(Number(event.target.value));
     };
 
-    const handleSaveClick = (id: string, newSum: number, newCount: number) => {
+    const handleSaveClick = (id: number, newSum: number, newCount: number) => {
         const newPrice = newSum || editingPrice;
         const updatedBouquets = bouquets.map((bouquet) => {
             if (id === bouquet.id) {
@@ -71,7 +71,7 @@ const AvailableBouquets = () => {
         setEditingPriceId(null);
     };
 
-    const sellBouquet = async (id: string, totalSum: number, count: number) => {
+    const sellBouquet = async (id: number, totalSum: number, count: number) => {
         await changePrice({
             id: id,
             bouquet: { total_sum: totalSum, count: count },
