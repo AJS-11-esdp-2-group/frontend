@@ -9,7 +9,6 @@ import { useCreateRecipeMutation } from '../../Store/services/recipes';
 import { GlobalTheme } from '../..';
 import {
 	Autocomplete,
-	Box,
 	Button,
 	Container,
 	Grid,
@@ -147,18 +146,9 @@ const AddRecipes = () => {
 
 	return (
 		<ThemeProvider theme={GlobalTheme}>
-			<Container
-				style={{
-					display: 'flex',
-					justifyContent: 'center',
-					flexDirection: 'column',
-				}}
-			>
-				<Box>
+			<Container>
 					<Typography variant="h4">{bouquetName.bouquet_name}</Typography>
-				</Box>
-				<Grid container spacing={2}>
-					<Grid item xs={12}>
+					<Grid spacing={2}>
 						<Autocomplete
 							disablePortal
 							options={items ? items : []}
@@ -182,7 +172,7 @@ const AddRecipes = () => {
 							buttonText="Добавить Товар"
 						/>
 					</Grid>
-				</Grid>
+				<Grid>
 				<form onSubmit={submitFormHandler}>
 					<FileUpload
 						onChange={fileChangeHandler}
@@ -211,6 +201,7 @@ const AddRecipes = () => {
 						Создать Букет
 					</Button>
 				</form>
+				</Grid>
 			</Container>
 		</ThemeProvider>
 	);
