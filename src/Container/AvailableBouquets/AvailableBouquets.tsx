@@ -32,7 +32,6 @@ const AvailableBouquets = () => {
         setOpen(isError);
     }, [isError]);
 
-
     useEffect(() => {
         if (data) {
             setBouquets(data as []);
@@ -71,15 +70,15 @@ const AvailableBouquets = () => {
         setEditingPriceId(null);
     };
 
-    const sellBouquet = async (id: number, totalSum: number, count: number) => {
+    const sellBouquet = async (id: number, totalSum: number, qty: number) => {
         await changePrice({
             id: id,
-            bouquet: { total_sum: totalSum, count: count },
+            bouquet: { total_sum: totalSum, count: qty },
         });
     };
 
-
     if (isLoading) return <h1>Loading...</h1>;
+
     return (
         <Container style={{
             display: 'flex',
@@ -100,7 +99,6 @@ const AvailableBouquets = () => {
                                                 count={bouquet.count}
                                                 name_bouquet={bouquet.name_bouquet}
                                                 image_bouquet={bouquet.image_bouquet}
-                                                added_date={bouquet.added_date}
                                                 actual_price={bouquet.actual_price}
                                                 onClick={() => onClick(bouquet.id)}
                                                 changePrice={() => handleEditPrice(bouquet.id, bouquet.actual_price)}
@@ -109,7 +107,7 @@ const AvailableBouquets = () => {
                                                 handleSaveClick={(bouquetId, newPrice) => handleSaveClick(bouquetId, newPrice, bouquet.count)}
                                                 editingPrice={editingPrice}
                                                 handlePriceChange={handlePriceChange}
-                                                sellBouquet={(id, totalSum) => sellBouquet(id, totalSum, bouquet.count)}
+                                                sellBouquet={(id, totalSum, qty) => sellBouquet(id, totalSum, qty)}
                                             />
                                         </List>
                                     </Grid>

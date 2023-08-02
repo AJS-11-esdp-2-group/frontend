@@ -9,7 +9,6 @@ export interface AvailableBouquetsProps {
   name_bouquet: string;
   actual_price: number;
   image_bouquet: string;
-  added_date: Date;
   onClick: MouseEventHandler<HTMLDivElement>;
   isEditing: boolean;
   editingPrice: number;
@@ -17,7 +16,7 @@ export interface AvailableBouquetsProps {
   handleSaveClick: (itemId: number, newPrice: number) => void;
   handleCancelClick: () => void;
   handlePriceChange: ChangeEventHandler<HTMLInputElement>;
-  sellBouquet: (id: number, totalSum: number, count: number) => void;
+  sellBouquet: (id: number, totalSum: number, qty: number) => void;
 }
 
 const AvailableBouquetsList = ({
@@ -26,7 +25,6 @@ const AvailableBouquetsList = ({
   name_bouquet,
   actual_price,
   image_bouquet,
-  added_date,
   onClick,
   isEditing,
   changePrice,
@@ -36,6 +34,7 @@ const AvailableBouquetsList = ({
 }: AvailableBouquetsProps) => {
   const [totalSum, setTotalSum] = useState(actual_price);
   const [previousTotalSum, setPreviousTotalSum] = useState(actual_price);
+  const [qty, setQty] = useState(1);
 
   const handlePriceInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTotalSum(Number(event.target.value));
@@ -51,8 +50,12 @@ const AvailableBouquetsList = ({
     handleCancelClick();
   };
 
+  const handleQtyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQty(Number(event.target.value));
+  };
+
   const handleSellButtonClick = () => {
-    sellBouquet(id, totalSum || actual_price, count); 
+    sellBouquet(id, totalSum || actual_price, qty); 
   };
 
   return (
@@ -103,7 +106,15 @@ const AvailableBouquetsList = ({
           ) : (
             <Button onClick={changePrice}>Изменить цену продажи</Button>
           )}
-          <Button onClick={handleSellButtonClick}>Продать букет</Button>
+          <TextField
+            value={qty}
+            id="outlined-basic"
+            label="Количество"
+            variant="outlined"
+            type="number"
+            onChange={handleQtyChange}
+          />
+          <Button onClick={handleSellButtonClick}>Продать букет(-ы)</Button>
         </ImageListItem>
       </ThemeProvider>
     </>
@@ -111,3 +122,7 @@ const AvailableBouquetsList = ({
 };
 
 export default AvailableBouquetsList;
+function qty(id: number, arg1: number, qty: any) {
+  throw new Error('Function not implemented.');
+}
+

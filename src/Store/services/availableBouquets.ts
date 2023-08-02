@@ -16,7 +16,10 @@ const availableBouquetsApi = api.injectEndpoints({
 			query: ({ id, bouquet }) => ({
 				url: `/sales/${id}`,
 				method: 'PUT',
-				body: bouquet,
+				body: {
+					total_sum: bouquet.total_sum,
+					count: bouquet.count,
+				},
 			}),
 			invalidatesTags: ['AvailableBouquets'],
 		}),
