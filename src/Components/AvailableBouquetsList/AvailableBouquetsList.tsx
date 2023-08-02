@@ -5,6 +5,7 @@ import { MouseEventHandler, ChangeEventHandler, useState } from 'react';
 
 export interface AvailableBouquetsProps {
   id: string;
+  count: number;
   name_bouquet: string;
   actual_price: number;
   image_bouquet: string;
@@ -16,11 +17,12 @@ export interface AvailableBouquetsProps {
   handleSaveClick: (itemId: string, newPrice: number) => void;
   handleCancelClick: MouseEventHandler<HTMLDivElement>;
   handlePriceChange: ChangeEventHandler<HTMLInputElement>;
-  sellBouquet: (id: string, totalSum: number) => void;
+  sellBouquet: (id: string, totalSum: number, count: number) => void;
 }
 
 const AvailableBouquetsList = ({
   id,
+  count,
   name_bouquet,
   actual_price,
   image_bouquet,
@@ -43,7 +45,7 @@ const AvailableBouquetsList = ({
   };
 
   const handleSellButtonClick = () => {
-    sellBouquet(id, totalSum || actual_price);
+    sellBouquet(id, totalSum || actual_price, count); 
   };
 
   return (
@@ -69,10 +71,10 @@ const AvailableBouquetsList = ({
             />
             <ListItem>
               <ListItemText primary={name_bouquet} />
-              <ListItemText secondary={'Собран ' + new Date(added_date).toLocaleString()} />
+              <ListItemText secondary={'Количество букетов в наличии: ' + count} />
+              {/* <ListItemText secondary={'Собран ' + new Date(added_date).toLocaleString()} /> */}
               <ListItemText secondary={'Цена букета по прайсу ' + actual_price + ' тенге'} />
               <ListItemText secondary={'Цена продажи ' + totalSum + ' тенге'} />
-
             </ListItem>
           </div>
           {isEditing ? (

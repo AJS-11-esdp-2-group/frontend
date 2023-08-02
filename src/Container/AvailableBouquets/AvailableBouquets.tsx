@@ -58,11 +58,11 @@ const AvailableBouquets = () => {
         setEditingPrice(Number(event.target.value));
     };
 
-    const handleSaveClick = (id: string, newBouquet: number) => {
-        const newPrice = newBouquet || editingPrice;
+    const handleSaveClick = (id: string, newSum: number, newCount: number) => {
+        const newPrice = newSum || editingPrice;
         const updatedBouquets = bouquets.map((bouquet) => {
             if (id === bouquet.id) {
-                return { ...bouquet, total_sum: newPrice };
+                return { ...bouquet, total_sum: newPrice, count: newCount };
             }
             return bouquet;
         });
@@ -71,12 +71,13 @@ const AvailableBouquets = () => {
         setEditingPriceId(null);
     };
 
-    const sellBouquet = async (id: string, totalSum: number) => {
+    const sellBouquet = async (id: string, totalSum: number, count: number) => {
         await changePrice({
             id: id,
-            bouquet: { total_sum: totalSum },
+            bouquet: { total_sum: totalSum, count: count },
         });
     };
+
 
     if (isLoading) return <h1>Loading...</h1>;
     return (
@@ -96,6 +97,7 @@ const AvailableBouquets = () => {
                                         <List>
                                             <AvailableBouquetsList
                                                 id={bouquet.id}
+                                                count={bouquet.count}
                                                 name_bouquet={bouquet.name_bouquet}
                                                 image_bouquet={bouquet.image_bouquet}
                                                 added_date={bouquet.added_date}
@@ -104,10 +106,10 @@ const AvailableBouquets = () => {
                                                 changePrice={() => handleEditPrice(bouquet.id, bouquet.actual_price)}
                                                 handleCancelClick={() => setEditingPriceId(null)}
                                                 isEditing={editingPriceId === bouquet.id}
-                                                handleSaveClick={() => handleSaveClick(bouquet.id, editingPrice)}
+                                                handleSaveClick={(bouquetId, newPrice) => handleSaveClick(bouquetId, newPrice, bouquet.count)}
                                                 editingPrice={editingPrice}
                                                 handlePriceChange={handlePriceChange}
-                                                sellBouquet={sellBouquet}
+                                                sellBouquet={(id, totalSum) => sellBouquet(id, totalSum, bouquet.count)}
                                             />
                                         </List>
                                     </Grid>

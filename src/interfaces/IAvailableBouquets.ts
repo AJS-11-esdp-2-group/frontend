@@ -1,5 +1,6 @@
 export interface IAvailableBouquet {
 	id: string;
+	count: number;
 	name_bouquet: string;
 	actual_price: number;
 	image_bouquet: string;
