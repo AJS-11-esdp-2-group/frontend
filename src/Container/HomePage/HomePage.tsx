@@ -61,6 +61,11 @@ const HomePage = () => {
 								Приходы
 							</Typography>
 						</Button>
+						<Button sx={{ width: '100%' }} variant="contained" color="secondary">
+							<Typography variant="body1" component={Link} to="/florist_page">
+								Для флориста
+							</Typography>
+						</Button>
 					</Box>
 				</Container>
 			) : null}

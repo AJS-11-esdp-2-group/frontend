@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 
 const AppToolBar = () => {
 	const user = useAppSelector(getUser);
-	console.log(user);
 	
 
 	return (

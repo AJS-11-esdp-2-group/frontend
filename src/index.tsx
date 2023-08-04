@@ -12,7 +12,14 @@ export const GlobalTheme = createTheme({
 	components: {
 	  MuiContainer: {
 		styleOverrides: {
-		  root: ({ theme }) => theme.unstable_sx({}),
+		  root: ({ theme }) => theme.unstable_sx({
+			padding: 0,
+			margin: 0,
+			'@media (min-width: 600px)': {
+				padding: '0px',
+				margin: '0px',
+			  },
+		  }),
 		},
 	  },
 	  MuiButtonBase: {
@@ -62,12 +69,7 @@ export const GlobalTheme = createTheme({
 		  container: {
 			display: 'flex',
 			alignItems:'stretch',
-			flexDirection:'column',
-			alignContent:'space-around',
-			justifyContent:'space-between',
-			'@media (max-width: 600px)': {
-			  display: 'block',
-			},
+			flexDirection:'row',
 		  },
 		},
 	  },
@@ -93,6 +95,14 @@ export const GlobalTheme = createTheme({
                     }),
             },
         },
+		MuiTypography: {
+			styleOverrides: {
+				h6: {
+				  color: 'white',
+				  fontWeight: 'bold',
+				},
+			  },
+		},
 	},
   });
   

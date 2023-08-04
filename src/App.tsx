@@ -15,7 +15,10 @@ import Recipes from './Container/Recipes/Recipes';
 import AddRecipes from './Container/Recipes/AddRecipes';
 import Invoices from './Components/Invoices/Invoices';
 import { getUser } from './Store/user/userSelectors';
-import { Routes, Route } from 'react-router-dom';
+import AvailableBouquets from './Container/AvailableBouquets/AvailableBouquets';
+import FloristPage from './Container/FloristPage/FloristPage';
+import CartToolBar from './Components/UI/Layout/AppToolbar/CartToolBar';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import {
 	CssBaseline,
 	PaletteMode,
@@ -23,7 +26,6 @@ import {
 	ThemeProvider,
 } from '@mui/material';
 import { grey, blue, blueGrey } from '@mui/material/colors';
-import AvailableBouquets from './Container/AvailableBouquets/AvailableBouquets';
 
 const getDesignTokens = (mode: PaletteMode) => ({
 	palette: {
@@ -46,11 +48,15 @@ const getDesignTokens = (mode: PaletteMode) => ({
 const modeTheme = createTheme(getDesignTokens('light'));
 function App() {
 	const user = useAppSelector(getUser);
+	const location = useLocation();
+  	const isFloristPage = location.pathname === '/florist_page';
+
 	return (
 		<ThemeProvider theme={modeTheme}>
 			<CssBaseline>
 				<header>
 					<AppToolBar />
+					{isFloristPage && <CartToolBar />}
 				</header>
 				<main>
 					<Routes>
@@ -187,7 +193,17 @@ function App() {
 									<AvailableBouquets />
 								</ProtectedRoute>
 							}
-						/>
+						/><Route
+						path="/florist_page"
+						element={
+							<ProtectedRoute
+								isAllowed={user.isAuthenticated}
+								redirectPath="/"
+							>
+								<FloristPage/>
+							</ProtectedRoute>
+						}
+					/>
 					</Routes>
 				</main>
 			</CssBaseline>
