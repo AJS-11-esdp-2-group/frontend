@@ -1,7 +1,9 @@
 import { IBouquets } from '../../interfaces/IBouquets';
 import { GlobalTheme } from '../..';
-import { Checkbox, ImageListItem, ImageListItemBar, ThemeProvider } from '@mui/material';
+import noImage from '../../assets/image.jpeg'
+import { Checkbox, IconButton, ImageListItem, ImageListItemBar, ThemeProvider } from '@mui/material';
 import { MouseEventHandler } from 'react';
+import { Info } from '@mui/icons-material';
 
 
 interface Props extends IBouquets {
@@ -22,12 +24,16 @@ const RecipesComponent = ({
 	checkboxVisible,
 	checkHandler,
   }: Props) => {
+	let cardImage = noImage; 
+	if (image) { 
+	  cardImage = image; 
+	}
 	return (
 	  <ThemeProvider theme={GlobalTheme}>
 		<ImageListItem key={id}>
 			{checkboxVisible && 
 			<Checkbox onClick={checkHandler} />}
-		  <img src={image} srcSet={image} alt={bouquet_name} loading="lazy" />
+		  <img src={cardImage} srcSet={cardImage} alt={bouquet_name} loading="lazy" />
 		  <ImageListItemBar 
 		  	title={parseInt(sum).toFixed().toString() === 'NaN' ? '0 т' : `${parseInt(sum).toFixed()} т`} 
 			position="top" />
@@ -36,6 +42,11 @@ const RecipesComponent = ({
 			title={bouquet_name}
 			subtitle={bouquet_description}
 			onClick={onClick}
+			actionIcon={
+				<IconButton key={id} sx={{ color: 'rgba(255, 255, 255, 0.54)' }} aria-label={`info about ${author}`}>
+				  <Info />
+				</IconButton>
+			}
 		  />
 		</ImageListItem>
 	  </ThemeProvider>
