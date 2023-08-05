@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import AddButton from '../../Components/UI/Button/AddButton';
 import FormElement from '../../Components/UI/Form/FormElement';
 import { useGetAllBouquetsQuery, useCreateBouquetMutation } from '../../Store/services/bouquets';
@@ -10,6 +8,7 @@ import { useAppSelector } from '../../Store/hooks';
 import { GlobalTheme } from '../..';
 import { useCreateAvailableBouquetMutation } from '../../Store/services/availableBouquets';
 import SuccessPopup from '../../Components/UI/SuccessPopup/SuccessPopup';
+import Loading from '../../Components/UI/Loading/Loading';
 import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -26,22 +25,23 @@ import {
     ListSubheader,
     ThemeProvider,
 } from '@mui/material';
+import { relative } from 'path';
 
 const Recipes = () => {
     const navigate = useNavigate();
     const { user } = useAppSelector((state) => state.auth);
 
     const [selectedBouquetId, setSelectedBouquetId] = useState<number>(0);
-    const { data: bouquets } = useGetAllBouquetsQuery();
+    const { data: bouquets, isLoading } = useGetAllBouquetsQuery();
     const { data: recipes } = useGetRecipeByIdQuery(selectedBouquetId);
     const { data: images } = useGetAllImagesQuery();
     const [createBouquet] = useCreateBouquetMutation();
     const [showForm, setShowForm] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [open, setOpen] = useState(false);
-	const [show, setShow] = useState(true);
+    const [show, setShow] = useState(true);
     const [selectedBouquetIds, setSelectedBouquetIds] = useState<number[]>([]);
-	const [sendToShowcase, {isSuccess}] = useCreateAvailableBouquetMutation();
+    const [sendToShowcase, { isSuccess }] = useCreateAvailableBouquetMutation();
 
     interface Props {
         bouquet_name: string;
@@ -102,36 +102,32 @@ const Recipes = () => {
         image: images?.find((image) => image.id_bouquet === bouquet.id),
     }));
 
-	useEffect(() => {
-		setShow(isSuccess);
-	  }, [isSuccess]);
+    useEffect(() => {
+        setShow(isSuccess);
+    }, [isSuccess]);
 
-    const handleSendToShowcase= async() => {
-		await sendToShowcase({
-			bouquets: selectedBouquetIds,
-		});
-		setIsChecked(false);
-		setShow(true);
+    const handleSendToShowcase = async () => {
+        await sendToShowcase({
+            bouquets: selectedBouquetIds,
+        });
+        setIsChecked(false);
+        setShow(true);
     };
 
-	const handleCloseShow = () => {
-		setShow(false);
-	  };
+    const handleCloseShow = () => {
+        setShow(false);
+    };
 
     return (
-
         <ThemeProvider theme={GlobalTheme}>
-			    <Container
+            <Container
                 style={{
                     display: 'flex',
                     flexDirection: 'column',
                 }}
             >
-				<SuccessPopup 
-								open={show} 
-								onClose={handleCloseShow} 
-								message="Букеты отправлены на витрину"
-							/>
+                {isLoading && <Loading/>}
+                <SuccessPopup open={show} onClose={handleCloseShow} message="Букеты отправлены на витрину" />
                 <AddButton onClick={handleAddButtonClick} buttonText="Создать новый рецепт" />
                 <form onSubmit={submitFormHandler}>
                     {showForm && (
@@ -157,7 +153,7 @@ const Recipes = () => {
                         </Grid>
                     )}
                 </form>
-                {selectedBouquetIds.length > 0 &&  isChecked ? (
+                {selectedBouquetIds.length > 0 && isChecked ? (
                     <Button variant="contained" color="secondary" onClick={handleSendToShowcase}>
                         Отправить букет на витрину
                     </Button>
@@ -191,7 +187,7 @@ const Recipes = () => {
                     </ImageList>
                 </Grid>
                 <Dialog open={open} onClose={handleClose}>
-                    <DialogTitle>Состав</DialogTitle>
+                    <DialogTitle color="black">Состав</DialogTitle>
                     <DialogContent>
                         {recipes &&
                             recipes.map((item) => (
@@ -205,7 +201,7 @@ const Recipes = () => {
                     </DialogActions>
                 </Dialog>
             </Container>
-		</ThemeProvider>
+        </ThemeProvider>
     );
 };
 

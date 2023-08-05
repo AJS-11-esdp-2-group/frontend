@@ -10,18 +10,6 @@ import { createTheme } from '@mui/material';
 
 export const GlobalTheme = createTheme({
 	components: {
-	  MuiContainer: {
-		styleOverrides: {
-		  root: ({ theme }) => theme.unstable_sx({
-			padding: 0,
-			margin: 0,
-			'@media (min-width: 600px)': {
-				padding: '0px',
-				margin: '0px',
-			  },
-		  }),
-		},
-	  },
 	  MuiButtonBase: {
 		styleOverrides: {
 		  root: ({ theme }) =>
@@ -34,7 +22,7 @@ export const GlobalTheme = createTheme({
 		styleOverrides: {
 		  root: ({ theme }) =>
 			theme.unstable_sx({
-			  margin:1,	  
+			  marginTop:1,	  
 			}),
 		},
 	  },

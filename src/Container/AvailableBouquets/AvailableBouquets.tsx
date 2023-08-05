@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/await-thenable */
-import { useEditAvailableBouquetMutation, useGetAllAvailableBouquetsQuery, useGetAvailableBouquetByIdQuery } from '../../Store/services/availableBouquets';
+import { useEditAvailableBouquetMutation, 
+    useGetAllAvailableBouquetsQuery, 
+    useGetAvailableBouquetByIdQuery,
+} from '../../Store/services/availableBouquets';
 import { IAvailableBouquets } from '../../interfaces/IAvailableBouquets';
 import AvailableBouquetsList from '../../Components/AvailableBouquetsList/AvailableBouquetsList';
+import Loading from '../../Components/UI/Loading/Loading';
 import { useEffect, useState } from 'react';
 import {
     Box,
@@ -77,14 +81,13 @@ const AvailableBouquets = () => {
         });
     };
 
-    if (isLoading) return <h1>Loading...</h1>;
-
     return (
         <Container style={{
             display: 'flex',
             justifyContent: 'center',
             flexDirection: 'column',
         }}>
+                {isLoading && <Loading/>}
             <Grid container sx={{ maxWidth: '400px', margin: '0 auto', my: 2 }}>
                 <Grid item xs={12}>
                     <Box>

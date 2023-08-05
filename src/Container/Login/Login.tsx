@@ -68,7 +68,6 @@ const Login = () => {
 		}
 	};
 	return (
-		<ThemeProvider theme={GlobalTheme}>
 			<Container component="section" maxWidth="xs">
 				<Snackbar
 					anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -130,7 +129,6 @@ const Login = () => {
 					</Box>
 				</Box>
 			</Container>
-		</ThemeProvider>
 	);
 };
 
