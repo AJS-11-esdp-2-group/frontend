@@ -8,145 +8,152 @@ import { GlobalTheme } from '../..';
 import AddButton from '../../Components/UI/Button/AddButton';
 import { useCreateItemsPriceMutation } from '../../Store/services/itemsPrices';
 import { Items } from '../../interfaces/Items';
+import Loading from '../../Components/UI/Loading/Loading';
 import { useEffect, useState } from 'react';
 import { Alert, Container, Grid, List, Snackbar, ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const ItemsContainer = () => {
-  const { data, isLoading, isError, error } = useGetAllItemsQuery();
-  const [open, setOpen] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
-  const [deleteItem] = useDeleteItemMutation();
-  const [deleteItemId, setDeleteItemId] = useState<number | null>(null);
-  const [uncoverForm, setUncoverForm] = useState(false);
-  const [createPrice] = useCreateItemsPriceMutation();
-  const navigate = useNavigate();
+    const { data, isLoading, isError, error } = useGetAllItemsQuery();
+    const [open, setOpen] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
+    const [deleteItem] = useDeleteItemMutation();
+    const [deleteItemId, setDeleteItemId] = useState<number | null>(null);
+    const [uncoverForm, setUncoverForm] = useState(false);
+    const [createPrice] = useCreateItemsPriceMutation();
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    setOpen(isError);
-  }, [isError]);
-  const [items, setItems] = useState<Items[]>([]);
+    useEffect(() => {
+        setOpen(isError);
+    }, [isError]);
+    const [items, setItems] = useState<Items[]>([]);
 
-  useEffect(() => {
-    if (data) {
-      setItems(data as []);
-    }
-  }, [data]);
-
-  const handleClose = () => {
-    setOpen(false);
-    setOpenModal(false);
-  };
-
-  const handleAddButtonClick = () => {
-    setUncoverForm(!uncoverForm);
-  };
-
-  const handleDeleteItem = (itemId: number) => {
-    setDeleteItemId(itemId);
-    setOpenModal(true);
-  };
-
-  const handleConfirmDelete = async () => {
-    if (deleteItemId) {
-      try {
-        const result = await deleteItem(deleteItemId);
-        if ('error' in result && result.error) {
-          setOpenModal(true);
-          setOpen(true);
-        } else {
-          setOpenModal(false);
+    useEffect(() => {
+        if (data) {
+            setItems(data as []);
         }
-      } catch (error) {
+    }, [data]);
+
+    const handleClose = () => {
+        setOpen(false);
+        setOpenModal(false);
+    };
+
+    const handleAddButtonClick = () => {
+        setUncoverForm(!uncoverForm);
+    };
+
+    const handleDeleteItem = (itemId: number) => {
+        setDeleteItemId(itemId);
         setOpenModal(true);
-        setOpen(true);
-      }
-      setDeleteItemId(null);
-    }
-  };
-  const [editingPriceId, setEditingPriceId] = useState<number | null>(null);
+    };
 
-  const handleEditPrice = (itemId: number, price: number) => {
-    setEditingPrice(price);
-    setEditingPriceId(itemId);
-  };
-
-  const handleSaveClick = async (itemId: number, newPrice: number) => {
-      await createPrice({
-        item_id: itemId,
-        price: newPrice,
-      });
-      const updatedItems = items.map((item) => {
-        if (item.id === itemId) {
-          return { ...item, price: newPrice };
+    const handleConfirmDelete = async () => {
+        if (deleteItemId) {
+            try {
+                const result = await deleteItem(deleteItemId);
+                if ('error' in result && result.error) {
+                    setOpenModal(true);
+                    setOpen(true);
+                } else {
+                    setOpenModal(false);
+                }
+            } catch (error) {
+                setOpenModal(true);
+                setOpen(true);
+            }
+            setDeleteItemId(null);
         }
-        return item;
-      });
+    };
+    const [editingPriceId, setEditingPriceId] = useState<number | null>(null);
 
-      setItems(updatedItems);
-      setEditingPriceId(null);
-  };
-  const [editingPrice, setEditingPrice] = useState(0);
+    const handleEditPrice = (itemId: number, price: number) => {
+        setEditingPrice(price);
+        setEditingPriceId(itemId);
+    };
 
-  const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEditingPrice(Number(event.target.value));
-  };
+    const handleSaveClick = async (itemId: number, newPrice: number) => {
+        await createPrice({
+            item_id: itemId,
+            price: newPrice,
+        });
+        const updatedItems = items.map((item) => {
+            if (item.id === itemId) {
+                return { ...item, price: newPrice };
+            }
+            return item;
+        });
 
-  if (isLoading) return <h1>Loading...</h1>;
-  return (
-    <ThemeProvider theme={GlobalTheme}>
-      <Container
-        maxWidth={'xl'}
-        sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignContent: 'center' }}
-      >
-        <AddButton buttonText="Создать Товар" onClick={handleAddButtonClick} />
-        {uncoverForm && <AddItem />}
-        <Grid container>
-          {items &&
-            items.map((item) => {
-              return (
-                <Grid item key={item.id}>
-                  <Snackbar
-                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                    open={open}
-                    autoHideDuration={3000}
-                    onClose={handleClose}
-                  >
-                    <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-                      {(error as CustomError)?.data?.message}
-                    </Alert>
-                  </Snackbar>
-                  <Modal
-                    isOpen={openModal && deleteItemId === item.id}
-                    onClose={handleClose}
-                    title="Вы действительно хотите удалить этот товар?"
-                    isLoading={isLoading}
-                    actionButtonLabel="Удалить"
-                    onActionButtonClick={handleConfirmDelete}
-                  />
-                  <List>
-                    <ItemsList
-                      id={item.id}
-                      item_name={item.item_name}
-                      price={editingPriceId === item.id ? editingPrice : item.price}
-                      onClick={() => navigate(`/edit-item/${item.id}`)}
-                      onDelete={() => handleDeleteItem(item.id)}
-                      changePrice={() => handleEditPrice(item.id, item.price)}
-                      handleCancelClick={() => setEditingPriceId(null)}
-                      isEditing={editingPriceId === item.id}
-                      handleSaveClick={() => handleSaveClick(item.id, editingPrice)}
-                      editingPrice={editingPrice}
-                      handlePriceChange={handlePriceChange}
-                    />
-                  </List>
-                  <List />
+        setItems(updatedItems);
+        setEditingPriceId(null);
+    };
+    const [editingPrice, setEditingPrice] = useState(0);
+
+    const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEditingPrice(Number(event.target.value));
+    };
+
+    return (
+        <ThemeProvider theme={GlobalTheme}>
+            <Container
+                sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'center',
+                    alignContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                }}
+            >
+                {isLoading && <Loading/>}
+                <AddButton buttonText="Создать Товар" onClick={handleAddButtonClick} />
+                {uncoverForm && <AddItem />}
+                <Grid container>
+                    {items &&
+                        items.map((item) => {
+                            return (
+                                <Grid item key={item.id}>
+                                    <Snackbar
+                                        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                                        open={open}
+                                        autoHideDuration={3000}
+                                        onClose={handleClose}
+                                    >
+                                        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                                            {(error as CustomError)?.data?.message}
+                                        </Alert>
+                                    </Snackbar>
+                                    <Modal
+                                        isOpen={openModal && deleteItemId === item.id}
+                                        onClose={handleClose}
+                                        title="Вы действительно хотите удалить этот товар?"
+                                        isLoading={isLoading}
+                                        actionButtonLabel="Удалить"
+                                        onActionButtonClick={handleConfirmDelete}
+                                    />
+                                    <Grid container sx={{ margin: 1 }}>
+                                        <ItemsList
+                                    id={item.id}
+                                    item_name={item.item_name}
+                                    price={editingPriceId === item.id ? editingPrice : item.price}
+                                    onClick={() => navigate(`/edit-item/${item.id}`)}
+                                    onDelete={() => handleDeleteItem(item.id)}
+                                    changePrice={() => handleEditPrice(item.id, item.price)}
+                                    handleCancelClick={() => setEditingPriceId(null)}
+                                    isEditing={editingPriceId === item.id}
+                                    handleSaveClick={() => handleSaveClick(item.id, editingPrice)}
+                                    editingPrice={editingPrice}
+                                    handlePriceChange={handlePriceChange} 
+                                    image_small={item.image_small}                                        />
+                                    </Grid>
+                                    <List />
+                                </Grid>
+                            );
+                        })}
                 </Grid>
-              );
-            })}
-        </Grid>
-      </Container>
-    </ThemeProvider>
-  );
+            </Container>
+        </ThemeProvider>
+    );
 };
 
 export default ItemsContainer;
