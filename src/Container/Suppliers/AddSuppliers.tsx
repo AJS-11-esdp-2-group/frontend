@@ -10,22 +10,18 @@ const AddSupplier = () => {
 
 	interface Props {
 		name_supplier: string;
-		contact_person: string;
 		email: string;
 		phone: string;
 		address: string;
-		id_country: string;
-		id_city: string;
+		comment: string;
 	}
 
 	const initialFormState: Props = {
 		name_supplier: '',
-		contact_person: '',
 		email: '',
 		phone: '',
 		address: '',
-		id_country: '',
-		id_city: '',
+		comment: '',
 	};
 
 	const [form, setForm] = useState<Props>(initialFormState);
@@ -79,12 +75,6 @@ const AddSupplier = () => {
 					onChange={inputChangeHandler}
 				/>
 				<FormElement
-					value={form.contact_person}
-					label="Контактное лицо"
-					name="contact_person"
-					onChange={inputChangeHandler}
-				/>
-				<FormElement
 					value={form.email}
 					label="Email"
 					name="email"
@@ -103,15 +93,9 @@ const AddSupplier = () => {
 					onChange={inputChangeHandler}
 				/>
 				<FormElement
-					value={form.id_country}
-					label="Страна"
-					name="id_country"
-					onChange={inputChangeHandler}
-				/>
-				<FormElement
-					value={form.id_city}
-					label="Город"
-					name="id_city"
+					value={form.comment}
+					label="Комментарий"
+					name="comment"
 					onChange={inputChangeHandler}
 				/>
 				<Button

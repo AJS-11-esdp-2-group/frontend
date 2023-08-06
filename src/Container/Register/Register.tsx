@@ -27,7 +27,6 @@ const Register = () => {
 		first_name: '',
 		last_name: '',
 		address: '',
-		country: 1, //пока на моках так как нету сервиса по получения стран
 	});
 
 	const [signUp, { isError, error }] = useSignUpMutation();
@@ -65,7 +64,6 @@ const Register = () => {
 				first_name: '',
 				last_name: '',
 				address: '',
-				country: 1, //пока на моках так как нету сервиса по получения стран
 			});
 			navigate('/login');
 		}
@@ -131,14 +129,14 @@ const Register = () => {
 								onChange={inputChangeHandler}
 								type="email"
 								name="email"
-								label="Эллектронная почта"
+								label="Электронная почта"
 							/>
 							<FormElement
 								required
 								value={form.address}
 								onChange={inputChangeHandler}
 								name="address"
-								label="Адресс"
+								label="Адрес"
 							/>
 							<FormElement
 								required

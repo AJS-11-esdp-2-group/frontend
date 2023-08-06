@@ -169,13 +169,6 @@ const Suppliers = () => {
 								<Collapse in={isItemOpen} timeout="auto" unmountOnExit>
 									<List component="div" disablePadding>
 										<ListItemButton sx={{ pl: 4 }}>
-											<ListItemText
-												primary={'Контактное лицо: ' + supplier.contact_person}
-											/>
-										</ListItemButton>
-									</List>
-									<List component="div" disablePadding>
-										<ListItemButton sx={{ pl: 4 }}>
 											<ListItemText primary={'Почта: ' + supplier.email} />
 										</ListItemButton>
 									</List>
@@ -188,12 +181,7 @@ const Suppliers = () => {
 										<ListItemButton sx={{ pl: 4 }}>
 											<ListItemText
 												primary={
-													'Адрес: ' +
-													supplier.name_country +
-													', ' +
-													supplier.name_city +
-													', ' +
-													supplier.address
+													'Адрес: ' + supplier.address
 												}
 											/>
 										</ListItemButton>
@@ -202,8 +190,7 @@ const Suppliers = () => {
 										<ListItemButton sx={{ pl: 4 }}>
 											<ListItemText
 												primary={
-													'Был добавлен ' +
-													new Date(supplier.create_date).toLocaleDateString()
+													'Комментарий: ' + supplier.comment
 												}
 											/>
 										</ListItemButton>
