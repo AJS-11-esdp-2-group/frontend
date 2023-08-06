@@ -1,13 +1,28 @@
 import MenuCard from '../../UI/Layout/Card/CardMenu';
 import { GlobalTheme } from '../../..';
+import Items from '../../../Container/Items/Items';
+import Recipes from '../../../Container/Recipes/Recipes';
 import { ThemeProvider } from '@emotion/react';
 import { Container, Grid, InputBase } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
+import { useState } from 'react';
 
 const FloristMenu = () => {
-    const colors = ['#04a96d', '#ef466f', 'purple', 'blue', '#da5a29'];
-    const menuName = ['Цветы', 'Рецепты', 'Услуги', 'Игрушки', 'Фурнитура'];
+    const [showItems, setShowItems] = useState(false);
+    const [showRecipes, setShowRecipes] = useState(false);
+    const colors = ['#04a96d', '#ef466f', '#f4a956'];
+    const menuName = ['Товары', 'Рецепты', 'Услуги'];
+
+    const handleFlowersClick = () => {
+        setShowItems(!showItems);
+        setShowRecipes(false);
+    };
+
+    const handleRecipesClick = () => {
+        setShowItems(false);
+        setShowRecipes(!showRecipes);
+    };
 
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
@@ -54,7 +69,7 @@ const FloristMenu = () => {
 
     return (
         <ThemeProvider theme={GlobalTheme}>
-            <Container sx={{ width: '60%', alignItems: 'flex-start', margin:0 }}>
+            <Container sx={{ width: '60%', alignItems: 'flex-start', margin: 0 }}>
                 <Grid container>
                     <Search>
                         <SearchIconWrapper>
@@ -65,12 +80,20 @@ const FloristMenu = () => {
                 </Grid>
 
                 <Grid container>
-                    {menuName.map((name, index) => (
-                        <Grid item sx={{ margin: 1 }}>
-                            <MenuCard key={name} menuName={name} color={colors[index % colors.length]} />
+                    <Grid item sx={{ margin: 1 }} onClick={handleFlowersClick}>
+                        <MenuCard menuName={menuName[0]} color={colors[0]} />
+                    </Grid>
+                    <Grid item sx={{ margin: 1 }} onClick={handleRecipesClick}>
+                        <MenuCard menuName={menuName[1]} color={colors[1]} />
+                    </Grid>
+                    {menuName.slice(2).map((name, index) => (
+                        <Grid item sx={{ margin: 1 }} key={name}>
+                            <MenuCard menuName={name} color={colors[(index + 2) % colors.length]} />
                         </Grid>
                     ))}
                 </Grid>
+                {showItems && <Items />}
+                {showRecipes && <Recipes />}
             </Container>
         </ThemeProvider>
     );
