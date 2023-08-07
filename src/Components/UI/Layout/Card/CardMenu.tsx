@@ -4,11 +4,12 @@ import FolderIcon from '@mui/icons-material/Folder';
 interface Props {
   menuName: string;
   color: string;
+  onclick: () => void;
 }
 
-const MenuCard = ({ menuName, color }: Props) => {
+const MenuCard = ({ menuName, color, onclick }: Props) => {
   return (
-    <Card sx={{ bgcolor: color, width: 180}}>
+    <Card onClick={onclick} sx={{ bgcolor: color, width: 180}}>
       <CardActionArea>
         <CardHeader
           avatar={
