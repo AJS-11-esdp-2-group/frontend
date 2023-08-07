@@ -10,7 +10,7 @@ import { useCreateItemsPriceMutation } from '../../Store/services/itemsPrices';
 import { Items } from '../../interfaces/Items';
 import Loading from '../../Components/UI/Loading/Loading';
 import { useEffect, useState } from 'react';
-import { Alert, Container, Grid, List, Snackbar, ThemeProvider } from '@mui/material';
+import { Alert, Container, Grid, Snackbar, ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const ItemsContainer = () => {
@@ -133,20 +133,20 @@ const ItemsContainer = () => {
                                     />
                                     <Grid container sx={{ margin: 1 }}>
                                         <ItemsList
-                                    id={item.id}
-                                    item_name={item.item_name}
-                                    price={editingPriceId === item.id ? editingPrice : item.price}
-                                    onClick={() => navigate(`/edit-item/${item.id}`)}
-                                    onDelete={() => handleDeleteItem(item.id)}
-                                    changePrice={() => handleEditPrice(item.id, item.price)}
-                                    handleCancelClick={() => setEditingPriceId(null)}
-                                    isEditing={editingPriceId === item.id}
-                                    handleSaveClick={() => handleSaveClick(item.id, editingPrice)}
-                                    editingPrice={editingPrice}
-                                    handlePriceChange={handlePriceChange} 
-                                    image_small={item.image_small}                                        />
+                                          id={item.id}
+                                          item_name={item.item_name}
+                                          price={editingPriceId === item.id ? editingPrice : item.price}
+                                          onClick={() => navigate(`/edit-item/${item.id}`)}
+                                          onDelete={() => handleDeleteItem(item.id)}
+                                          changePrice={() => handleEditPrice(item.id, item.price)}
+                                          handleCancelClick={() => setEditingPriceId(null)}
+                                          isEditing={editingPriceId === item.id}
+                                          handleSaveClick={() => handleSaveClick(item.id, editingPrice)}
+                                          editingPrice={editingPrice}
+                                          handlePriceChange={handlePriceChange} 
+                                          image_small={item.image_small}
+                                        />
                                     </Grid>
-                                    <List />
                                 </Grid>
                             );
                         })}
