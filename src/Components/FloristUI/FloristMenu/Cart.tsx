@@ -10,7 +10,9 @@ const Cart = () => {
                         Ассортимент
                     </Typography>
                 </Grid>
-                <Grid minHeight={450}>{/* место для товаров */}</Grid>
+                <Grid minHeight={450}>
+                    {/* место для товаров */}
+                </Grid>
             </Grid>
             <Grid
                 container

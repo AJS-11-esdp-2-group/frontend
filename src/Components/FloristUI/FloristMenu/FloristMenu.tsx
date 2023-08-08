@@ -56,12 +56,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const colors = ['#04a96d', '#ef466f', 'purple', 'blue', '#da5a29'];
 const menuName = ['Цветы', 'Игрушки', 'Фурнитура', 'Рецепты', 'Услуги'];
 
+interface ItemsOnCart extends Items {
+    qty: number;
+}
+
 const FloristMenu = () => {
     const { data } = useGetAllItemsQuery();
     const [selectedMenu, setSelectedMenu] = useState('');
     const [isMenuCardVisible, setMenuCardVisible] = useState(true);
     const [searchResult, setSearchResult] = useState<Items [] | undefined>([]);
     const [search, setSearch] = useState(false);
+    const [items, setItems] = useState<ItemsOnCart []>([]);
 
     const flowers = data?.filter((flower) => Number(flower.id_category) === 1);
     const toys = data?.filter((flower) => Number(flower.id_category) === 2);
@@ -75,29 +80,57 @@ const FloristMenu = () => {
     
     const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if(selectedMenu === 'Цветы') {
-            setSearch(true)
+            setSearch(true);
+            setMenuCardVisible(false);
             const result: Array<Items> | undefined = flowers?.filter(
                 flower => flower.item_name.toLowerCase().includes(e.target.value.toLowerCase())
             );
             setSearchResult(result)           
         } else if (selectedMenu === 'Игрушки') {
-            setSearch(true)
+            setSearch(true);
+            setMenuCardVisible(false);
             const result: Array<Items> | undefined = toys?.filter(
                 flower => flower.item_name.toLowerCase().includes(e.target.value.toLowerCase())
             );
             setSearchResult(result)
         } else if (selectedMenu === 'Фурнитура') {
-            setSearch(true)
+            setSearch(true);
+            setMenuCardVisible(false);
             const result: Array<Items> | undefined = accessories?.filter(
                 flower => flower.item_name.toLowerCase().includes(e.target.value.toLowerCase())
             );
             setSearchResult(result)
         } else {
-            setSearch(true)
+            setSearch(true);
+            setMenuCardVisible(false);
             const result: Array<Items> | undefined = data?.filter(
                 flower => flower.item_name.toLowerCase().includes(e.target.value.toLowerCase())
             );
             setSearchResult(result)
+        }
+    };
+
+    const cardClickHandler = (item: Items) => {
+        const copyItems: ItemsOnCart [] = [...items];
+        if(copyItems.length > 0) {
+            let equalStatus = false;
+            copyItems.forEach((itm, index) => {
+                if(item.item_name === itm.item_name) {
+                    equalStatus = true;
+                    copyItems[index].qty++;
+                }
+            });
+            if(equalStatus) {
+                setItems(copyItems);
+            } else {
+                const copyItem = {...item, qty: 1};
+                copyItems.push(copyItem);
+                setItems(copyItems);
+            }
+        } else {
+            const copyItem = {...item, qty: 1};
+            copyItems.push(copyItem);
+            setItems(copyItems);
         }
     };
 
@@ -143,6 +176,7 @@ const FloristMenu = () => {
                                 item_name={flower.item_name}
                                 price={flower.price}
                                 image_small={flower.image_small}
+                                onClickCard={()=>cardClickHandler(flower)}
                             />
                         ))}
                     {selectedMenu === 'Игрушки' && !search &&
@@ -154,6 +188,7 @@ const FloristMenu = () => {
                                 item_name={toy.item_name}
                                 price={toy.price}
                                 image_small={toy.image_small}
+                                onClickCard={()=>cardClickHandler(toy)}
                             />
                         ))}
                     {selectedMenu === 'Фурнитура' && !search &&
@@ -165,6 +200,7 @@ const FloristMenu = () => {
                                 item_name={accessory.item_name}
                                 price={accessory.price}
                                 image_small={accessory.image_small}
+                                onClickCard={()=>cardClickHandler(accessory)}
                             />
                         ))}
                     {search &&  searchResult !== undefined && searchResult.length > 0 
@@ -175,6 +211,7 @@ const FloristMenu = () => {
                                 item_name={result.item_name}
                                 price={result.price}
                                 image_small={result.image_small}
+                                onClickCard={()=>cardClickHandler(result)}
                             />
                         ))
                     }

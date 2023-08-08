@@ -6,15 +6,16 @@ interface Props {
     item_name: string;
     price: number;
     image_small: string;
+    onClickCard: ()=> void;
 }
 
-const Items = ({ id, item_name, price, image_small }: Props) => {
+const Items = ({ id, item_name, price, image_small, onClickCard }: Props) => {
     let cardImage;
     if (image_small) {
         cardImage = `${apiUrl}/uploads/${image_small}`;
     }
     return (
-        <Card key={id} sx={{ width: 240, height: 170, margin: 1 }}>
+        <Card key={id} sx={{ width: 240, height: 170, margin: 1 }} onClick={onClickCard}>
             <CardContent style={{ position: 'relative' }}>
                 <CardMedia sx={{ height: 80 }} image={cardImage} title={cardImage} />
 
