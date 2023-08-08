@@ -4,6 +4,11 @@ import { Container, Typography, Button, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const HomePage = () => {
+	const queryParams = new URLSearchParams(window.location.search);
+	const params = queryParams.get("params");
+	console.log(JSON.parse(params as string));
+	
+	
 	const user = useAppSelector(getUser);
 	return (
 		<Container

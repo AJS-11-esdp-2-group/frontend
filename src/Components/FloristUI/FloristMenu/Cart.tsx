@@ -1,9 +1,13 @@
 import { Delete, StoreRounded, YardRounded } from '@mui/icons-material';
-import { Box, Button, Container, Grid, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Typography, TableContainer } from '@mui/material';
 
-const Cart = () => {
+interface Props {
+    clickNavigate: () => void;
+}
+
+const Cart = ({clickNavigate}: Props) => {
     return (
-        <Container sx={{ width: '36%', position: 'absolute', right: 0 }}>
+        <Container sx={{ width: '36%', position: 'fixed', right: 0 }}>
             <Grid container>
                 <Grid>
                     <Typography color="primary" variant="h6">
@@ -11,7 +15,9 @@ const Cart = () => {
                     </Typography>
                 </Grid>
                 <Grid minHeight={450}>
-                    {/* место для товаров */}
+                    <TableContainer>
+
+                    </TableContainer>
                 </Grid>
             </Grid>
             <Grid
@@ -24,8 +30,8 @@ const Cart = () => {
                         <YardRounded fontSize="large" />
                         <Typography variant="body1">Букет</Typography>
                     </Grid>
-                    <Grid item sx={{ margin: 1 }}>
-                        <StoreRounded fontSize="large" />
+                    <Grid item sx={{ margin: 1 }} onClick={clickNavigate}>
+                        <StoreRounded fontSize="large"/>
                         <Typography variant="body1">Витрина</Typography>
                     </Grid>
                     <Typography sx={{ marginLeft: '10px', marginRight: '70px' }} variant="h6">

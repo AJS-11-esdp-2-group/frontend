@@ -9,6 +9,8 @@ import { Button, Container, Grid, InputBase } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import { ChangeEvent, useState } from 'react';
+import { NavigateFunction, useNavigate } from 'react-router';
+import { createSearchParams } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -67,6 +69,8 @@ const FloristMenu = () => {
     const [searchResult, setSearchResult] = useState<Items [] | undefined>([]);
     const [search, setSearch] = useState(false);
     const [items, setItems] = useState<ItemsOnCart []>([]);
+
+    const navigate: NavigateFunction = useNavigate();
 
     const flowers = data?.filter((flower) => Number(flower.id_category) === 1);
     const toys = data?.filter((flower) => Number(flower.id_category) === 2);
@@ -132,6 +136,10 @@ const FloristMenu = () => {
             copyItems.push(copyItem);
             setItems(copyItems);
         }
+    };
+
+    const navigateToShowcase = () => {
+        navigate({pathname: '/', search: `?params=${JSON.stringify(items)}`});
     };
 
     return (
@@ -218,7 +226,7 @@ const FloristMenu = () => {
                 </Grid>
             </Container>
             <Container sx={{width: '33%'}}>
-                <Cart/>
+                <Cart clickNavigate={navigateToShowcase}/>
             </Container>
         </ThemeProvider>
     );
