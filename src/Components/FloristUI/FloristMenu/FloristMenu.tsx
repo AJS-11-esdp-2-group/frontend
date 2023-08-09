@@ -140,7 +140,7 @@ const FloristMenu = () => {
     };
 
     const navigateToShowcase = () => {
-        navigate({pathname: '/', search: `?params=${JSON.stringify(items)}`});
+        navigate({pathname: '/sendshowcase', search: `?params=${JSON.stringify(items)}`});
     };
 
     const removeItemHandler = (index: number) => {
