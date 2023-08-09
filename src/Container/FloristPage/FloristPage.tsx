@@ -5,9 +5,9 @@ import { Container, ThemeProvider } from '@mui/material';
 const FloristPage = () => {
   return (
     <ThemeProvider theme={GlobalTheme}>
-        <Container sx={{display: 'flex'}}>
+      <Container sx={{display: 'flex'}}>
         <FloristMenu />
-    </Container>
+      </Container>
     </ThemeProvider>
 
   );
