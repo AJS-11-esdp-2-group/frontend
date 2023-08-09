@@ -10,7 +10,6 @@ import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import { ChangeEvent, useState } from 'react';
 import { NavigateFunction, useNavigate } from 'react-router';
-import { createSearchParams } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -58,8 +57,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const colors = ['#04a96d', '#ef466f', 'purple', 'blue', '#da5a29'];
 const menuName = ['Цветы', 'Игрушки', 'Фурнитура', 'Рецепты', 'Услуги'];
 
-interface ItemsOnCart extends Items {
+export interface ItemsOnCart extends Items {
     qty: number;
+    isActive: boolean;
 }
 
 const FloristMenu = () => {
@@ -69,6 +69,7 @@ const FloristMenu = () => {
     const [searchResult, setSearchResult] = useState<Items [] | undefined>([]);
     const [search, setSearch] = useState(false);
     const [items, setItems] = useState<ItemsOnCart []>([]);
+    const [isActiveItem, setIsActiveItem] = useState<boolean>(false);
 
     const navigate: NavigateFunction = useNavigate();
 
@@ -127,12 +128,12 @@ const FloristMenu = () => {
             if(equalStatus) {
                 setItems(copyItems);
             } else {
-                const copyItem = {...item, qty: 1};
+                const copyItem = {...item, qty: 1, isActive: false};
                 copyItems.push(copyItem);
                 setItems(copyItems);
             }
         } else {
-            const copyItem = {...item, qty: 1};
+            const copyItem = {...item, qty: 1, isActive: false};
             copyItems.push(copyItem);
             setItems(copyItems);
         }
@@ -140,6 +141,47 @@ const FloristMenu = () => {
 
     const navigateToShowcase = () => {
         navigate({pathname: '/', search: `?params=${JSON.stringify(items)}`});
+    };
+
+    const removeItemHandler = (index: number) => {
+        const copyItems = [...items];
+        copyItems.splice(index, 1);
+        setItems(prev => copyItems);
+    };
+
+    const increaseItemHandler = (index: number) => {
+        const copyItems = [...items];
+        copyItems[index].qty ++;
+        setItems(prev=> copyItems);
+    };
+
+    const decreaseItemHandler = (index: number) => {
+        const copyItems = [...items];
+        if(copyItems[index].qty > 1){
+            copyItems[index].qty --;
+            setItems(prev=> copyItems);
+        }
+    };
+
+    const changePriceHandler = (index: number, e:ChangeEvent<HTMLInputElement>) => {
+        const copyItems = [...items];
+        copyItems[index].price = parseInt(e.target.value);
+        setItems(prev => copyItems);
+    };
+
+    const activeItemHandler = (index:number) => {
+        if(isActiveItem) {
+            const copyItems = [...items];
+            copyItems.forEach(item => {
+                item.isActive = false;
+            });
+
+            setItems(prev => copyItems);
+        }
+        setIsActiveItem(true);
+        const copyItems = [...items];
+        copyItems[index].isActive = true;
+        setItems(copyItems);
     };
 
     return (
@@ -226,7 +268,15 @@ const FloristMenu = () => {
                 </Grid>
             </Container>
             <Container sx={{width: '33%'}}>
-                <Cart clickNavigate={navigateToShowcase}/>
+                <Cart
+                    items={items} 
+                    clickNavigate={navigateToShowcase}
+                    removeItem={removeItemHandler}
+                    increaseItem={increaseItemHandler}
+                    decreaseItem={decreaseItemHandler}
+                    changePrice={changePriceHandler}
+                    activeItem={activeItemHandler}
+                />
             </Container>
         </ThemeProvider>
     );
