@@ -14,6 +14,7 @@ import AddSupply from './Container/Supply/AddSupply';
 import Recipes from './Container/Recipes/Recipes';
 import AddRecipes from './Container/Recipes/AddRecipes';
 import Invoices from './Components/Invoices/Invoices';
+import SendShowcase from './Container/SendShowcase/SendShowcase';
 import { getUser } from './Store/user/userSelectors';
 import AvailableBouquets from './Container/AvailableBouquets/AvailableBouquets';
 import FloristPage from './Container/FloristPage/FloristPage';
@@ -180,6 +181,17 @@ function App() {
 									redirectPath="/"
 								>
 									<Invoices />
+								</ProtectedRoute>
+							}
+						/>
+												<Route
+							path="/sendshowcase"
+							element={
+								<ProtectedRoute
+									isAllowed={user.isAuthenticated}
+									redirectPath="/"
+								>
+									<SendShowcase />
 								</ProtectedRoute>
 							}
 						/>
