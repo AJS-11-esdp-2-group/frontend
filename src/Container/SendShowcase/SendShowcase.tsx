@@ -20,34 +20,16 @@ const SendShowcase = () => {
   //Тут будет массив который будет получен с предыдущей страницы
   const [bouquetDescription, setBouquetDescription] = useState([
     {
-      id_item: '1',
-      name: 'Роза',
-      price: 1000,
-      count: 1,
-    },
-    {
-      id_item: '2',
-      name: 'Фиалка',
-      price: 120,
-      count: 12,
-    },
-    {
-      id_item: '3',
-      name: 'Гвоздика',
-      price: 201,
-      count: 10,
-    },
-    {
-      id_item: '4',
-      name: 'Ромашка',
-      price: 301,
-      count: 7,
+      id: 0,
+      item_name: '',
+      price: '',
+      qty: 0,
     },
   ])
 
-  // useEffect(() => {
-  //   setBouquetDescription(JSON.parse(params as string))
-  // }, [params])
+  useEffect(() => {
+    setBouquetDescription(JSON.parse(params as string))
+  }, [params])
 
   const handleSubmit = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -107,11 +89,11 @@ const SendShowcase = () => {
             <Grid container direction="column" spacing={2}>
               {bouquetDescription &&
                 bouquetDescription.map((bouquet) => (
-                  <Grid item xs key={bouquet.id_item}>
+                  <Grid item xs key={bouquet.id}>
                     <ul>
-                      <li>Цветок: {bouquet.name}</li>
+                      <li>Цветок: {bouquet.item_name}</li>
                       <li>Цена: {bouquet.price}</li>
-                      <li>Количество: {bouquet.count}</li>
+                      <li>Количество: {bouquet.qty}</li>
                     </ul>
                   </Grid>
                 ))}
