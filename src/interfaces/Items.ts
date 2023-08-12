@@ -10,7 +10,6 @@ export interface Item {
 	price: number;
 	id_category: string;
 	id_subcategory: string;
-	id_under_subcategory: string;
 	image_small: string;
 	id_user: number;
 }

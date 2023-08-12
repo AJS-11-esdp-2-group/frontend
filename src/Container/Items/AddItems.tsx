@@ -4,7 +4,6 @@ import FormElement from '../../Components/UI/Form/FormElement';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import { useAddItemMutation } from '../../Store/services/items';
 import { useGetAllcategoriesQuery, useGetSubcategoriesByIdCategoryQuery } from '../../Store/services/categories';
-import { useGetUnderSubcategoriesByIdCategoryQuery } from '../../Store/services/subcategories';
 import BasicSelect from '../../Components/UI/Form/SelectFormElement';
 import { useAppSelector } from '../../Store/hooks';
 import { useNavigate } from 'react-router';
@@ -24,7 +23,6 @@ const AddItem = () => {
 		item_description: string;
 		id_category: string;
 		id_subcategory: string;
-		id_under_subcategory: string;
 		id_user: number;
 		price: number;
 		image_small: string
@@ -34,14 +32,12 @@ const AddItem = () => {
 		item_description: '',
 		id_category: '',
 		id_subcategory: '',
-		id_under_subcategory: '',
 		id_user: user.id as number,
 		price: 0,
 		image_small: '',
 	};
 
   const { data: subcategory } = useGetSubcategoriesByIdCategoryQuery(categoryId);
-  const { data: underSubcategory } = useGetUnderSubcategoriesByIdCategoryQuery(subCategoryId);
 
   const [openItemId, setOpenItemId] = useState<number | null>(null);
 
@@ -157,21 +153,6 @@ const AddItem = () => {
               : []
           }
         />
-        <BasicSelect
-          value={form.id_under_subcategory}
-          label="Подкатегория подкатегории"
-          name="id_under_subcategory"
-          onChange={(value) => selectChangeHandler('id_under_subcategory', value)}
-          options={
-            underSubcategory
-              ? underSubcategory.map((undersubs) => ({
-                  id: undersubs.id,
-                  name: undersubs.under_subcategory_name,
-                }))
-              : []
-          }
-        />
-
         <FileUpload onChange={fileChangeHandler} name="image_small" label="Фото" />
         <Button
           fullWidth
