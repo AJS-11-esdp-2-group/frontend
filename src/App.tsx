@@ -15,8 +15,9 @@ import Recipes from './Container/Recipes/Recipes';
 import AddRecipes from './Container/Recipes/AddRecipes';
 import Invoices from './Components/Invoices/Invoices';
 import SendShowcase from './Container/SendShowcase/SendShowcase';
+import ShowcaseBouquets from './Container/ShowcaseBouquets/ShowcaseBouquets';
 import { getUser } from './Store/user/userSelectors';
-import AvailableBouquets from './Container/AvailableBouquets/AvailableBouquets';
+import DetailShowcaseBouquets from './Container/DetailShowcaseBouquet/DetailShowcaseBoquet';
 import FloristPage from './Container/FloristPage/FloristPage';
 import CartToolBar from './Components/UI/Layout/AppToolbar/CartToolBar';
 import { Routes, Route, useLocation } from 'react-router-dom';
@@ -195,17 +196,30 @@ function App() {
 								</ProtectedRoute>
 							}
 						/>
-						<Route
+
+<Route
 							path="/available_bouquets"
 							element={
 								<ProtectedRoute
 									isAllowed={user.isAuthenticated}
 									redirectPath="/"
 								>
-									<AvailableBouquets />
+									<ShowcaseBouquets />
 								</ProtectedRoute>
 							}
-						/><Route
+						/>
+						<Route
+							path="/detailBouquet/:id"
+							element={
+								<ProtectedRoute
+									isAllowed={user.isAuthenticated}
+									redirectPath="/"
+								>
+									<DetailShowcaseBouquets />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
 						path="/florist_page"
 						element={
 							<ProtectedRoute

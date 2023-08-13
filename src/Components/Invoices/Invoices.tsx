@@ -21,11 +21,11 @@ function CustomToolbar() {
 };
 
 const columns: GridColDef[] = [
-  { field: 'id', headerName: '№ накладной', width: 200 },
+  { field: 'id', headerName: '№ накладной', width: 150 },
   {
     field: 'date',
     headerName: 'Дата',
-    width: 250,
+    width: 180,
     valueFormatter: (date) => new Date(date?.value).toLocaleString(),
   },
   {
@@ -43,11 +43,16 @@ const columns: GridColDef[] = [
   {
     field: 'supplier_name',
     headerName: 'Поставщик',
-    width: 150,
+    width: 180,
   },
   {
     field: 'storage_name',
     headerName: 'Точка продаж',
+    width: 180,
+  },
+  {
+    field: 'username',
+    headerName: 'Сотрудник',
     width: 150,
   },
 ];

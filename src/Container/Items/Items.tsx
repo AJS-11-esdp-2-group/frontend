@@ -30,6 +30,8 @@ const ItemsContainer = () => {
 
     useEffect(() => {
         if (data) {
+            console.log(data);
+            
             setItems(data as []);
         }
     }, [data]);
