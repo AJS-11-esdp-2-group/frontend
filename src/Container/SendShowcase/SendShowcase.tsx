@@ -15,7 +15,6 @@ const SendShowcase = () => {
   })
   const queryParams = new URLSearchParams(window.location.search)
   const params = queryParams.get('params')
-  console.log(JSON.parse(params as string))
 
   //Тут будет массив который будет получен с предыдущей страницы
   const [bouquetDescription, setBouquetDescription] = useState([
