@@ -3,18 +3,25 @@ import { Box, Button, Container, Grid, Typography, TableContainer, TableBody } f
 import  {ItemsOnCart} from '../FloristMenu/FloristMenu';
 import CartItem from '../../UI/Cart/CartItem';
 import {ChangeEvent} from 'react';
+import { IAvailableBouquet } from '../../../interfaces/IAvailableBouquets';
+import CartBouquet from '../../UI/Cart/CartBouquet';
 
 interface Props {
     items: ItemsOnCart [];
+    bouquets: IAvailableBouquet[] | [];
     clickNavigate: () => void;
     removeItem: (i: number) => void;
     increaseItem: (i: number) => void;
     decreaseItem: (i: number) => void;
     changePrice: (i:number, e: ChangeEvent<HTMLInputElement>) => void;
     activeItem: (i:number) => void;
+    activeIndex: number | null;
+    bouquetActualPriceChange: (i: number, e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Cart = ({items, clickNavigate, removeItem, increaseItem, decreaseItem, changePrice, activeItem}: Props) => {
+const Cart = ({items, clickNavigate, removeItem, increaseItem, decreaseItem, 
+    changePrice, activeItem, activeIndex, bouquets, bouquetActualPriceChange}: Props) => {
+        
     return (
         <Container sx={{ width: '36%', position: 'fixed', right: 0 }}>
             <Grid container>
@@ -38,9 +45,26 @@ const Cart = ({items, clickNavigate, removeItem, increaseItem, decreaseItem, cha
                                             removeItem={()=>removeItem(i)}
                                             changePrice={(e) =>changePrice(i, e)}
                                             activeItem={() => activeItem(i)}
+                                            editBarDisplay={i === activeIndex ? true : false}
                                         />
                                     )
                                 }) : null
+                            }
+                            {
+                                items.length <= 0 && bouquets?.length &&
+                                bouquets?.map((bouquet, i) => {
+                                    return (
+                                        <CartBouquet 
+                                            key={bouquet.id}
+                                            image={bouquet.image_bouquet}
+                                            id={bouquet.id}
+                                            name={bouquet.name_bouquet}
+                                            price={bouquet.actual_price}
+                                            actualPriceChange={(e) => bouquetActualPriceChange(i, e)}
+                                            total_sum={bouquet.total_sum}
+                                        />
+                                    );
+                                })
                             }
                         </TableBody>
                     </TableContainer>

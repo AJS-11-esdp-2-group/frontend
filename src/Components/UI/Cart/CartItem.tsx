@@ -12,9 +12,10 @@ interface Props {
     decreaseItem: () => void;
     changePrice: (e: ChangeEvent<HTMLInputElement>) => void;
     activeItem: () => void;
+    editBarDisplay: boolean
 }
 
-const CartItem = ({item, removeItem, increaseItem, decreaseItem, changePrice, activeItem}: Props) => {
+const CartItem = ({item, removeItem, increaseItem, decreaseItem, changePrice, activeItem, editBarDisplay}: Props) => {
     return (
         <>
         <TableRow onClick={activeItem} sx={{width: '100%', display: 'flex', justifyContent: 'strech'}}>
@@ -24,7 +25,7 @@ const CartItem = ({item, removeItem, increaseItem, decreaseItem, changePrice, ac
             <TableCell align='right' sx={{width: '25%'}}>{item.price * item.qty}</TableCell>
         </TableRow>
         {
-            item.isActive?
+            editBarDisplay?
             <TableRow sx={{width: '100%', display: 'flex', justifyContent: 'strech'}}>
                 <TableCell align='left' sx={{width: '35%', padding: '8px', display: 'flex', alignItems: 'baseline'}}>
                     <TextField
