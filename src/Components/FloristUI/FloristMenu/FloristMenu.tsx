@@ -8,8 +8,10 @@ import { ThemeProvider } from '@emotion/react';
 import { Button, Container, Grid, InputBase } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
 import { NavigateFunction, useNavigate } from 'react-router';
+import { useGetBouquetsOnBasketQuery } from '../../../Store/services/availableBouquets';
+import { IAvailableBouquet, IAvailableBouquets } from '../../../interfaces/IAvailableBouquets';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -59,19 +61,26 @@ const menuName = ['Цветы', 'Игрушки', 'Фурнитура', 'Рец�
 
 export interface ItemsOnCart extends Items {
     qty: number;
-    isActive: boolean;
 }
 
 const FloristMenu = () => {
     const { data } = useGetAllItemsQuery();
+    const bouquets = useGetBouquetsOnBasketQuery().data as IAvailableBouquets [] | [];
+    const refetch = useGetBouquetsOnBasketQuery().refetch;
     const [selectedMenu, setSelectedMenu] = useState('');
     const [isMenuCardVisible, setMenuCardVisible] = useState(true);
     const [searchResult, setSearchResult] = useState<Items [] | undefined>([]);
     const [search, setSearch] = useState(false);
     const [items, setItems] = useState<ItemsOnCart []>([]);
-    const [isActiveItem, setIsActiveItem] = useState<boolean>(false);
+    const [basketBouquets, setBasketBouquets] = useState<IAvailableBouquet [] | []>([]);
+    const [activeItemIndex, setActiveItemIdex] = useState<number | null>(null);
 
     const navigate: NavigateFunction = useNavigate();
+
+    useEffect(() => {
+        refetch();
+        setBasketBouquets(prev => bouquets);
+    }, [bouquets, refetch]);
 
     const flowers = data?.filter((flower) => Number(flower.id_category) === 1);
     const toys = data?.filter((flower) => Number(flower.id_category) === 2);
@@ -128,14 +137,16 @@ const FloristMenu = () => {
             if(equalStatus) {
                 setItems(copyItems);
             } else {
-                const copyItem = {...item, qty: 1, isActive: false};
+                const copyItem = {...item, qty: 1};
                 copyItems.push(copyItem);
                 setItems(copyItems);
+                setActiveItemIdex(copyItems.length -1);
             }
         } else {
-            const copyItem = {...item, qty: 1, isActive: false};
+            const copyItem = {...item, qty: 1};
             copyItems.push(copyItem);
             setItems(copyItems);
+            setActiveItemIdex(copyItems.length -1);
         }
     };
 
@@ -170,18 +181,17 @@ const FloristMenu = () => {
     };
 
     const activeItemHandler = (index:number) => {
-        if(isActiveItem) {
-            const copyItems = [...items];
-            copyItems.forEach(item => {
-                item.isActive = false;
-            });
-
-            setItems(prev => copyItems);
+        if(activeItemIndex === index) {
+            setActiveItemIdex(null);
+            return
         }
-        setIsActiveItem(true);
-        const copyItems = [...items];
-        copyItems[index].isActive = true;
-        setItems(copyItems);
+        setActiveItemIdex(index);
+    };
+
+    const bouquetPriceChangeHandler = (index: number, e:ChangeEvent<HTMLInputElement> ) => {
+        const copyBasket = [...basketBouquets];
+        copyBasket[index].total_sum = parseInt(e.target.value);
+        setBasketBouquets(prev => copyBasket);
     };
 
     return (
@@ -276,6 +286,9 @@ const FloristMenu = () => {
                     decreaseItem={decreaseItemHandler}
                     changePrice={changePriceHandler}
                     activeItem={activeItemHandler}
+                    activeIndex={activeItemIndex}
+                    bouquets={basketBouquets}
+                    bouquetActualPriceChange={bouquetPriceChangeHandler}
                 />
             </Container>
         </ThemeProvider>

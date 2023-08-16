@@ -12,6 +12,9 @@ const availableBouquetsApi = api.injectEndpoints({
       query: () => "/sales/showcase",
       providesTags: () => [{ type: "AvailableBouquets", id: "LIST" }]
     }),
+    getBouquetsOnBasket: build.query<IAvailableBouquets[], void>({
+      query: () => '/sales/basket'
+    }),
     getAvailableBouquetById: build.query<IDetailBoquet[], number | string>({
       query: (id) => `/sales/showcase/${id}`
     }),
@@ -60,5 +63,6 @@ export const {
   useEditAvailableBouquetMutation,
   useCreateAvailableBouquetMutation,
   useWriteOfBouquetMutation,
-  useSendBouquetBasketMutation
+  useSendBouquetBasketMutation,
+  useGetBouquetsOnBasketQuery
 } = availableBouquetsApi;
