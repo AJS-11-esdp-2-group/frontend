@@ -37,16 +37,16 @@ const Cart = ({
         <Container sx={{ width: '36%', position: 'fixed', right: 0 }}>
             <Grid container>
                 <Grid>
-                    <Typography color="primary" variant="h6">
-                        {items.length > 0 && bouquets.length === 0 ? 'Ассортимент' : null}
-                        {bouquets.length > 0 && items.length === 0 ? 'Букеты' : null}
+                    <Typography color='primary' variant='h6'>
+                        {items?.length > 0 && bouquets?.length === 0 ? 'Ассортимент' : null}
+                        {bouquets?.length > 0 && items?.length === 0 ? 'Букеты' : null}
                     </Typography>
                 </Grid>
                 <Grid minHeight={450} sx={{ width: '100%' }}>
                     <TableContainer sx={{ maxHeight: 450, overflow: 'scroll' }}>
                         <TableBody>
-                            {items.length > 0
-                                ? items.map((item, i) => {
+                            {items && items?.length >= 1
+                                ? items?.map((item, i) => {
                                       return (
                                           <CartItem
                                               key={i}
@@ -61,7 +61,7 @@ const Cart = ({
                                       );
                                   })
                                 : null}
-                            {items.length <= 0 &&
+                            {items?.length <= 0 &&
                                 bouquets?.length &&
                                 bouquets?.map((bouquet, i) => {
                                     return (
@@ -98,10 +98,14 @@ const Cart = ({
                         Итого:
                     </Typography>
                     <Typography variant='h6'>
-                        {items.length > 0 || bouquets.length > 0
+                        {(items && items.length > 0) || (bouquets && bouquets.length > 0)
                             ? (
-                                  (items.length > 0 ? items.reduce((acc, item) => acc + item.price * item.qty, 0) : 0) +
-                                  (bouquets.length > 0 ? bouquets.reduce((acc, item) => acc + item.total_sum, 0) : 0)
+                                  (items && items.length > 0
+                                      ? items.reduce((acc, item) => acc + item.price * item.qty, 0)
+                                      : 0) +
+                                  (bouquets && bouquets.length > 0
+                                      ? bouquets.reduce((acc, item) => acc + item.total_sum, 0)
+                                      : 0)
                               ).toFixed(2)
                             : '0.00'}
                     </Typography>
