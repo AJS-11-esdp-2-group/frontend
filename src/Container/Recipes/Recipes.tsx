@@ -25,7 +25,6 @@ import {
     ListSubheader,
     ThemeProvider,
 } from '@mui/material';
-import { relative } from 'path';
 
 const Recipes = () => {
     const navigate = useNavigate();
@@ -153,7 +152,7 @@ const Recipes = () => {
                         </Grid>
                     )}
                 </form>
-                {selectedBouquetIds.length > 0 && isChecked ? (
+                {selectedBouquetIds.length  >=1 && isChecked ? (
                     <Button variant="contained" color="secondary" onClick={handleSendToShowcase}>
                         Отправить букет на витрину
                     </Button>

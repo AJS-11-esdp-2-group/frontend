@@ -9,12 +9,12 @@ import { Provider } from 'react-redux';
 import { createTheme } from '@mui/material';
 
 export const GlobalTheme = createTheme({
-	components: {
+	components: {	
 	  MuiButtonBase: {
 		styleOverrides: {
 		  root: ({ theme }) =>
 			theme.unstable_sx({
-			  marginBottom: 3,
+			  marginBottom: 1,
 			}),
 		},
 	  },
