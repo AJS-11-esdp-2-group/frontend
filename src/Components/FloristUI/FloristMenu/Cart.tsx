@@ -38,8 +38,8 @@ const Cart = ({
             <Grid container>
                 <Grid>
                     <Typography color="primary" variant="h6">
-                        {items.length > 0 ? 'Ассортимент' : null}
-                        {bouquets.length > 0 ? 'Букеты' : null}
+                        {items.length > 0 && bouquets.length === 0 ? 'Ассортимент' : null}
+                        {bouquets.length > 0 && items.length === 0 ? 'Букеты' : null}
                     </Typography>
                 </Grid>
                 <Grid minHeight={450} sx={{ width: '100%' }}>

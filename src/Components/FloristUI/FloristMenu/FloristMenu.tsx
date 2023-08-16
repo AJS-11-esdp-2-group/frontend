@@ -255,7 +255,7 @@ const FloristMenu = () => {
         setShow(false);
     };
 
-    const totalValue = calculateTotalValue(items, basketBouquets as IAvailableBouquet[]);
+    const totalValue = calculateTotalValue(items as ItemsOnCart[], basketBouquets as IAvailableBouquet[]);
     return (
         <ThemeProvider theme={GlobalTheme}>
             {showPayment && (
