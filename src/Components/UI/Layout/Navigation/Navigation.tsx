@@ -21,6 +21,7 @@ import {
 	CategoryRounded,
 	EmojiNatureTwoTone,
 	FilterVintage,
+	Check,
 } from '@mui/icons-material';
 
 type Anchor = 'left';
@@ -78,6 +79,14 @@ const Navigation = () => {
 							<FilterVintage />
 						</ListItemIcon>
 						<Typography>Букеты в наличии</Typography>
+					</ListItemButton>
+				</ListItem>
+				<ListItem>
+					<ListItemButton component={Link} to="/orders">
+						<ListItemIcon>
+							<Check />
+						</ListItemIcon>
+						<Typography>История заказов</Typography>
 					</ListItemButton>
 				</ListItem>
 				<ListItem>

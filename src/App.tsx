@@ -28,6 +28,7 @@ import {
 	ThemeProvider,
 } from '@mui/material';
 import { grey, blue, blueGrey } from '@mui/material/colors';
+import Sold from './Container/Orders/Orders';
 
 const getDesignTokens = (mode: PaletteMode) => ({
 	palette: {
@@ -51,7 +52,7 @@ const modeTheme = createTheme(getDesignTokens('light'));
 function App() {
 	const user = useAppSelector(getUser);
 	const location = useLocation();
-  	const isFloristPage = location.pathname === '/florist_page';
+	const isFloristPage = location.pathname === '/florist_page';
 
 	return (
 		<ThemeProvider theme={modeTheme}>
@@ -185,7 +186,7 @@ function App() {
 								</ProtectedRoute>
 							}
 						/>
-												<Route
+						<Route
 							path="/sendshowcase"
 							element={
 								<ProtectedRoute
@@ -196,8 +197,18 @@ function App() {
 								</ProtectedRoute>
 							}
 						/>
-
-<Route
+						<Route
+							path="/orders"
+							element={
+								<ProtectedRoute
+									isAllowed={user.isAuthenticated}
+									redirectPath="/"
+								>
+									<Sold />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
 							path="/available_bouquets"
 							element={
 								<ProtectedRoute
@@ -220,16 +231,16 @@ function App() {
 							}
 						/>
 						<Route
-						path="/florist_page"
-						element={
-							<ProtectedRoute
-								isAllowed={user.isAuthenticated}
-								redirectPath="/"
-							>
-								<FloristPage/>
-							</ProtectedRoute>
-						}
-					/>
+							path="/florist_page"
+							element={
+								<ProtectedRoute
+									isAllowed={user.isAuthenticated}
+									redirectPath="/"
+								>
+									<FloristPage />
+								</ProtectedRoute>
+							}
+						/>
 					</Routes>
 				</main>
 			</CssBaseline>
