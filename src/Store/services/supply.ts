@@ -1,6 +1,6 @@
 import { ISupplies } from '../../interfaces/ISupply';
 import { api } from '../../features';
-import { Supply } from '../../Container/Supply/AddSupply';
+import { Supply } from '../../Components/Invoices/AddInvoice';
 import { IInvoice } from '../../interfaces/IInvoice'
 
 interface limit {

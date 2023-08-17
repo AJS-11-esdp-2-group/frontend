@@ -6,7 +6,7 @@ import { useGetAllItemsQuery } from '../../Store/services/items';
 import { useAddsupplyMutation } from '../../Store/services/supply';
 import { useGetAllSuppliersQuery } from '../../Store/services/suppliers';
 import { useGetAllStorageQuery } from '../../Store/services/storages';
-import BasicSelect from '../../Components/UI/Form/SelectFormElement';
+import BasicSelect from '../UI/Form/SelectFormElement';
 import { Items } from '../../interfaces/Items';
 import { useNavigate } from 'react-router';
 import {
@@ -26,7 +26,7 @@ import {
 } from '@mui/material';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import EnhancedTableHead from '../../Components/Supply/AddSupply/TableHead/TableHead';
+import EnhancedTableHead from '../Supply/AddSupply/TableHead/TableHead';
 
 interface InvoiceItem {
 	item_id: string;
@@ -42,7 +42,7 @@ export interface Supply {
 	items: Array<InvoiceItem>;
 }
 
-const AddSupply = () => {
+const AddInvoice = () => {
 	const { data: storages } = useGetAllStorageQuery();
 	const { data: suppliers } = useGetAllSuppliersQuery();
 	const { data: items } = useGetAllItemsQuery();
@@ -333,4 +333,4 @@ const AddSupply = () => {
 	);
 };
 
-export default AddSupply;
+export default AddInvoice;
