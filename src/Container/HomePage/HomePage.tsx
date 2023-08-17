@@ -52,7 +52,7 @@ const HomePage = () => {
 						}}
 					>
 						<Button sx={{ width: '100%' }} variant="contained" color="primary">
-							<Typography variant="body1" component={Link} to="/new-supply">
+							<Typography variant="body1" component={Link} to="/new-invoice">
 								Создать Приход
 							</Typography>
 						</Button>

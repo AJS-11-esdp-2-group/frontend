@@ -98,16 +98,6 @@ const Navigation = () => {
 					</ListItemButton>
 				</ListItem>
 				<ListItem>
-					<ListItemButton>
-						<ListItemIcon>
-							<BlindsClosedOutlinedIcon />
-						</ListItemIcon>
-						<Typography component={Link} to="/supply">
-							Приходы
-						</Typography>
-					</ListItemButton>
-				</ListItem>
-				<ListItem>
 					<ListItemButton component={Link} to="/items_categories">
 						<ListItemIcon>
 							<CategoryRounded />

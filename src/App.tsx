@@ -9,8 +9,7 @@ import { useAppSelector } from './Store/hooks';
 import AppToolBar from './Components/UI/Layout/AppToolbar/ApptoolBar';
 import EditItem from './Container/Items/EditItem';
 import EditSupplier from './Container/Suppliers/EditSupplier';
-import Supply from './Container/Supply/Supply';
-import AddSupply from './Container/Supply/AddSupply';
+import AddSupply from './Components/Invoices/AddInvoice';
 import Recipes from './Container/Recipes/Recipes';
 import AddRecipes from './Container/Recipes/AddRecipes';
 import Invoices from './Components/Invoices/Invoices';
@@ -121,18 +120,18 @@ function App() {
 							}
 						/>
 						<Route
-							path="/supply"
+							path="/invoices"
 							element={
 								<ProtectedRoute
 									isAllowed={user.isAuthenticated}
 									redirectPath="/"
 								>
-									<Supply />
+									<Invoices />
 								</ProtectedRoute>
 							}
 						/>
 						<Route
-							path="/new-supply"
+							path="/new-invoice"
 							element={
 								<ProtectedRoute
 									isAllowed={user.isAuthenticated}
@@ -172,17 +171,6 @@ function App() {
 									redirectPath="/"
 								>
 									<AddRecipes />
-								</ProtectedRoute>
-							}
-						/>
-						<Route
-							path="/invoices"
-							element={
-								<ProtectedRoute
-									isAllowed={user.isAuthenticated}
-									redirectPath="/"
-								>
-									<Invoices />
 								</ProtectedRoute>
 							}
 						/>

@@ -77,7 +77,7 @@ const Invoices = () => {
           variant="contained"
           color="success"
           component={Link}
-          to="/new-supply"
+          to="/new-invoice"
         >
           Создать накладную
         </Button>
