@@ -23,6 +23,7 @@ import { red } from '@mui/material/colors'
 import { GlobalTheme } from '../..'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import noImage from '../../assets/no-photo.png'
 
 const ShowcaseBouquets = () => {
   const [sendBasket] = useSendBouquetBasketMutation()
@@ -192,7 +193,7 @@ const ShowcaseBouquets = () => {
                       image={
                         item.image_bouquet
                           ? item.image_bouquet
-                          : '../no-photo.png'
+                          : noImage
                       }
                       alt={item.name_bouquet}
                     />

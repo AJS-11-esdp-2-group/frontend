@@ -119,7 +119,7 @@ const Login = () => {
 								Войти
 							</LoadingButton>
 							<Grid container>
-								<Grid item sx={{ marginLeft: 6 }}>
+								<Grid item sx={{ marginLeft: 6, pt:3 }}>
 									<Link component={RouterLink} to="/register">
 										У вас нет аккаунта? Зарегистрироваться
 									</Link>

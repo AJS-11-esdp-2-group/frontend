@@ -1,6 +1,6 @@
 import { IBouquets } from '../../interfaces/IBouquets';
 import { GlobalTheme } from '../..';
-import noImage from '../../assets/image.jpeg'
+import noImage from '../../assets/no-photo.png'
 import { Checkbox, IconButton, ImageListItem, ImageListItemBar, ThemeProvider } from '@mui/material';
 import { MouseEventHandler } from 'react';
 import { Info } from '@mui/icons-material';
@@ -33,7 +33,7 @@ const RecipesComponent = ({
 		<ImageListItem key={id}>
 			{checkboxVisible && 
 			<Checkbox onClick={checkHandler} />}
-		  <img src={cardImage} srcSet={cardImage} alt={bouquet_name} loading="lazy" />
+		  <img src={cardImage} srcSet={cardImage} alt={bouquet_name} loading="lazy"/>
 		  <ImageListItemBar 
 		  	title={parseInt(sum).toFixed().toString() === 'NaN' ? '0 т' : `${parseInt(sum).toFixed()} т`} 
 			position="top" />

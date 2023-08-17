@@ -144,7 +144,7 @@ const Recipes = () => {
                                 name="bouquet_description"
                                 onChange={inputChangeHandler}
                             />
-                            <Button type="submit" variant="contained" color="success">
+                            <Button type="submit" variant="contained" color="success" sx={{mr:2}}>
                                 Создать
                             </Button>
                             <Button variant="contained" color="error" onClick={handleAddButtonClick}>
@@ -171,6 +171,7 @@ const Recipes = () => {
                         {bouquetsWithImages &&
                             bouquetsWithImages.map((bouquet) => (
                                 <RecipesComponent
+                                    key={bouquet.id}
                                     onClick={() => handleBouquetClick(bouquet.id)}
                                     id={bouquet.id}
                                     bouquet_name={bouquet.bouquet_name}
