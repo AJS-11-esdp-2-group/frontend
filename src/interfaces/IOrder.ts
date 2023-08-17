@@ -3,6 +3,7 @@ export interface IOrders {
 	order_number: string;
 	order_date: string;
 	total_sales: number;
+	first_name: string;
 }
 export interface IOrder {
 	order_number: string;

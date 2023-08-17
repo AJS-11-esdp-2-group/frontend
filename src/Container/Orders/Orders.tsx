@@ -30,6 +30,12 @@ const columns: GridColDef[] = [
         type: 'number',
         width: 200,
     },
+    {
+        field: 'first_name',
+        headerName: 'Автор заказа',
+        type: 'number',
+        width: 200,
+    },
 ];
 
 const Orders = () => {
@@ -58,7 +64,7 @@ const Orders = () => {
                         initialState={{
                             pagination: {
                                 paginationModel: {
-                                    pageSize: 4,
+                                    pageSize: 10,
                                 },
                             },
                         }}
