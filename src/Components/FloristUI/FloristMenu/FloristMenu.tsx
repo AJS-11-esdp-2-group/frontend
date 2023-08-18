@@ -17,6 +17,22 @@ import SearchIcon from '@mui/icons-material/Search';
 import { ChangeEvent, useState, useEffect } from 'react';
 import { NavigateFunction, useNavigate } from 'react-router';
 
+const unFreeze = function(o: any){
+    let oo=undefined;
+    if( o instanceof Array){
+        oo=[];
+        const clone=function(v: any){oo.push(v)};
+        o.forEach(clone); 
+    }else if(o instanceof String){
+        oo=new String(o).toString();
+    }else  if(typeof o =='object'){
+        oo={} as any;
+        for (let property in o)
+        {oo[property] = o[property];}
+    }
+    return oo;
+}
+
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -91,7 +107,17 @@ const FloristMenu = () => {
 
     useEffect(() => {
         refetch();
-        setBasketBouquets((prev) => bouquetsOnBasket);
+        if(bouquetsOnBasket) {
+            const unFrezzed = bouquetsOnBasket.map(elem => {
+                return unFreeze(elem);
+            });
+            const defaultTotalSum = unFrezzed.map(elem => {
+                const copyElem = {...elem};
+                copyElem.total_sum = elem.actual_price;
+                return copyElem;
+            });
+            setBasketBouquets((prev) => defaultTotalSum);
+        }
         setShow(isSuccess);
     }, [bouquetsOnBasket, refetch, isSuccess]);
 
@@ -203,7 +229,7 @@ const FloristMenu = () => {
 
     const bouquetPriceChangeHandler = (index: number, e: ChangeEvent<HTMLInputElement>) => {
         const copyBasket = [...basketBouquets];
-        copyBasket[index].total_sum = parseInt(e.target.value);
+        copyBasket[index].total_sum = isNaN(parseInt(e.target.value))? 0 : parseInt(e.target.value);
         setBasketBouquets((prev) => copyBasket);
     };
     const togglePayment = () => {

@@ -66,7 +66,7 @@ const Cart = ({
                                 bouquets?.map((bouquet, i) => {
                                     return (
                                         <CartBouquet
-                                            key={bouquet.id}
+                                            key={i}
                                             image={bouquet.image_bouquet}
                                             id={bouquet.id}
                                             name={bouquet.name_bouquet}
