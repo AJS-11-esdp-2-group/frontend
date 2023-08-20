@@ -1,4 +1,5 @@
 export interface Items extends Item {
+	available_qty: string | number;
 	id: number;
 	id_category: string;
 	create_date: Date;
