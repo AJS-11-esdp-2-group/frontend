@@ -10,6 +10,7 @@ import BasicSelect from '../UI/Form/SelectFormElement';
 import { Items } from '../../interfaces/Items';
 import { useNavigate } from 'react-router';
 import {
+	Table,
 	Container,
 	Button,
 	Snackbar,
@@ -22,7 +23,8 @@ import {
 	TableBody,
 	TableRow,
 	TableCell,
-	Box
+	Box,
+	Paper
 } from '@mui/material';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -179,154 +181,179 @@ const AddInvoice = () => {
 			<Container
 				sx={{ marginTop: '50px', marginBottom: 10}}
 			>
-				<TextField
-					name="invoice_number"
-					label="Номер накладной"
-					value={form.invoice_number}
-					onChange={inputChangeHandler}
-				/>
-				<Snackbar
-					anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-					open={open}
-					autoHideDuration={3000}
-					onClose={handleClose}
-				>
-					<Alert severity="error" onClose={handleClose}>
-						{(error as CustomError)?.data?.message}
-					</Alert>
-				</Snackbar>
-				<BasicSelect
-					value={form.source_id}
-					label="контрагент"
-					name="source_id"
-					onChange={(value) => selectChangeHandler('source_id', value)}
-					options={
-						suppliers
-							? suppliers.map((suppliers) => ({
-									id: suppliers.id,
-									name: suppliers.name_supplier,
-								}))
-							: []
-					}
-				/>
-				<BasicSelect
-					value={form.target_id}
-					label="Торговая точка"
-					name="target"
-					onChange={(value) => selectChangeHandler('target_id', value)}
-					options={
-						storages
-							? storages.map((storage) => ({
-									id: storage.id,
-									name: storage.storage,
-								}))
-							: []
-					}
-				/>
-				<Autocomplete
-					disablePortal
-					options={items ? items : []}
-					getOptionLabel={(option) => option.item_name}
-					onChange={autocompleteChangeHandler}
-					renderInput={(params) => (
-						<TextField name="item_id" {...params} label="Выберите товар" />
-					)}
-				/>	
-				<Box>
-					<Button
-						variant="contained"
-						color="success"
-						type="submit"
-						className="submit"
-						disabled={!isFormValid()}
-						onClick={submitFormHandler}
+				<Container sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: 0}}>
+					<Box sx={{width: '20%', display:'flex', alignItems: 'center'}}>
+						<TextField
+							name="invoice_number"
+							label="Номер накладной"
+							value={form.invoice_number}
+							onChange={inputChangeHandler}
+						/>
+					</Box>
+					<Snackbar
+						anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+						open={open}
+						autoHideDuration={3000}
+						onClose={handleClose}
 					>
-						Создать Приход
-					</Button>
-				</Box>		
-				<TableContainer sx = {{maxHeight: 500}}>
-					<EnhancedTableHead/>
-					<TableBody>
-						<TableRow>
-							<TableCell></TableCell>
-							<TableCell ></TableCell>
-							<TableCell align='center'></TableCell>
-							<TableCell align='center'>
-								{
-									form.items.length > 0 && 
-									form.items[form.items.length-1]?.qty !== '' && 
-									form.items[form.items.length-1]?.price !== '' ?
-									form.items.reduce((acc, item) => {
-										if(item.qty === '') return acc
-										return acc + parseInt(item.qty)
-									}, 0) : null
-								}
-							</TableCell>
-							<TableCell align='center'></TableCell>
-							<TableCell align='center'>
-								{
-									form.items.length > 0 && 
-									form.items[form.items.length-1]?.qty !== '' && 
-									form.items[form.items.length-1]?.price !== '' ?
-									form.items.reduce((acc, item) => {
-										if(item.price === '' && item.qty === '') return acc
-										if(item.price === '') return acc
-										return acc + (parseInt(item.qty) *parseInt(item.price)) 
-									}, 0) : null
-								}
-							</TableCell>
-						</TableRow>
-						{
-							form.items.length > 0 ? 
-							form.items.map((item, i) => {
-								const itemName = items?.map(it => {
-									if(it.id === parseInt(item.item_id)) return it.item_name
-								})
-								return(
-									<TableRow>
-										<TableCell>{i+1}</TableCell>
-										<TableCell 
-											component="th"
-											scope="row"
-											padding="none"
-										>
-											{itemName}
-										</TableCell>
-										<TableCell align='center'>{0}</TableCell>
-										<TableCell align='center'>
-											<TextField 
-												id={i.toString()}
-												name='qty'
-												margin='normal'
-												size='small'
-												sx={{width: 80}}
-												onChange={itemDetailChangeHandler}
-												value={form.items[i].qty}
-											/>
-										</TableCell>
-										<TableCell align='center'>
-											<TextField 
-												margin='normal'
-												size='small'
-												sx={{width: 80}}
-												id={i.toString()}
-												name='price'
-												onChange={itemDetailChangeHandler}
-												value={form.items[i].price}
-											/>
-										</TableCell>
-										<TableCell align='center'>
-											{isNaN(parseInt(item.price) * parseInt(item.qty))? '0' : parseInt(item.price) * parseInt(item.qty)}
-										</TableCell>
-										<TableCell align='center' onClick={() => deleteItem(i)}>
-											<HighlightOffIcon 
-											/>
-										</TableCell>
-									</TableRow>
-								)
-							}) : <Typography >Нет выбранных товаров</Typography>
-						}
-					</TableBody>
+						<Alert severity="error" onClose={handleClose}>
+							{(error as CustomError)?.data?.message}
+						</Alert>
+					</Snackbar>
+					<Box sx={{width: '30%'}}>
+						<BasicSelect
+							value={form.source_id}
+							label="контрагент"
+							name="source_id"
+							onChange={(value) => selectChangeHandler('source_id', value)}
+							options={
+								suppliers
+									? suppliers.map((suppliers) => ({
+											id: suppliers.id,
+											name: suppliers.name_supplier,
+										}))
+									: []
+							}
+						/>
+					</Box>
+					<Box sx={{width: '30%'}}>
+						<BasicSelect
+							value={form.target_id}
+							label="Торговая точка"
+							name="target"
+							onChange={(value) => selectChangeHandler('target_id', value)}
+							options={
+								storages
+									? storages.map((storage) => ({
+											id: storage.id,
+											name: storage.storage,
+										}))
+									: []
+							}
+						/>
+					</Box>
+				</Container>
+				<Container>
+					<Autocomplete
+						disablePortal
+						options={items ? items : []}
+						getOptionLabel={(option) => option.item_name}
+						onChange={autocompleteChangeHandler}
+						renderInput={(params) => (
+							<TextField name="item_id" {...params} label="Выберите товар" />
+						)}
+					/>
+					<Box sx={{marginTop: '8px', marginBottom: '8px'}}>
+						<Button
+							variant="contained"
+							color="success"
+							type="submit"
+							className="submit"
+							disabled={!isFormValid()}
+							onClick={submitFormHandler}
+						>
+							Создать Приход
+						</Button>
+					</Box>
+				</Container>			
+				<TableContainer component={Paper} sx={{maxHeight:'430px'}}>
+					<Table>
+						<EnhancedTableHead/>
+					</Table>
+					<Table>
+						<TableBody>
+							<TableRow>
+								<TableCell></TableCell>
+								<TableCell ></TableCell>
+								<TableCell align='center'></TableCell>
+								<TableCell align='center'>
+									{
+										form.items.length > 0 && 
+										form.items[form.items.length-1]?.qty !== '' && 
+										form.items[form.items.length-1]?.price !== '' ?
+										form.items.reduce((acc, item) => {
+											if(item.qty === '') return acc
+											return acc + parseInt(item.qty)
+										}, 0) : null
+									}
+								</TableCell>
+								<TableCell align='center'></TableCell>
+								<TableCell align='center'>
+									{
+										form.items.length > 0 && 
+										form.items[form.items.length-1]?.qty !== '' && 
+										form.items[form.items.length-1]?.price !== '' ?
+										form.items.reduce((acc, item) => {
+											if(item.price === '' && item.qty === '') return acc
+											if(item.price === '') return acc
+											return acc + (parseInt(item.qty) *parseInt(item.price)) 
+										}, 0) : null
+									}
+								</TableCell>
+							</TableRow>
+							{
+								form.items.length > 0 ? 
+								form.items.map((item, i) => {
+									const itemName = items?.map(it => {
+										if(it.id === parseInt(item.item_id)) return it.item_name
+									})
+									const avalaibleQty = items?.map(it => {
+										if(it.id === parseInt(item.item_id)) return it.available_qty
+									})
+									return(
+										<TableRow key={i}>
+											<TableCell sx={{width: '70px'}}>{i+1}</TableCell>
+											<TableCell 
+												component="th"
+												scope="row"
+												padding="none"
+												sx={{width: '185px'}}
+											>
+												{itemName}
+											</TableCell>
+											<TableCell align='center'>{avalaibleQty}</TableCell>
+											<TableCell align='center' padding='none'>
+												<TextField 
+													type='number'
+													id={i.toString()}
+													name='qty'
+													margin='normal'
+													size='small'
+													sx={{width: 80}}
+													onChange={itemDetailChangeHandler}
+													value={form.items[i].qty}
+												/>
+											</TableCell>
+											<TableCell align='center' padding='none'>
+												<TextField 
+													type='number'
+													margin='normal'
+													size='small'
+													sx={{width: 80}}
+													id={i.toString()}
+													name='price'
+													onChange={itemDetailChangeHandler}
+													value={form.items[i].price}
+												/>
+											</TableCell>
+											<TableCell align='center' padding='none' sx={{width: '200px'}}>
+												{isNaN(parseInt(item.price) * parseInt(item.qty))? '0' : parseInt(item.price) * parseInt(item.qty)}
+											</TableCell>
+											<TableCell align='center' onClick={() => deleteItem(i)} padding='none'>
+												<HighlightOffIcon 
+												/>
+											</TableCell>
+										</TableRow>
+									)
+								}) : 
+								<TableRow>
+									<TableCell>
+										<Typography >Нет выбранных товаров</Typography>
+									</TableCell>
+								</TableRow>
+							}
+						</TableBody>
+					</Table>
 				</TableContainer>
 			</Container>
 		</ThemeProvider>
