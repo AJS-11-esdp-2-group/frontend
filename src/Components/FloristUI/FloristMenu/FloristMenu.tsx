@@ -8,8 +8,10 @@ import Payment from '../Payment/Payment';
 import { useGetBouquetsOnBasketQuery } from '../../../Store/services/availableBouquets';
 import { IAvailableBouquet, IAvailableBouquets } from '../../../interfaces/IAvailableBouquets';
 import { useSendForSaleMutation } from '../../../Store/services/sale';
-import ISendData from '../../../interfaces/ISale';
+import ISale from '../../../interfaces/ISale';
 import SuccessPopup from '../../UI/SuccessPopup/SuccessPopup';
+import ErrorPopup from '../../UI/ErrorPopup/ErrorPopup';
+import { CustomError } from '../../../interfaces/errors/CustomError';
 import { ThemeProvider } from '@emotion/react';
 import { Button, Container, Grid, InputBase } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
@@ -17,21 +19,24 @@ import SearchIcon from '@mui/icons-material/Search';
 import { ChangeEvent, useState, useEffect } from 'react';
 import { NavigateFunction, useNavigate } from 'react-router';
 
-const unFreeze = function(o: any){
-    let oo=undefined;
-    if( o instanceof Array){
-        oo=[];
-        const clone=function(v: any){oo.push(v)};
-        o.forEach(clone); 
-    }else if(o instanceof String){
-        oo=new String(o).toString();
-    }else  if(typeof o =='object'){
-        oo={} as any;
-        for (let property in o)
-        {oo[property] = o[property];}
+const unFreeze = function (o: any) {
+    let oo = undefined;
+    if (o instanceof Array) {
+        oo = [];
+        const clone = function (v: any) {
+            oo.push(v);
+        };
+        o.forEach(clone);
+    } else if (o instanceof String) {
+        oo = new String(o).toString();
+    } else if (typeof o == 'object') {
+        oo = {} as any;
+        for (let property in o) {
+            oo[property] = o[property];
+        }
     }
     return oo;
-}
+};
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -96,7 +101,8 @@ const FloristMenu = () => {
     const [activeItemIndex, setActiveItemIdex] = useState<number | null>(null);
     const [showPayment, setShowPayment] = useState(false);
     const [showMenu, setShowMenu] = useState(true);
-    const [toSale, { isSuccess }] = useSendForSaleMutation();
+    const [open, setOpen] = useState(false);
+    const [toSale, { isSuccess, isError, error }] = useSendForSaleMutation();
     const [payment, setPayment] = useState(0);
     const selectPaymentTypeHandler = (selectedPayment: number) => {
         setPayment(selectedPayment);
@@ -107,19 +113,20 @@ const FloristMenu = () => {
 
     useEffect(() => {
         refetch();
-        if(bouquetsOnBasket) {
-            const unFrezzed = bouquetsOnBasket.map(elem => {
+        if (bouquetsOnBasket) {
+            const unFrezzed = bouquetsOnBasket.map((elem) => {
                 return unFreeze(elem);
             });
-            const defaultTotalSum = unFrezzed.map(elem => {
-                const copyElem = {...elem};
+            const defaultTotalSum = unFrezzed.map((elem) => {
+                const copyElem = { ...elem };
                 copyElem.total_sum = elem.actual_price;
                 return copyElem;
             });
             setBasketBouquets((prev) => defaultTotalSum);
         }
         setShow(isSuccess);
-    }, [bouquetsOnBasket, refetch, isSuccess]);
+        setOpen(isError);
+    }, [bouquetsOnBasket, refetch, isSuccess, isError]);
 
     const flowers = data?.filter((flower) => Number(flower.id_category) === 1);
     const toys = data?.filter((flower) => Number(flower.id_category) === 2);
@@ -190,7 +197,9 @@ const FloristMenu = () => {
     };
 
     const navigateToShowcase = () => {
-        navigate({ pathname: '/sendshowcase', search: `?params=${JSON.stringify(items)}` });
+        if(items.length > 0 || bouquetsOnBasket.length > 0){
+            navigate({ pathname: '/sendshowcase', search: `?params=${JSON.stringify(items)}` });
+        }
     };
 
     const removeItemHandler = (index: number) => {
@@ -229,12 +238,14 @@ const FloristMenu = () => {
 
     const bouquetPriceChangeHandler = (index: number, e: ChangeEvent<HTMLInputElement>) => {
         const copyBasket = [...basketBouquets];
-        copyBasket[index].total_sum = isNaN(parseInt(e.target.value))? 0 : parseInt(e.target.value);
+        copyBasket[index].total_sum = isNaN(parseInt(e.target.value)) ? 0 : parseInt(e.target.value);
         setBasketBouquets((prev) => copyBasket);
     };
     const togglePayment = () => {
-        setShowPayment(true);
-        setShowMenu(false);
+        if (items.length > 0 || bouquetsOnBasket.length > 0) {
+            setShowPayment(true);
+            setShowMenu(false);
+        }
     };
 
     const calculateTotalValue = (items: ItemsOnCart[], bouquetsOnBasket: IAvailableBouquet[]) => {
@@ -257,6 +268,21 @@ const FloristMenu = () => {
         { type: 'Перевод', id: 5 },
     ];
 
+    const handleCloseShow = () => {
+        setShow(false);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const [totalSum, setTotalSum] = useState('');
+    const handleButtonClick = (value: number | string) => {
+        if (value === 'X') {
+            setTotalSum(totalSum.slice(0, -1));
+        } else {
+            setTotalSum(totalSum + value);
+        }
+    };
+    const isInputEmpty = totalSum.trim() === '';
     const sendForSaleHandler = async () => {
         try {
             const saleData = {
@@ -266,19 +292,19 @@ const FloristMenu = () => {
                     total_price: bouquet.total_sum,
                     payment_type: payment as number,
                 })),
+                totalSales: totalSum as unknown as number,
             };
-            await toSale(saleData as ISendData);
-            setShow(true);
-            navigate('/florist_page');
-            setShowPayment(false);
-            setShowMenu(true);
+            await toSale(saleData as ISale);
+            if(isSuccess) {
+                setShow(true);
+            setTimeout(() => {
+                setShowPayment(false);
+                setShowMenu(true);
+            }, 2000);
+            }
         } catch (error) {
-            console.error('Error sending data:', error);
+            setOpen(!!error);
         }
-    };
-
-    const handleCloseShow = () => {
-        setShow(false);
     };
 
     const totalValue = calculateTotalValue(items as ItemsOnCart[], basketBouquets as IAvailableBouquet[]);
@@ -291,8 +317,13 @@ const FloristMenu = () => {
                         sum={Number(totalValue) ? Number(totalValue) : null}
                         saleHandler={sendForSaleHandler}
                         selectPaymentType={selectPaymentTypeHandler}
+                        inputValue={totalSum}
+                        onchange={(e) => setTotalSum(e.target.value)}
+                        handleButtonClick={handleButtonClick}
+                        isInputEmpty={isInputEmpty}
                     />
                     <SuccessPopup open={show} onClose={handleCloseShow} message='Продажа прошла успешно' />
+                    <ErrorPopup open={open} onClose={handleClose} message={(error as CustomError)?.data?.message} />;
                 </Container>
             )}
             {showMenu && (
@@ -338,6 +369,7 @@ const FloristMenu = () => {
                                     item_name={flower.item_name}
                                     price={flower.price}
                                     image_small={flower.image_small}
+                                    available_qty={flower.available_qty}
                                     onClickCard={() => cardClickHandler(flower)}
                                 />
                             ))}
@@ -351,6 +383,7 @@ const FloristMenu = () => {
                                     item_name={toy.item_name}
                                     price={toy.price}
                                     image_small={toy.image_small}
+                                    available_qty={toy.available_qty}
                                     onClickCard={() => cardClickHandler(toy)}
                                 />
                             ))}
@@ -364,6 +397,7 @@ const FloristMenu = () => {
                                     item_name={accessory.item_name}
                                     price={accessory.price}
                                     image_small={accessory.image_small}
+                                    available_qty={accessory.available_qty}
                                     onClickCard={() => cardClickHandler(accessory)}
                                 />
                             ))}
@@ -377,6 +411,7 @@ const FloristMenu = () => {
                                     item_name={result.item_name}
                                     price={result.price}
                                     image_small={result.image_small}
+                                    available_qty={result.available_qty}
                                     onClickCard={() => cardClickHandler(result)}
                                 />
                             ))}

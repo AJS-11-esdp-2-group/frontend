@@ -86,10 +86,6 @@ const Cart = ({
                 sx={{ display: 'flex', position: 'relative', background: 'black', color: 'white' }}
             >
                 <Box sx={{ display: 'flex', margin: 2 }}>
-                    <Grid item sx={{ margin: 1 }}>
-                        <YardRounded fontSize='large' />
-                        <Typography variant='body1'>Букет</Typography>
-                    </Grid>
                     <Grid item sx={{ margin: 1 }} onClick={clickNavigate}>
                         <StoreRounded fontSize='large' />
                         <Typography variant='body1'>Витрина</Typography>
