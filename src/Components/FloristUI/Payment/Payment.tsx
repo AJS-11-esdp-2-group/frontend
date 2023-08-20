@@ -1,5 +1,5 @@
 import { GlobalTheme } from '../../..';
-import { useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 import { Grid, Button, TextField, Typography, Container, Paper, ThemeProvider } from '@mui/material';
 import { purple } from '@mui/material/colors';
 
@@ -9,23 +9,26 @@ interface Props {
         id: number;
     }[];
     sum: number | null;
+    inputValue: string | number;
     saleHandler: () => void;
     selectPaymentType: (selectedPayment: number) => void;
+    handleButtonClick: (value: number | string) => void;
+    isInputEmpty: boolean;
+    onchange: ChangeEventHandler<HTMLInputElement>
 }
 
-const Payment = ({ sum, saleHandler, paymentTypes, selectPaymentType }: Props) => {
-    const [inputValue, setInputValue] = useState('');
+const Payment = ({ 
+    sum, 
+    saleHandler, 
+    paymentTypes, 
+    selectPaymentType, 
+    handleButtonClick, 
+    isInputEmpty, 
+    onchange, 
+    inputValue,
+}: Props) => {
     const [selectedPaymentType, setSelectedPaymentType] = useState<number | null>(null);
     const buttons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '.', 'X'];
-    const handleButtonClick = (value: number | string) => {
-        if (value === 'X') {
-            setInputValue(inputValue.slice(0, -1));
-        } else {
-            setInputValue(inputValue + value);
-        }
-    };
-
-    const isInputEmpty = inputValue.trim() === '';
 
     return (
         <ThemeProvider theme={GlobalTheme}>
@@ -50,7 +53,7 @@ const Payment = ({ sum, saleHandler, paymentTypes, selectPaymentType }: Props) =
                             variant='outlined'
                             fullWidth
                             value={inputValue}
-                            onChange={(e) => setInputValue(e.target.value)}
+                            onChange={onchange}
                         />
                         <Grid container spacing={2}>
                             {buttons.map((button, index) => (
@@ -97,7 +100,7 @@ const Payment = ({ sum, saleHandler, paymentTypes, selectPaymentType }: Props) =
                 <Button
                     sx={{ display: 'flex', flexDirection: 'column', background: purple[700] }}
                     variant='contained'
-                    disabled={isInputEmpty}
+                    disabled={isInputEmpty || selectedPaymentType === null}
                     onClick={saleHandler}
                 >
                     <Typography variant='h6'>Внесите оплату для закрытия заказа</Typography>
