@@ -1,7 +1,7 @@
 export interface Items extends Item {
 	id: number;
-	id_category: string;
 	create_date: Date;
+	available_qty: number;
 }
 
 export interface Item {

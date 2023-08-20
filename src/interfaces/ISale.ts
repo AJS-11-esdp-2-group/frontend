@@ -4,6 +4,7 @@ export default interface IBouquetData {
     total_price: number;
     payment_type: number;
 };
-export default interface ISendData {
+export default interface ISale {
     bouquets: IBouquetData[];
+    totalSales: number;
 };
