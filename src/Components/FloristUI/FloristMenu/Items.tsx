@@ -1,15 +1,17 @@
 import { apiUrl } from '../../../common/constans';
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { deepOrange } from '@mui/material/colors';
+import { Avatar, Card, CardContent, CardMedia, Typography } from '@mui/material';
 
 interface Props {
     id: number;
     item_name: string;
     price: number;
     image_small: string;
-    onClickCard: ()=> void;
+    available_qty: number;
+    onClickCard: () => void;
 }
 
-const Items = ({ id, item_name, price, image_small, onClickCard }: Props) => {
+const Items = ({ id, item_name, price, image_small, onClickCard, available_qty }: Props) => {
     let cardImage;
     if (image_small) {
         cardImage = `${apiUrl}/uploads/${image_small}`;
@@ -17,6 +19,9 @@ const Items = ({ id, item_name, price, image_small, onClickCard }: Props) => {
     return (
         <Card key={id} sx={{ width: 240, height: 170, margin: 1 }} onClick={onClickCard}>
             <CardContent style={{ position: 'relative' }}>
+                <Avatar sx={{ bgcolor: deepOrange[500], position: 'absolute', top: 1, right: 1 }}>
+                    {available_qty}
+                </Avatar>
                 <CardMedia sx={{ height: 80 }} image={cardImage} title={cardImage} />
 
                 <Typography variant="body1" style={{ maxWidth: '100%' }}>
