@@ -26,9 +26,10 @@ import {
 	Box,
 	Paper
 } from '@mui/material';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, MouseEventHandler, startTransition, useEffect, useState } from 'react';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import EnhancedTableHead from '../Supply/AddSupply/TableHead/TableHead';
+import { Translate } from '@mui/icons-material';
 
 interface InvoiceItem {
 	item_id: string;
@@ -173,6 +174,40 @@ const AddInvoice = () => {
 		}));
 	};
 
+	const [touchStartPosition, setStartPosition] = useState<number | null>(null);
+	const [momentPosition, setMomentPosition] = useState<number | null>(null);
+	const [touchItemIndex, setTouchItemIndex] = useState<number | null>(null);
+
+	const onTouchStartHandler = (event: any, index:number) => {
+		setMomentPosition(null);
+		setTouchItemIndex(index);
+		setStartPosition(event.touches[0].clientX);
+	};
+
+	const onTouchMoveHandler = (e: any)=> {
+		setMomentPosition(null);
+		setMomentPosition(e.touches[0].clientX);
+
+		if(touchItemIndex !== null && touchStartPosition && momentPosition && momentPosition - touchStartPosition > 300) {
+			const items = form.items;
+			items.splice(touchItemIndex, 1);
+			
+			setForm((prevState) => ({
+				...prevState,
+				items: items
+			}));
+			setStartPosition(null); 
+			setMomentPosition(null);
+			setTouchItemIndex(null);
+		}
+	};
+
+	const onTouchEndHandler = (e: any) => {
+		setStartPosition(null);
+		setMomentPosition(null);
+		setTouchItemIndex(null);
+	};
+
 	return (
 		<ThemeProvider theme={GlobalTheme}>
 			<Container>
@@ -261,9 +296,9 @@ const AddInvoice = () => {
 						<EnhancedTableHead/>
 					</Table>
 					<Table>
-						<TableBody>
+						<TableBody >
 							<TableRow>
-								<TableCell></TableCell>
+								<TableCell ></TableCell>
 								<TableCell ></TableCell>
 								<TableCell align='center'></TableCell>
 								<TableCell align='center'>
@@ -290,7 +325,7 @@ const AddInvoice = () => {
 										}, 0) : null
 									}
 								</TableCell>
-							</TableRow>
+							</TableRow >
 							{
 								form.items.length > 0 ? 
 								form.items.map((item, i) => {
@@ -301,9 +336,17 @@ const AddInvoice = () => {
 										if(it.id === parseInt(item.item_id)) return it.available_qty
 									})
 									return(
-										<TableRow key={i}>
+										<TableRow 
+											key={i} 
+											sx={{transform: `translate(${touchStartPosition && momentPosition && touchItemIndex == i ? 
+												(momentPosition-touchStartPosition): '0'}px)`}}
+											onTouchStart={(e) => onTouchStartHandler(e,i)}
+											onTouchMove={onTouchMoveHandler}
+											onTouchEnd={onTouchEndHandler}
+											>
 											<TableCell sx={{width: '70px'}}>{i+1}</TableCell>
 											<TableCell 
+												
 												component="th"
 												scope="row"
 												padding="none"
