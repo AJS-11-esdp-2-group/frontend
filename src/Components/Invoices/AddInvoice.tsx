@@ -26,10 +26,9 @@ import {
 	Box,
 	Paper
 } from '@mui/material';
-import { ChangeEvent, FormEvent, MouseEventHandler, startTransition, useEffect, useState } from 'react';
+import { ChangeEvent, TouchEvent, useEffect, useState } from 'react';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import EnhancedTableHead from '../Supply/AddSupply/TableHead/TableHead';
-import { Translate } from '@mui/icons-material';
 
 interface InvoiceItem {
 	item_id: string;
@@ -178,13 +177,13 @@ const AddInvoice = () => {
 	const [momentPosition, setMomentPosition] = useState<number | null>(null);
 	const [touchItemIndex, setTouchItemIndex] = useState<number | null>(null);
 
-	const onTouchStartHandler = (event: any, index:number) => {
+	const onTouchStartHandler = (event:  TouchEvent<HTMLTableRowElement>, index:number) => {
 		setMomentPosition(null);
 		setTouchItemIndex(index);
 		setStartPosition(event.touches[0].clientX);
 	};
 
-	const onTouchMoveHandler = (e: any)=> {
+	const onTouchMoveHandler = (e: TouchEvent<HTMLTableRowElement>)=> {
 		setMomentPosition(null);
 		setMomentPosition(e.touches[0].clientX);
 
@@ -202,7 +201,7 @@ const AddInvoice = () => {
 		}
 	};
 
-	const onTouchEndHandler = (e: any) => {
+	const onTouchEndHandler = (e: TouchEvent<HTMLTableRowElement>) => {
 		setStartPosition(null);
 		setMomentPosition(null);
 		setTouchItemIndex(null);
