@@ -35,9 +35,10 @@ import InsertCommentTwoToneIcon from '@mui/icons-material/InsertCommentTwoTone'
 import PersonPinTwoToneIcon from '@mui/icons-material/PersonPinTwoTone'
 import ExpandLessTwoToneIcon from '@mui/icons-material/ExpandLessTwoTone'
 import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone'
+import Loading from '../../Components/UI/Loading/Loading'
 
 const Suppliers = () => {
-  const { data, isLoading, refetch, isError, error } = useGetAllSuppliersQuery()
+  const { data, isLoading, isError, error } = useGetAllSuppliersQuery()
   const [open, setOpen] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const [deleteSupplier] = useDeleteSupplierMutation()
@@ -81,14 +82,14 @@ const Suppliers = () => {
           setOpen(false)
         }
         setDeleteSupplierId(null)
-        refetch()
+       
       } catch (error) {
         setOpen(true)
       }
     }
   }
 
-  if (isLoading) return <h1>Loading...</h1>
+  if (isLoading) return <Loading/>
 
   return (
     <ThemeProvider theme={GlobalTheme}>

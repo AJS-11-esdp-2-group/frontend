@@ -9,6 +9,7 @@ import Skeleton from '@mui/material/Skeleton';
 import { useEffect } from 'react';
 import { IOrders } from '../../interfaces/IOrder';
 import { useGetAllOrdersQuery } from '../../Store/services/orders';
+import Loading from '../../Components/UI/Loading/Loading';
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: '№ ', width: 100 },
@@ -40,7 +41,7 @@ const columns: GridColDef[] = [
 
 const Orders = () => {
     const navigate = useNavigate()
-    const { data: rows, refetch } = useGetAllOrdersQuery();
+    const { data: rows, refetch, isLoading } = useGetAllOrdersQuery();
 
     useEffect(() => {
         refetch();
@@ -52,6 +53,7 @@ const Orders = () => {
 
     return (
         <Container>
+            {isLoading && <Loading />}
             <Box sx={{ mt: 5, mb: 5 }}>
                 <Typography variant="h4">История заказов</Typography>
             </Box>

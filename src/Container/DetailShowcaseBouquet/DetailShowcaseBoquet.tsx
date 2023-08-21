@@ -25,10 +25,11 @@ import {
 } from '../../Store/services/availableBouquets'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined'
+import Loading from '../../Components/UI/Loading/Loading'
 
 const DetailShowcaseBouquets = () => {
   const params = useParams()
-  const { data: bouquets } = useGetAvailableBouquetByIdQuery(
+  const { data: bouquets, isLoading } = useGetAvailableBouquetByIdQuery(
     params.id as string,
   )
 
@@ -43,9 +44,11 @@ const DetailShowcaseBouquets = () => {
     await writeOfBouquet(order_number)
     await navigate('/available_bouquets')
   }
+
   return (
     <ThemeProvider theme={GlobalTheme}>
       <Container>
+        {isLoading && <Loading/>}
         {bouquets ? (
           <Grid container spacing={2}>
             <Grid item xs={4}>

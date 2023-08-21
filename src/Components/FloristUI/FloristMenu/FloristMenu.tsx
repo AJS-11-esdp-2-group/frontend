@@ -18,6 +18,7 @@ import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import { ChangeEvent, useState, useEffect } from 'react';
 import { NavigateFunction, useNavigate } from 'react-router';
+import Loading from '../../UI/Loading/Loading';
 
 const unFreeze = function (o: any) {
     let oo = undefined;
@@ -89,7 +90,7 @@ export interface ItemsOnCart extends Items {
 }
 
 const FloristMenu = () => {
-    const { data } = useGetAllItemsQuery();
+    const { data, isLoading } = useGetAllItemsQuery();
     const bouquetsOnBasket = useGetBouquetsOnBasketQuery().data as IAvailableBouquets[] | [];
     const refetch = useGetBouquetsOnBasketQuery().refetch;
     const [selectedMenu, setSelectedMenu] = useState('');
@@ -308,6 +309,7 @@ const FloristMenu = () => {
     };
 
     const totalValue = calculateTotalValue(items as ItemsOnCart[], basketBouquets as IAvailableBouquet[]);
+    if (isLoading) return <Loading/>
     return (
         <ThemeProvider theme={GlobalTheme}>
             {showPayment && (

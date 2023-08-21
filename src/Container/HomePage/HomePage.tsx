@@ -74,7 +74,7 @@ const HomePage = () => {
                 sx={style}
               >
                 <Typography align="center" variant="h5" sx={{ pt: 14 }}>
-                  Создать Приход
+                  Создать приход
                 </Typography>
               </Paper>
               <Paper component={Link} to="/invoices" elevation={15} sx={style}>
@@ -104,7 +104,7 @@ const HomePage = () => {
               </Paper>
               <Paper component={Link} to="/orders" elevation={15} sx={style}>
                 <Typography align="center" variant="h5" sx={{ pt: 14 }}>
-                  История зазкаов
+                  История заказов
                 </Typography>
               </Paper>
               <Paper component={Link} to="/recipes" elevation={15} sx={style}>
