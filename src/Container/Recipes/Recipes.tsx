@@ -21,8 +21,6 @@ import {
     DialogTitle,
     Grid,
     ImageList,
-    ImageListItem,
-    ListSubheader,
     ThemeProvider,
 } from '@mui/material';
 
@@ -130,7 +128,12 @@ const Recipes = () => {
                 <AddButton onClick={handleAddButtonClick} buttonText="Создать новый рецепт" />
                 <form onSubmit={submitFormHandler}>
                     {showForm && (
-                        <Grid container>
+                        <Grid sx={{
+                            display:'flex',
+                            flexDirection:'column',
+                            margin: 'auto',
+                            width: '40%',
+                        }}>
                             <FormElement
                                 value={form.bouquet_name}
                                 label="Название"
@@ -143,7 +146,7 @@ const Recipes = () => {
                                 name="bouquet_description"
                                 onChange={inputChangeHandler}
                             />
-                            <Button type="submit" variant="contained" color="success" sx={{mr:2}}>
+                            <Button type="submit" variant="contained" color="success">
                                 Создать
                             </Button>
                             <Button variant="contained" color="error" onClick={handleAddButtonClick}>
@@ -165,7 +168,7 @@ const Recipes = () => {
                 <Grid container>
                     <ImageList  
                         cols={4}
-                        sx={{ width: '100%', display:'grid',}}
+                        sx={{ width: '100%', display:'grid'}}
                      >
                         <>
                         {bouquetsWithImages &&
