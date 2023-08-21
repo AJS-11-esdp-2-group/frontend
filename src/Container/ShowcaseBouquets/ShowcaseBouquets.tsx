@@ -24,6 +24,7 @@ import { GlobalTheme } from '../..'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import noImage from '../../assets/no-photo.png'
+import Loading from '../../Components/UI/Loading/Loading'
 
 const ShowcaseBouquets = () => {
   const [sendBasket] = useSendBouquetBasketMutation()
@@ -78,6 +79,7 @@ const ShowcaseBouquets = () => {
   }
   return (
     <ThemeProvider theme={GlobalTheme}>
+      {isLoading && <Loading />}
       <Container>
         <Grid
           sx={{ pb: 3 }}
@@ -114,30 +116,30 @@ const ShowcaseBouquets = () => {
               name_bouquet: string | undefined
               added_date: string | number | Date
               order_number:
-                | string
-                | number
-                | boolean
-                | React.ReactElement<
-                    any,
-                    string | React.JSXElementConstructor<any>
-                  >
-                | Iterable<React.ReactNode>
-                | React.ReactPortal
-                | null
-                | undefined
+              | string
+              | number
+              | boolean
+              | React.ReactElement<
+                any,
+                string | React.JSXElementConstructor<any>
+              >
+              | Iterable<React.ReactNode>
+              | React.ReactPortal
+              | null
+              | undefined
               image_bouquet: string | undefined
               actual_price:
-                | string
-                | number
-                | boolean
-                | React.ReactElement<
-                    any,
-                    string | React.JSXElementConstructor<any>
-                  >
-                | Iterable<React.ReactNode>
-                | React.ReactPortal
-                | null
-                | undefined
+              | string
+              | number
+              | boolean
+              | React.ReactElement<
+                any,
+                string | React.JSXElementConstructor<any>
+              >
+              | Iterable<React.ReactNode>
+              | React.ReactPortal
+              | null
+              | undefined
             }) => (
               <Card key={item.id} sx={{ width: 350, m: 1 }}>
                 <CardHeader

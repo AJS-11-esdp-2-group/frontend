@@ -38,6 +38,7 @@ import QueueTwoToneIcon from '@mui/icons-material/QueueTwoTone'
 import StarsTwoToneIcon from '@mui/icons-material/StarsTwoTone';
 import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone'
 import CheckBoxTwoToneIcon from '@mui/icons-material/CheckBoxTwoTone';
+import Loading from '../../Components/UI/Loading/Loading'
 
 const Categories = () => {
   const { data, isLoading, isError, error } = useGetAllcategoriesQuery()
@@ -101,7 +102,7 @@ const Categories = () => {
     isFetching,
   } = useGetSubcategoriesByIdCategoryQuery(categoryId)
 
-  if (isLoading) return <h1>Loading...</h1>
+  if (isLoading) return <Loading/>
   return (
     <ThemeProvider theme={GlobalTheme}>
       <Container

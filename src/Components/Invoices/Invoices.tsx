@@ -11,6 +11,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button, Container, Typography } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import { useEffect } from 'react';
+import Loading from '../UI/Loading/Loading';
 
 function CustomToolbar() {
   return (
@@ -59,8 +60,8 @@ const columns: GridColDef[] = [
 
 const Invoices = () => {
   const navigate = useNavigate()
-  const { data: rows, refetch } = useGetAllActionsQuery();
-  
+  const { data: rows, refetch, isLoading } = useGetAllActionsQuery();
+
   useEffect(() => {
     refetch();
   }, [refetch]);
@@ -71,6 +72,7 @@ const Invoices = () => {
 
   return (
     <Container>
+      {isLoading && <Loading />}
       <Typography variant="h4">Приходные накладные</Typography>
       <Box sx={{ mt: 5, mb: 5 }}>
         <Button
