@@ -172,7 +172,8 @@ const FloristMenu = () => {
     };
 
     const cardClickHandler = (item: Items) => {
-        const copyItems: ItemsOnCart[] = [...items];
+        if(item.available_qty > 0) {
+            const copyItems: ItemsOnCart[] = [...items];
         if (copyItems.length > 0) {
             let equalStatus = false;
             copyItems.forEach((itm, index) => {
@@ -194,6 +195,7 @@ const FloristMenu = () => {
             copyItems.push(copyItem);
             setItems(copyItems);
             setActiveItemIdex(copyItems.length - 1);
+        }
         }
     };
 
