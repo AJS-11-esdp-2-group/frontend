@@ -89,6 +89,9 @@ export const GlobalTheme = createTheme({
 				  color: 'white',
 				  fontWeight: 'bold',
 				},
+				h5: {
+					fontWeight: 'bold',
+				},
 			  },
 		},
 	},

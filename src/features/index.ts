@@ -47,5 +47,6 @@ export const api = createApi({
 		'Recipes',
 		'AvailableBouquets',
 		'Orders',
+		'InvoiceByNumber',
 	],
 });

@@ -1,7 +1,7 @@
 import { ISupplies } from '../../interfaces/ISupply';
 import { api } from '../../features';
 import { Supply } from '../../Components/Invoices/AddInvoice';
-import { IInvoice } from '../../interfaces/IInvoice'
+import { IInvoice, InvoiceById } from '../../interfaces/IInvoice'
 
 interface limit {
 	start: number;
@@ -28,6 +28,10 @@ const suppliesApi = api.injectEndpoints({
 				body: newSupply,
 			}),
 		}),
+		getInvoceByid: build.query<InvoiceById[], string>({
+			query: (id) => `/supply/invoices/${id}`,
+			providesTags: () => [{ type: 'InvoiceByNumber', id: 'LIST' }],
+		}),
 	}),
 });
 
@@ -35,5 +39,6 @@ export const {
 	useGetSuppliesBetweenMutation,
 	useGetSuppliesSupplierMutation,
 	useAddsupplyMutation,
-	useGetAllActionsQuery
+	useGetAllActionsQuery,
+	useGetInvoceByidQuery,
 } = suppliesApi;
