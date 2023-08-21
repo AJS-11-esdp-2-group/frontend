@@ -29,7 +29,6 @@ const RecipesComponent = ({
 	  cardImage = image; 
 	}
 	return (
-	  <ThemeProvider theme={GlobalTheme}>
 		<ImageListItem key={id}>
 			{checkboxVisible && 
 			<Checkbox onClick={checkHandler} />}
@@ -49,7 +48,6 @@ const RecipesComponent = ({
 			}
 		  />
 		</ImageListItem>
-	  </ThemeProvider>
 	);
   };
   

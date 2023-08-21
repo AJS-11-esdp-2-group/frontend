@@ -163,10 +163,11 @@ const Recipes = () => {
                 )}
 
                 <Grid container>
-                    <ImageList sx={{ width: '100%', height: 850 }}>
-                        <ImageListItem key="Subheader" cols={2}>
-                            <ListSubheader component="div">Рецепты</ListSubheader>
-                        </ImageListItem>
+                    <ImageList  
+                        cols={4}
+                        sx={{ width: '100%', display:'grid',}}
+                     >
+                        <>
                         {bouquetsWithImages &&
                             bouquetsWithImages.map((bouquet) => (
                                 <RecipesComponent
@@ -184,6 +185,7 @@ const Recipes = () => {
                                     checkHandler={() => checkHandler(bouquet.id)}
                                 />
                             ))}
+                        </>
                     </ImageList>
                 </Grid>
                 <Dialog open={open} onClose={handleClose}>

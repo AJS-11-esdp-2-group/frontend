@@ -197,7 +197,7 @@ const FloristMenu = () => {
     };
 
     const navigateToShowcase = () => {
-        if(items.length > 0 || bouquetsOnBasket.length > 0){
+        if (items.length > 0 || bouquetsOnBasket.length > 0) {
             navigate({ pathname: '/sendshowcase', search: `?params=${JSON.stringify(items)}` });
         }
     };
@@ -295,13 +295,13 @@ const FloristMenu = () => {
                 totalSales: totalSum as unknown as number,
             };
             await toSale(saleData as ISale);
-            if(isSuccess) {
+            if (isSuccess) {
                 setShow(true);
+            }
             setTimeout(() => {
-                setShowPayment(false);
+                setShowPayment(!showPayment);
                 setShowMenu(true);
             }, 2000);
-            }
         } catch (error) {
             setOpen(!!error);
         }
