@@ -1,5 +1,5 @@
 import { api } from '../../features';
-import { IOrders } from '../../interfaces/IOrder';
+import { IOrder, IOrders } from '../../interfaces/IOrder';
 
 const ordersApi = api.injectEndpoints({
 	endpoints: (build) => ({
@@ -7,9 +7,14 @@ const ordersApi = api.injectEndpoints({
 			query: () => '/sales',
 			providesTags: () => [{ type: 'Orders', id: 'LIST' }],
 		}),
+		getOrderById: build.query<IOrder[], string>({
+			query: (id) => `/sales/${id}`,
+			providesTags: () => [{ type: 'Order', id: 'LIST' }],
+		}),
 	}),
 });
 
 export const {
-	useGetAllOrdersQuery
+	useGetAllOrdersQuery,
+	useGetOrderByIdQuery
 } = ordersApi;

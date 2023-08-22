@@ -5,6 +5,7 @@ export interface IOrders {
 	total_sales: number;
 	first_name: string;
 }
+
 export interface IOrder {
 	order_number: string;
 	bouquet_id: number;
