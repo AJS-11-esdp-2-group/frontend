@@ -19,7 +19,7 @@ import { getUser } from './Store/user/userSelectors';
 import DetailShowcaseBouquets from './Container/DetailShowcaseBouquet/DetailShowcaseBoquet';
 import FloristPage from './Container/FloristPage/FloristPage';
 import CartToolBar from './Components/UI/Layout/AppToolbar/CartToolBar';
-import Sold from './Container/Orders/Orders';
+import Orders from './Container/Orders/Orders';
 import InvoiceContainer from './Container/Invoice/InvoiceContainer';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import {
@@ -29,6 +29,7 @@ import {
 	ThemeProvider,
 } from '@mui/material';
 import { grey, blue, blueGrey } from '@mui/material/colors';
+import OrdersDetails from './Container/Orders/OrdersDetails';
 
 const getDesignTokens = (mode: PaletteMode) => ({
 	palette: {
@@ -204,7 +205,18 @@ function App() {
 									isAllowed={user.isAuthenticated}
 									redirectPath="/"
 								>
-									<Sold />
+									<Orders />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/orders/:id"
+							element={
+								<ProtectedRoute
+									isAllowed={user.isAuthenticated}
+									redirectPath="/"
+								>
+									<OrdersDetails />
 								</ProtectedRoute>
 							}
 						/>
