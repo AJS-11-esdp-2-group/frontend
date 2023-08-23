@@ -47,13 +47,13 @@ const ItemsList = ({
         handleSaveClick(id, editingPrice);
     };
 
-    let cardImage; 
-  if (image_small) { 
-    cardImage = `${apiUrl}/uploads/${image_small}`; 
-  } 
+    let cardImage;
+    if (image_small) {
+        cardImage = `${image_small}`;
+    }
 
     return (
-         <Card sx={{ width: 250, height:350 }}>
+        <Card sx={{ width: 250, height: 350 }}>
             <CardContent style={{ position: 'relative' }}>
                 <CardHeader
                     action={
@@ -71,12 +71,12 @@ const ItemsList = ({
                     }
                 />
                 <CardMedia
-        sx={{ height: 140 }}
-        image={cardImage}
-        title={cardImage}
-      />
+                    sx={{ height: 140 }}
+                    image={cardImage}
+                    title={cardImage}
+                />
 
-                <Typography variant="body1"  style={{ maxWidth: '100%' }}>
+                <Typography variant="body1" style={{ maxWidth: '100%' }}>
                     {item_name}
                 </Typography>
                 {isEditing ? (
@@ -109,7 +109,7 @@ const ItemsList = ({
                     </Button>
                 )}
             </CardActions>
-        </Card>       
+        </Card>
     );
 };
 
