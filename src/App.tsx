@@ -30,6 +30,7 @@ import {
 } from '@mui/material';
 import { grey, blue, blueGrey } from '@mui/material/colors';
 import OrdersDetails from './Container/Orders/OrdersDetails';
+import EditCategory from './Container/Categories/EditCategory';
 
 const getDesignTokens = (mode: PaletteMode) => ({
 	palette: {
@@ -162,6 +163,17 @@ function App() {
 									redirectPath="/"
 								>
 									<Categories />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/edit-category/:id"
+							element={
+								<ProtectedRoute
+									isAllowed={user.isAuthenticated}
+									redirectPath="/"
+								>
+									<EditCategory />
 								</ProtectedRoute>
 							}
 						/>
