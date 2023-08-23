@@ -26,7 +26,7 @@ import {
 	Box,
 	Paper
 } from '@mui/material';
-import { ChangeEvent, TouchEvent, useEffect, useState } from 'react';
+import { ChangeEvent, TouchEvent, useEffect, useRef, useState } from 'react';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import EnhancedTableHead from '../Supply/AddSupply/TableHead/TableHead';
 
@@ -177,27 +177,46 @@ const AddInvoice = () => {
 	const [momentPosition, setMomentPosition] = useState<number | null>(null);
 	const [touchItemIndex, setTouchItemIndex] = useState<number | null>(null);
 
+	const promise = () => {
+		return new Promise((resolve, rejected) => {
+			setTimeout(() => {
+				resolve('next');
+			}, 300);
+		})
+	};
+
 	const onTouchStartHandler = (event:  TouchEvent<HTMLTableRowElement>, index:number) => {
 		setMomentPosition(null);
 		setTouchItemIndex(index);
 		setStartPosition(event.touches[0].clientX);
 	};
 
-	const onTouchMoveHandler = (e: TouchEvent<HTMLTableRowElement>)=> {
+	const promiseStatus = useRef<boolean>(false);
+
+	const onTouchMoveHandler = async(e: TouchEvent<HTMLTableRowElement>)=> {
 		setMomentPosition(null);
 		setMomentPosition(e.touches[0].clientX);
-
-		if(touchItemIndex !== null && touchStartPosition && momentPosition && momentPosition - touchStartPosition > 300) {
+	
+		if(touchItemIndex !== null && touchStartPosition && !promiseStatus.current &&
+			momentPosition && momentPosition - touchStartPosition > 300) {
+			promiseStatus.current = true;
+			const result = await promise();
+			
 			const items = form.items;
-			items.splice(touchItemIndex, 1);
+			
+			if(touchItemIndex !== null) {
+				items.splice(touchItemIndex, 1);
+			}
 			
 			setForm((prevState) => ({
 				...prevState,
 				items: items
 			}));
+			
 			setStartPosition(null); 
 			setMomentPosition(null);
 			setTouchItemIndex(null);
+			promiseStatus.current = false;
 		}
 	};
 
