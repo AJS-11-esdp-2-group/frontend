@@ -14,15 +14,15 @@ interface Props {
 const Items = ({ id, item_name, price, image_small, onClickCard, available_qty }: Props) => {
     let cardImage;
     if (image_small) {
-        cardImage = `${apiUrl}/uploads/${image_small}`;
+        cardImage = `${image_small}`;
     }
     return (
-        <Card key={id} sx={{ width: 240, height: 170, margin: 1 }} onClick={onClickCard}>
+        <Card key={id} sx={{ width: 240, height: 240, margin: 1 }} onClick={onClickCard}>
             <CardContent style={{ position: 'relative' }}>
                 <Avatar sx={{ bgcolor: deepOrange[500], position: 'absolute', top: 1, right: 1 }}>
                     {available_qty}
                 </Avatar>
-                <CardMedia sx={{ height: 80 }} image={cardImage} title={cardImage} />
+                <CardMedia sx={{ height: 150 }} image={cardImage} title={cardImage} />
 
                 <Typography variant="body1" style={{ maxWidth: '100%' }}>
                     {item_name}
