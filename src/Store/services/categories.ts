@@ -29,6 +29,17 @@ const categoryApi = api.injectEndpoints({
 			}),
 			invalidatesTags: ['Categories'],
 		}),
+		editCategory: build.mutation<
+			ICategories,
+			{ id: number; category: ICategory}
+		>({
+			query: (category) => ({
+				url: `/items_category/${category.id}`,
+				method: 'PUT',
+				body: category.category,
+			}),
+			invalidatesTags: ['Categories'],
+		}),
 	}),
 });
 
@@ -38,4 +49,5 @@ export const {
 	useGetSubcategoriesByIdCategoryQuery,
 	useAddCategoryMutation,
 	useDeleteCategoryMutation,
+	useEditCategoryMutation,
 } = categoryApi;

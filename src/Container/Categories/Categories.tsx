@@ -37,8 +37,10 @@ import { GlobalTheme } from '../..'
 import QueueTwoToneIcon from '@mui/icons-material/QueueTwoTone'
 import StarsTwoToneIcon from '@mui/icons-material/StarsTwoTone';
 import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone'
+import ModeEditTwoToneIcon from '@mui/icons-material/ModeEditTwoTone'
 import CheckBoxTwoToneIcon from '@mui/icons-material/CheckBoxTwoTone';
 import Loading from '../../Components/UI/Loading/Loading'
+import { useNavigate } from 'react-router'
 
 const Categories = () => {
   const { data, isLoading, isError, error } = useGetAllcategoriesQuery()
@@ -49,6 +51,7 @@ const Categories = () => {
   const [deleteCategoryId, setDeleteCategoryId] = useState<number | null>(null)
   const [openItemId, setOpenItemId] = useState<number | null>(null)
   const [uncoverForm, setUncoverForm] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     setOpen(isError)
@@ -102,7 +105,7 @@ const Categories = () => {
     isFetching,
   } = useGetSubcategoriesByIdCategoryQuery(categoryId)
 
-  if (isLoading) return <Loading/>
+  if (isLoading) return <Loading />
   return (
     <ThemeProvider theme={GlobalTheme}>
       <Container
@@ -114,7 +117,7 @@ const Categories = () => {
             background: 'linear-gradient(10deg,	#FFF8DC 10%,#d6d3ea 90%)',
             borderRadius: 2,
             color: 'black',
-			width:600
+            width: 600
           }}
           component="nav"
           aria-labelledby="nested-list-subheader"
@@ -131,9 +134,9 @@ const Categories = () => {
           <ListItem>
             <ListItemButton onClick={handleAddButtonClick}>
               <ListItemIcon>
-			  <QueueTwoToneIcon sx={{ width: 35, height: 35 }} />
+                <QueueTwoToneIcon sx={{ width: 35, height: 35 }} />
               </ListItemIcon>
-              <Typography variant="h5">				
+              <Typography variant="h5">
                 Категория
               </Typography>
             </ListItemButton>
@@ -172,14 +175,20 @@ const Categories = () => {
                     key={category.id}
                   >
                     <ListItemIcon>
-                      <StarsTwoToneIcon sx={{ width: 30, height: 30 }}/>
+                      <StarsTwoToneIcon sx={{ width: 30, height: 30 }} />
                     </ListItemIcon>
                     <ListItemText primary={category.category_name} />
+                    <IconButton
+                      onClick={() => navigate(`/edit-category/${category.id}`)}
+                      aria-label="settings"
+                    >
+                      <ModeEditTwoToneIcon sx={{ width: 35, height: 35 }} />
+                    </IconButton>
                     <IconButton
                       onClick={() => handleDeleteCategory(category.id)}
                       aria-label="settings"
                     >
-                      <DeleteForeverTwoToneIcon sx={{ width: 30, height: 30 }}/>
+                      <DeleteForeverTwoToneIcon sx={{ width: 30, height: 30 }} />
                     </IconButton>
                     {isItemOpen ? (
                       <ExpandLess
@@ -212,7 +221,7 @@ const Categories = () => {
                         ) : subcategories?.length === 0 ? (
                           <ListItemButton sx={{ pl: 4 }}>
                             <ListItemIcon>
-                              <SendIcon sx={{ width: 30, height: 30 }}/>
+                              <SendIcon sx={{ width: 30, height: 30 }} />
                             </ListItemIcon>
                             <ListItemText>Нет подкатегорий</ListItemText>
                           </ListItemButton>
@@ -222,7 +231,7 @@ const Categories = () => {
                             return (
                               <ListItemButton key={sub.id} sx={{ pl: 4 }}>
                                 <ListItemIcon>
-                                  <CheckBoxTwoToneIcon sx={{ width: 30, height: 30 }}/>
+                                  <CheckBoxTwoToneIcon sx={{ width: 30, height: 30 }} />
                                 </ListItemIcon>
                                 <ListItemText key={sub.id}>
                                   {sub.subcategory_name}
