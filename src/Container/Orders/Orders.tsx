@@ -23,7 +23,19 @@ const columns: GridColDef[] = [
         field: 'order_date',
         headerName: 'Дата/Время заказа',
         width: 250,
-        valueFormatter: (date) => new Date(date?.value).toLocaleString(),
+        valueFormatter: (date) => {
+            if (!date?.value) return '';
+            const localDate = new Date(date.value);
+            localDate.setHours(localDate.getHours() + 6);
+            return localDate.toLocaleString('ru-RU', {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+            });
+        },
     },
     {
         field: 'total_sales',
@@ -40,7 +52,7 @@ const columns: GridColDef[] = [
 ];
 
 const Orders = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const { data: rows, refetch, isLoading } = useGetAllOrdersQuery();
 
     useEffect(() => {
@@ -70,7 +82,6 @@ const Orders = () => {
                                 },
                             },
                         }}
-                        checkboxSelection
                         disableRowSelectionOnClick
                     />
                 ) : (

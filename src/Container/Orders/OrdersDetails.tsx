@@ -36,21 +36,36 @@ const OrdersDetails = () => {
                 {order && (
                     <Grid>
                         <Typography variant="h4">
-                            Детали заказа от {new Date(order[0].added_date).toISOString().replace('T', ' ').split('.')[0]}
+                            Детали заказа от{' '}
+                            {(() => {
+                                const addedDate = new Date(order[0].added_date);
+                                addedDate.setHours(addedDate.getHours() + 6);
+
+                                return addedDate.toLocaleString('ru-RU', {
+                                    year: 'numeric',
+                                    month: 'numeric',
+                                    day: 'numeric',
+                                    hour: 'numeric',
+                                    minute: 'numeric',
+                                    second: 'numeric',
+                                });
+                            })()}
                         </Typography>
                     </Grid>
                 )}
-                <Grid margin={1}>
-                    <TableRow>
-                    <TableCell>Номер заказа</TableCell>
-                    <TableCell>{order && order[0].order_number}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                    <TableCell>Заказ выполнил</TableCell>
-                    <TableCell>{order && order[0].first_name}</TableCell>
-                    </TableRow>
+                <Grid container spacing={1}>
+                    <Grid item xs={6}>
+                        <TableRow>
+                            <TableCell>Номер заказа</TableCell>
+                            <TableCell>{order && order[0].order_number}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>Заказ выполнил</TableCell>
+                            <TableCell>{order && order[0].first_name}</TableCell>
+                        </TableRow>
+                    </Grid>
                 </Grid>
-                <Grid margin={1}>
+                <Grid container spacing={1}>
                     <Typography variant="h5">Товары</Typography>
                 </Grid>
                 <TableContainer component={Paper}>
@@ -58,9 +73,15 @@ const OrdersDetails = () => {
                         <TableHead>
                             <TableRow>
                                 <StyledTableCell>Название букета</StyledTableCell>
-                                <StyledTableCell align="right">Цена по прайсу</StyledTableCell>
-                                <StyledTableCell align="right">Цена продажи</StyledTableCell>
-                                <StyledTableCell align="right">Способ оплаты</StyledTableCell>
+                                <StyledTableCell align="right">
+                                    Цена по прайсу
+                                </StyledTableCell>
+                                <StyledTableCell align="right">
+                                    Цена продажи
+                                </StyledTableCell>
+                                <StyledTableCell align="right">
+                                    Способ оплаты
+                                </StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>{order && <Order order={order} />}</TableBody>
