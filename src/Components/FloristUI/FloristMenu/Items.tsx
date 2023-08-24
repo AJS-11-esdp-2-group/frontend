@@ -1,4 +1,4 @@
-import { apiUrl } from '../../../common/constans';
+import noImage from '../../../assets/no-photo.png';
 import { deepOrange } from '@mui/material/colors';
 import { Avatar, Card, CardContent, CardMedia, Typography } from '@mui/material';
 
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const Items = ({ id, item_name, price, image_small, onClickCard, available_qty }: Props) => {
-    let cardImage;
+    let cardImage = noImage;
     if (image_small) {
         cardImage = `${image_small}`;
     }
