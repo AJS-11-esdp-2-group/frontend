@@ -38,7 +38,7 @@ const Cart = ({
             <Grid container>
                 <Grid>
                     <Typography color='primary' variant='h6'>
-                        {items?.length > 0 && bouquets?.length === 0 ? 'Ассортимент' : 'Корзина пуста'}
+                        {items?.length > 0 && bouquets?.length === 0 ? 'Ассортимент' : null}
                         {bouquets?.length > 0 && items?.length === 0 ? 'Букеты' : null}
                     </Typography>
                 </Grid>
@@ -61,7 +61,7 @@ const Cart = ({
                                       );
                                   })
                                 : null}
-                            {items?.length  >= 1 &&
+                            {items?.length  >= 0 &&
                                 bouquets?.length &&
                                 bouquets?.map((bouquet, i) => {
                                     return (
