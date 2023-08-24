@@ -52,15 +52,15 @@ const AddRecipes = () => {
     }, [bouquet]);
 
     const fileChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        const name = e.target.name;
         if (e.target.files) {
-            const file = e.target.files[0];
-            setNewImage((prevState) => ({
-                ...prevState,
-                image: file as unknown as string,
-                id_bouquet: id,
-            }));
+          const file = e.target.files[0]
+          setForm((prevState) => ({
+            ...prevState,
+            [name]: file,
+          }));
         }
-    };
+      }
 
     const autocompleteChangeHandler = (event: ChangeEvent<{}>, value: Items | string | null) => {
         if (value !== null) {
@@ -111,7 +111,6 @@ const AddRecipes = () => {
     const submitFormHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData();
-
         if (newImage.image) {
             formData.append('image', newImage.image);
         }

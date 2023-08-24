@@ -51,6 +51,7 @@ const SendShowcase = () => {
     formData.append('items', JSON.stringify(bouquetDescription))
     await sendShowcase(formData)
     await navigate('/available_bouquets')
+    
   }
 
   const fileChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
