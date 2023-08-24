@@ -11,7 +11,7 @@ const itemsApi = api.injectEndpoints({
 		getItemById: build.query<Items[], number | string>({
 			query: (id) => `/items/${id}`,
 		}),
-		addItem: build.mutation<Items, Item>({
+		addItem: build.mutation<Items, FormData>({
 			query: (item) => ({
 				url: '/items',
 				method: 'POST',
