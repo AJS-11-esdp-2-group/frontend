@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/no-shadow */
 import AddCategory from './AddCategory';
 import {
     useDeleteCategoryMutation,
@@ -11,8 +9,8 @@ import Modal from '../../Components/UI/Modal/Modal';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import Loading from '../../Components/UI/Loading/Loading';
 import { GlobalTheme } from '../..';
-import React, { useEffect, useState } from 'react';
 import { ISubcategory } from '../../interfaces/ISubcategories';
+import  { useEffect, useState } from 'react';
 import {
     Container,
     List,
@@ -95,7 +93,7 @@ const Categories = () => {
     };
 
     const [categoryId, setCategoryId] = useState(0);
-    const { data: subcategories, refetch, isFetching } = useGetSubcategoriesByIdCategoryQuery(categoryId);
+    const { data: subcategories, isFetching } = useGetSubcategoriesByIdCategoryQuery(categoryId);
 
     if (isLoading) return <Loading />;
     return (
