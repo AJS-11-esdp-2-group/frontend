@@ -1,13 +1,14 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import FormElement from '../../Components/UI/Form/FormElement';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import { useAddCategoryMutation } from '../../Store/services/categories';
+import SuccessPopup from '../../Components/UI/SuccessPopup/SuccessPopup';
 import { useNavigate } from 'react-router';
-import { Container, Button, Snackbar, Alert } from '@mui/material';
+import { Container, Snackbar, Alert } from '@mui/material';
 import { ChangeEvent, useEffect, useState } from 'react';
+import { LoadingButton } from '@mui/lab';
 
 const AddCategory = () => {
-	const [addCategory, { error, isError }] = useAddCategoryMutation();
+	const [addCategory, { error, isError, isSuccess, isLoading }] = useAddCategoryMutation();
 
 	interface Props {
 		category_name: string;
@@ -28,7 +29,8 @@ const AddCategory = () => {
 
 	useEffect(() => {
 		setOpen(isError);
-	}, [isError]);
+		setOpen(isSuccess);
+	}, [isError, isSuccess]);
 
 	const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -61,6 +63,7 @@ const AddCategory = () => {
 						{(error as CustomError)?.data?.message}
 					</Alert>
 				</Snackbar>
+				<SuccessPopup open={open} onClose={handleClose} message='Категория создана'/>
 				<FormElement
 					value={form.category_name}
 					label="Название категории"
@@ -73,7 +76,8 @@ const AddCategory = () => {
 					name="category_description"
 					onChange={inputChangeHandler}
 				/>
-				<Button
+				<LoadingButton
+					loading={isLoading}
 					fullWidth
 					variant="contained"
 					color="success"
@@ -82,7 +86,7 @@ const AddCategory = () => {
 					sx={{ marginBottom: 2, marginTop: 3 }}
 				>
 					Добавить категорию
-				</Button>
+				</LoadingButton>
 			</Container>
 		</form>
 	);

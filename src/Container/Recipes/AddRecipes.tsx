@@ -7,23 +7,24 @@ import FormElement from '../../Components/UI/Form/FormElement';
 import AddButton from '../../Components/UI/Button/AddButton';
 import { useCreateRecipeMutation } from '../../Store/services/recipes';
 import { GlobalTheme } from '../..';
-import { Autocomplete, Button, Container, Grid, TextField, Typography, ThemeProvider } from '@mui/material';
+import SuccessPopup from '../../Components/UI/SuccessPopup/SuccessPopup';
+import { Autocomplete, Container, Grid, TextField, Typography, ThemeProvider } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { LoadingButton } from '@mui/lab';
 
 interface Props {
     item_name: string;
     id_item: string;
     qty: string;
     id_bouquet: number;
-    image_large: string;
 }
 
 const AddRecipes = () => {
     const { id } = useParams();
     const { data: bouquet } = useGetBouquetByIdQuery(id as unknown as number);
     const { data: items } = useGetAllItemsQuery();
-    const [createImage, error] = useCreateImageMutation();
+    const [createImage, {isSuccess, isError, isLoading}] = useCreateImageMutation();
     const [createRecipe] = useCreateRecipeMutation();
     const [bouquetName, setBouquetName] = useState({
         bouquet_name: '',
@@ -33,34 +34,34 @@ const AddRecipes = () => {
         id_item: '',
         qty: '',
         id_bouquet: id as unknown as number,
-        image_large: '',
     });
     const [newImage, setNewImage] = useState({
         image: '',
         id_bouquet: id,
     });
     const [itemsList, setItemsList] = useState<{ id_item: string; qty: string }[]>([]);
-
+    const [open, setOpen] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
+        setOpen(isSuccess);
         if (bouquet) {
             setBouquetName({
                 bouquet_name: bouquet[0].bouquet_name,
             });
         }
-    }, [bouquet]);
+    }, [bouquet, isSuccess]);
 
     const fileChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name;
         if (e.target.files) {
           const file = e.target.files[0]
-          setForm((prevState) => ({
+          setNewImage((prevState) => ({
             ...prevState,
             [name]: file,
           }));
         }
-      }
+      };
 
     const autocompleteChangeHandler = (event: ChangeEvent<{}>, value: Items | string | null) => {
         if (value !== null) {
@@ -104,7 +105,7 @@ const AddRecipes = () => {
                 item_name: form.item_name,
             });
 
-            setForm((prevState) => ({ ...prevState, id_item: '', qty: '' }));
+            setForm((prevState) => ({ ...prevState, id_item: '', qty: '', item_name: '' }));
         }
     };
 
@@ -116,12 +117,18 @@ const AddRecipes = () => {
         }
         formData.append('id_bouquet', newImage.id_bouquet as string);
         await createImage(formData);
-        navigate('/recipes');
+        if(!isError) {
+            navigate('/recipes');
+        }
+    };
+    const handleClose = () => {
+        setOpen(false);
     };
 
     return (
         <ThemeProvider theme={GlobalTheme}>
             <Container>
+            <SuccessPopup open={open} onClose={handleClose} message="Рецепт создан"/>
                 <Typography variant="h4">{bouquetName.bouquet_name}</Typography>
                 <Grid spacing={2}>
                     <Autocomplete
@@ -144,7 +151,7 @@ const AddRecipes = () => {
                 </Grid>
                 <Grid>
                     <form onSubmit={submitFormHandler}>
-                        <FileUpload onChange={fileChangeHandler} label="Фото букета" name="newImage" />
+                        <FileUpload onChange={fileChangeHandler} label="Фото букета" name="image" />
                         {itemsList.map((item, index) => {
                             const selectedItem = items?.find((i) => i.id.toString() === item.id_item);
                             const itemName = selectedItem ? selectedItem.item_name : '';
@@ -155,9 +162,9 @@ const AddRecipes = () => {
                                 </div>
                             );
                         })}
-                        <Button fullWidth variant="contained" color="success" type="submit" className="submit">
+                        <LoadingButton loading={isLoading} fullWidth variant="contained" color="success" type="submit" className="submit">
                             Создать Букет
-                        </Button>
+                        </LoadingButton>
                     </form>
                 </Grid>
             </Container>
