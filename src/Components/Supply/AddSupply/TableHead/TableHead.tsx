@@ -48,10 +48,11 @@ export default function EnhancedTableHead() {
 
 	return (
 		<TableHead>
-			<TableRow>
+			<TableRow sx={{backgroundColor: 'blanchedalmond'}}>
 				<TableCell padding="normal"></TableCell>
 				{headCells.map((headCell) => (
 					<TableCell
+						sx={{fontFamily: 'monospace', fontSize: '18px'}}
 						size="medium"
 						key={headCell.id}
 						align='center'
