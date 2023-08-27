@@ -1,5 +1,5 @@
 import { ICategories, ICategory } from '../../interfaces/ICategories';
-import { ISubcategories } from '../../interfaces/ISubcategories';
+import { ISubcategory } from '../../interfaces/ISubcategories';
 import { api } from '../../features/index';
 
 const categoryApi = api.injectEndpoints({
@@ -11,7 +11,7 @@ const categoryApi = api.injectEndpoints({
 		getCategoryById: build.query<ICategories[], number | string>({
 			query: (id) => `/items_category/${id}`,
 		}),
-		getSubcategoriesByIdCategory: build.query<ISubcategories[], number>({
+		getSubcategoriesByIdCategory: build.query<ISubcategory[], number>({
 			query: (id) => `/items_subcategory?id_category=${id}`,
 		}),
 		addCategory: build.mutation<ICategories, ICategory>({

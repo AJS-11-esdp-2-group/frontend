@@ -35,33 +35,34 @@ const InvoiceContainer = () => {
             <Container>
                 {invoice && (
                     <Grid>
-                        <Typography variant="h4">
-                            Приходная накладная № {id} от {new Date(invoice[0].date).toISOString().replace('T', ' ').split('.')[0]}
+                        <Typography variant='h4'>
+                            Приходная накладная № {id} от{' '}
+                            {new Date(invoice[0].date).toISOString().replace('T', ' ').split('.')[0]}
                         </Typography>
                     </Grid>
                 )}
                 <Grid margin={1}>
                     <TableRow>
-                    <TableCell>Контрагент</TableCell>
-                    <TableCell>{invoice && invoice[0].source_supplier_name}</TableCell>
+                        <TableCell>Контрагент</TableCell>
+                        <TableCell>{invoice && invoice[0].source_supplier_name}</TableCell>
                     </TableRow>
                     <TableRow>
-                    <TableCell>Торговая точка</TableCell>
-                    <TableCell>{invoice && invoice[0].target_storage_name}</TableCell>
+                        <TableCell>Торговая точка</TableCell>
+                        <TableCell>{invoice && invoice[0].target_storage_name}</TableCell>
                     </TableRow>
                 </Grid>
                 <Grid margin={1}>
-                    <Typography variant="h5">Товары</Typography>
+                    <Typography variant='h5'>Товары</Typography>
                 </Grid>
                 <TableContainer component={Paper}>
-                    <Table aria-label="customized table">
+                    <Table aria-label='customized table'>
                         <TableHead>
                             <TableRow>
                                 <StyledTableCell>Название</StyledTableCell>
-                                <StyledTableCell align="right">Количество</StyledTableCell>
-                                <StyledTableCell align="right">Единицы измерения</StyledTableCell>
-                                <StyledTableCell align="right">Закуп. цена</StyledTableCell>
-                                <StyledTableCell align="right">Сумма</StyledTableCell>
+                                <StyledTableCell align='right'>Количество</StyledTableCell>
+                                <StyledTableCell align='right'>Единицы измерения</StyledTableCell>
+                                <StyledTableCell align='right'>Закуп. цена</StyledTableCell>
+                                <StyledTableCell align='right'>Сумма</StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>{invoice && <Invoice invoice={invoice} />}</TableBody>

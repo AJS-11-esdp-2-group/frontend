@@ -1,7 +1,6 @@
 import { IBouquets } from '../../interfaces/IBouquets';
-import { GlobalTheme } from '../..';
-import noImage from '../../assets/no-photo.png'
-import { Checkbox, IconButton, ImageListItem, ImageListItemBar, ThemeProvider } from '@mui/material';
+import noImage from '../../assets/no-photo.png';
+import { Checkbox, IconButton, ImageListItem, ImageListItemBar } from '@mui/material';
 import { MouseEventHandler } from 'react';
 import { Info } from '@mui/icons-material';
 

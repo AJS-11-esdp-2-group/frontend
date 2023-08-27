@@ -61,7 +61,7 @@ const Cart = ({
                                       );
                                   })
                                 : null}
-                            {items?.length <= 0 &&
+                            {items?.length  >= 0 &&
                                 bouquets?.length &&
                                 bouquets?.map((bouquet, i) => {
                                     return (

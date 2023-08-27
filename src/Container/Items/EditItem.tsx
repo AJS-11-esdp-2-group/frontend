@@ -27,6 +27,8 @@ const EditItem = () => {
   const [subCategoryId, setSubCategoryId] = useState(0);
   const { data: categories } = useGetAllcategoriesQuery();
   const { data: subcategory } = useGetSubcategoriesByIdCategoryQuery(categoryId);
+  console.log(subcategory);
+  
   const [openItemId, setOpenItemId] = useState<number | null>(null);
 
   const handleClick = (itemId: number) => {

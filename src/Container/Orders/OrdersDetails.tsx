@@ -1,5 +1,5 @@
 import Order from '../../Components/Orders/Order';
-import { useGetOrderByIdQuery } from '../../Store/services/orders';
+import { useGetOrderByIdQuery, useGetAllOrdersQuery } from '../../Store/services/orders';
 import { GlobalTheme } from '../..';
 import {
     Container,
@@ -29,13 +29,16 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 const OrdersDetails = () => {
     const { id } = useParams();
     const { data: order } = useGetOrderByIdQuery(id as string);
+    const { data: orders } = useGetAllOrdersQuery();
+
+    const orderNum = order && order.length > 0 ? orders?.find((id) => id.id === order[0].general_order_id) : 0;
 
     return (
         <ThemeProvider theme={GlobalTheme}>
             <Container>
                 {order && (
                     <Grid>
-                        <Typography variant="h4">
+                        <Typography variant='h4'>
                             Детали заказа от{' '}
                             {(() => {
                                 const addedDate = new Date(order[0].added_date);
@@ -57,7 +60,7 @@ const OrdersDetails = () => {
                     <Grid item xs={6}>
                         <TableRow>
                             <TableCell>Номер заказа</TableCell>
-                            <TableCell>{order && order[0].order_number}</TableCell>
+                            {orderNum ? <TableCell>{orderNum.order_number}</TableCell> : null}
                         </TableRow>
                         <TableRow>
                             <TableCell>Заказ выполнил</TableCell>
@@ -66,22 +69,16 @@ const OrdersDetails = () => {
                     </Grid>
                 </Grid>
                 <Grid container spacing={1}>
-                    <Typography variant="h5">Товары</Typography>
+                    <Typography variant='h5'>Товары</Typography>
                 </Grid>
                 <TableContainer component={Paper}>
-                    <Table aria-label="customized table">
+                    <Table aria-label='customized table'>
                         <TableHead>
                             <TableRow>
                                 <StyledTableCell>Название букета</StyledTableCell>
-                                <StyledTableCell align="right">
-                                    Цена по прайсу
-                                </StyledTableCell>
-                                <StyledTableCell align="right">
-                                    Цена продажи
-                                </StyledTableCell>
-                                <StyledTableCell align="right">
-                                    Способ оплаты
-                                </StyledTableCell>
+                                <StyledTableCell align='right'>Цена по прайсу</StyledTableCell>
+                                <StyledTableCell align='right'>Цена продажи</StyledTableCell>
+                                <StyledTableCell align='right'>Способ оплаты</StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>{order && <Order order={order} />}</TableBody>

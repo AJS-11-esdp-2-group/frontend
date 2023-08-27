@@ -12,12 +12,14 @@ import Loading from '../../Components/UI/Loading/Loading';
 import { useEffect, useState } from 'react';
 import { Alert, Container, Grid, Snackbar, ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import SuccessPopup from '../../Components/UI/SuccessPopup/SuccessPopup';
 
 const ItemsContainer = () => {
     const { data, isLoading, isError, error } = useGetAllItemsQuery();
     const [open, setOpen] = useState(false);
+    const [show, setShow] = useState(false)
     const [openModal, setOpenModal] = useState(false);
-    const [deleteItem] = useDeleteItemMutation();
+    const [deleteItem, {isSuccess}] = useDeleteItemMutation();
     const [deleteItemId, setDeleteItemId] = useState<number | null>(null);
     const [uncoverForm, setUncoverForm] = useState(false);
     const [createPrice] = useCreateItemsPriceMutation();
@@ -30,15 +32,15 @@ const ItemsContainer = () => {
 
     useEffect(() => {
         if (data) {
-            console.log(data);
-            
             setItems(data as []);
         }
-    }, [data]);
+        setShow(isSuccess);
+    }, [data, isSuccess]);
 
     const handleClose = () => {
         setOpen(false);
         setOpenModal(false);
+        setShow(false);
     };
 
     const handleAddButtonClick = () => {
@@ -94,7 +96,7 @@ const ItemsContainer = () => {
     const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEditingPrice(Number(event.target.value));
     };
-
+    
     return (
         <ThemeProvider theme={GlobalTheme}>
             <Container
@@ -107,6 +109,7 @@ const ItemsContainer = () => {
                     flexDirection: 'column',
                 }}
             >
+                <SuccessPopup open={show} onClose={handleClose} message="Товар удален"/>
                 {isLoading && <Loading/>}
                 <AddButton buttonText="Создать Товар" onClick={handleAddButtonClick} />
                 {uncoverForm && <AddItem />}

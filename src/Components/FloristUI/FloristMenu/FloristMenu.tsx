@@ -172,35 +172,35 @@ const FloristMenu = () => {
     };
 
     const cardClickHandler = (item: Items) => {
-        if(item.available_qty > 0) {
+        if (item.available_qty > 0) {
             const copyItems: ItemsOnCart[] = [...items];
-        if (copyItems.length > 0) {
-            let equalStatus = false;
-            copyItems.forEach((itm, index) => {
-                if (item.item_name === itm.item_name) {
-                    equalStatus = true;
-                    copyItems[index].qty++;
+            if (copyItems.length > 0) {
+                let equalStatus = false;
+                copyItems.forEach((itm, index) => {
+                    if (item.item_name === itm.item_name) {
+                        equalStatus = true;
+                        copyItems[index].qty++;
+                    }
+                });
+                if (equalStatus) {
+                    setItems(copyItems);
+                } else {
+                    const copyItem = { ...item, qty: 1 };
+                    copyItems.push(copyItem);
+                    setItems(copyItems);
+                    setActiveItemIdex(copyItems.length - 1);
                 }
-            });
-            if (equalStatus) {
-                setItems(copyItems);
             } else {
                 const copyItem = { ...item, qty: 1 };
                 copyItems.push(copyItem);
                 setItems(copyItems);
                 setActiveItemIdex(copyItems.length - 1);
             }
-        } else {
-            const copyItem = { ...item, qty: 1 };
-            copyItems.push(copyItem);
-            setItems(copyItems);
-            setActiveItemIdex(copyItems.length - 1);
-        }
         }
     };
 
     const navigateToShowcase = () => {
-        if (items.length > 0 || bouquetsOnBasket.length > 0) {
+        if (items.length > 0 || bouquetsOnBasket.length < 0) {
             navigate({ pathname: '/sendshowcase', search: `?params=${JSON.stringify(items)}` });
         }
     };
@@ -311,7 +311,7 @@ const FloristMenu = () => {
     };
 
     const totalValue = calculateTotalValue(items as ItemsOnCart[], basketBouquets as IAvailableBouquet[]);
-    if (isLoading) return <Loading/>
+    if (isLoading) return <Loading />;
     return (
         <ThemeProvider theme={GlobalTheme}>
             {showPayment && (

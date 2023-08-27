@@ -1,13 +1,13 @@
-import { ISubcategories } from '../../interfaces/ISubcategories';
+import { ISubcategory } from '../../interfaces/ISubcategories';
 import { api } from '../../features/index';
 
 const subcategoryApi = api.injectEndpoints({
 	endpoints: (build) => ({
-		getAllSubcategories: build.query<ISubcategories[], void>({
+		getAllSubcategories: build.query<ISubcategory[], void>({
 			query: () => '/items_subcategory',
 			providesTags: () => [{ type: 'Subcategories' }],
 		}),
-		getSubcategoryById: build.query<ISubcategories[], number | string>({
+		getSubcategoryById: build.query<ISubcategory[], number | string>({
 			query: (id) => `/items_subcategory/${id}`,
 		}),
 		deleteSubcategory: build.mutation<void, number>({
