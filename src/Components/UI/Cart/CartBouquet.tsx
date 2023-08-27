@@ -13,15 +13,15 @@ interface Props {
 
 const CartBouquet = ({id, image, name, price, actualPriceChange, total_sum}: Props) => {
     return (
-        <TableRow  sx={{width: '100%', display: 'flex', justifyContent: 'strech'}}>
+        <TableRow  sx={{width: '100%', display: 'flex', justifyContent: 'strech', backgroundColor: 'aliceblue', borderRadius: '10px'}}>
             <TableCell align='left' sx={{width: '15%'}}>
                 <Avatar>
                     {image? <img src={image} alt={name} style={{width: 'inherit', height: 'inherit'}}/> : <ImageIcon />}
                 </Avatar>
             </TableCell>
             <TableCell align='center' sx={{width: '35%'}}>{name}</TableCell>
-            <TableCell align='center' sx={{width: '25%'}}>{price}</TableCell>
-            <TableCell align='right' sx={{width: '25%', padding: '0px', display: 'flex', alignItems: 'baseline'}}>
+            <TableCell align='center' sx={{width: '23%', display: 'flex', alignItems: 'center'}}>{price}</TableCell>
+            <TableCell align='right' sx={{width: '27%', padding: '0px, 5px', display: 'flex', alignItems: 'baseline'}}>
                 <TextField
                     sx={{height:30}}
                     id={id.toString()}

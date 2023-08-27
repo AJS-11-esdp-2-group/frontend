@@ -165,7 +165,7 @@ const AddInvoice = () => {
 		const {id, name, value } = e.target;
 		const index = parseInt(id);
 		const items = form.items;
-		const item = {...items[index], [name]: value};
+		const item = {...items[index], [name]: +value < 0 ? 0 : value};
 		items[index] = item;
 		setForm((prevState) => ({
 			...prevState,
@@ -357,7 +357,7 @@ const AddInvoice = () => {
 										<TableRow 
 											key={i} 
 											sx={{transform: `translate(${touchStartPosition && momentPosition && touchItemIndex == i ? 
-												(momentPosition-touchStartPosition): '0'}px)`}}
+												(momentPosition-touchStartPosition): '0'}px)`, backgroundColor:'lightgray'}}
 											onTouchStart={(e) => onTouchStartHandler(e,i)}
 											onTouchMove={onTouchMoveHandler}
 											onTouchEnd={onTouchEndHandler}
