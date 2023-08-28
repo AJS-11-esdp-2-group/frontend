@@ -19,7 +19,7 @@ const CartBouquet = ({id, image, name, price, actualPriceChange, total_sum}: Pro
                     {image? <img src={image} alt={name} style={{width: 'inherit', height: 'inherit'}}/> : <ImageIcon />}
                 </Avatar>
             </TableCell>
-            <TableCell align='center' sx={{width: '35%'}}>{name}</TableCell>
+            <TableCell align='center' sx={{width: '35%', display: 'flex', alignItems: 'center'}}>{name}</TableCell>
             <TableCell align='center' sx={{width: '23%', display: 'flex', alignItems: 'center'}}>{price}</TableCell>
             <TableCell align='right' sx={{width: '27%', padding: '0px, 5px', display: 'flex', alignItems: 'baseline'}}>
                 <TextField
