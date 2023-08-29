@@ -25,7 +25,7 @@ const AppToolBar = () => {
 							fontWeight: 'bold',
 						}}
 					>
-						<Link to="/">Flower Shop</Link>
+						<Link to="/">Цветочный магазин</Link>
 					</Typography>
 					{user.isAuthenticated? (
 						<Typography
