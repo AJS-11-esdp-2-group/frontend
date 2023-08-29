@@ -9,13 +9,19 @@ import { useAppSelector } from './Store/hooks';
 import AppToolBar from './Components/UI/Layout/AppToolbar/ApptoolBar';
 import EditItem from './Container/Items/EditItem';
 import EditSupplier from './Container/Suppliers/EditSupplier';
-import Supply from './Container/Supply/Supply';
-import AddSupply from './Container/Supply/AddSupply';
+import AddSupply from './Components/Invoices/AddInvoice';
 import Recipes from './Container/Recipes/Recipes';
 import AddRecipes from './Container/Recipes/AddRecipes';
 import Invoices from './Components/Invoices/Invoices';
+import SendShowcase from './Container/SendShowcase/SendShowcase';
+import ShowcaseBouquets from './Container/ShowcaseBouquets/ShowcaseBouquets';
 import { getUser } from './Store/user/userSelectors';
-import { Routes, Route } from 'react-router-dom';
+import DetailShowcaseBouquets from './Container/DetailShowcaseBouquet/DetailShowcaseBoquet';
+import FloristPage from './Container/FloristPage/FloristPage';
+import CartToolBar from './Components/UI/Layout/AppToolbar/CartToolBar';
+import Orders from './Container/Orders/Orders';
+import InvoiceContainer from './Container/Invoice/InvoiceContainer';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import {
 	CssBaseline,
 	PaletteMode,
@@ -23,7 +29,8 @@ import {
 	ThemeProvider,
 } from '@mui/material';
 import { grey, blue, blueGrey } from '@mui/material/colors';
-import AvailableBouquets from './Container/AvailableBouquets/AvailableBouquets';
+import OrdersDetails from './Container/Orders/OrdersDetails';
+import EditCategory from './Container/Categories/EditCategory';
 
 const getDesignTokens = (mode: PaletteMode) => ({
 	palette: {
@@ -46,11 +53,15 @@ const getDesignTokens = (mode: PaletteMode) => ({
 const modeTheme = createTheme(getDesignTokens('light'));
 function App() {
 	const user = useAppSelector(getUser);
+	const location = useLocation();
+	const isFloristPage = location.pathname === '/florist_page';
+
 	return (
 		<ThemeProvider theme={modeTheme}>
 			<CssBaseline>
 				<header>
 					<AppToolBar />
+					{isFloristPage && <CartToolBar />}
 				</header>
 				<main>
 					<Routes>
@@ -112,18 +123,29 @@ function App() {
 							}
 						/>
 						<Route
-							path="/supply"
+							path="/invoices"
 							element={
 								<ProtectedRoute
 									isAllowed={user.isAuthenticated}
 									redirectPath="/"
 								>
-									<Supply />
+									<Invoices />
 								</ProtectedRoute>
 							}
 						/>
 						<Route
-							path="/new-supply"
+							path="/invoices/:id"
+							element={
+								<ProtectedRoute
+									isAllowed={user.isAuthenticated}
+									redirectPath="/"
+								>
+									<InvoiceContainer />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/new-invoice"
 							element={
 								<ProtectedRoute
 									isAllowed={user.isAuthenticated}
@@ -141,6 +163,17 @@ function App() {
 									redirectPath="/"
 								>
 									<Categories />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/edit-category/:id"
+							element={
+								<ProtectedRoute
+									isAllowed={user.isAuthenticated}
+									redirectPath="/"
+								>
+									<EditCategory />
 								</ProtectedRoute>
 							}
 						/>
@@ -167,13 +200,35 @@ function App() {
 							}
 						/>
 						<Route
-							path="/invoices"
+							path="/sendshowcase"
 							element={
 								<ProtectedRoute
 									isAllowed={user.isAuthenticated}
 									redirectPath="/"
 								>
-									<Invoices />
+									<SendShowcase />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/orders"
+							element={
+								<ProtectedRoute
+									isAllowed={user.isAuthenticated}
+									redirectPath="/"
+								>
+									<Orders />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/orders/:id"
+							element={
+								<ProtectedRoute
+									isAllowed={user.isAuthenticated}
+									redirectPath="/"
+								>
+									<OrdersDetails />
 								</ProtectedRoute>
 							}
 						/>
@@ -184,7 +239,29 @@ function App() {
 									isAllowed={user.isAuthenticated}
 									redirectPath="/"
 								>
-									<AvailableBouquets />
+									<ShowcaseBouquets />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/detailBouquet/:id"
+							element={
+								<ProtectedRoute
+									isAllowed={user.isAuthenticated}
+									redirectPath="/"
+								>
+									<DetailShowcaseBouquets />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/florist_page"
+							element={
+								<ProtectedRoute
+									isAllowed={user.isAuthenticated}
+									redirectPath="/"
+								>
+									<FloristPage />
 								</ProtectedRoute>
 							}
 						/>

@@ -11,6 +11,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button, Container, Typography } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import { useEffect } from 'react';
+import Loading from '../UI/Loading/Loading';
 
 function CustomToolbar() {
   return (
@@ -21,11 +22,11 @@ function CustomToolbar() {
 };
 
 const columns: GridColDef[] = [
-  { field: 'id', headerName: '№ накладной', width: 200 },
+  { field: 'id', headerName: '№ накладной', width: 150 },
   {
     field: 'date',
     headerName: 'Дата',
-    width: 250,
+    width: 180,
     valueFormatter: (date) => new Date(date?.value).toLocaleString(),
   },
   {
@@ -43,34 +44,42 @@ const columns: GridColDef[] = [
   {
     field: 'supplier_name',
     headerName: 'Поставщик',
-    width: 150,
+    width: 180,
   },
   {
     field: 'storage_name',
     headerName: 'Точка продаж',
+    width: 180,
+  },
+  {
+    field: 'username',
+    headerName: 'Сотрудник',
     width: 150,
   },
 ];
 
 const Invoices = () => {
   const navigate = useNavigate()
-  const { data: rows, refetch } = useGetAllActionsQuery();
+  const { data: rows, refetch, isLoading } = useGetAllActionsQuery();
+
   useEffect(() => {
     refetch();
   }, [refetch]);
+
   const handleOnCellClick = (params: any) => {
     navigate(`/invoices/${params.row.id}`);
   };
 
   return (
     <Container>
+      {isLoading && <Loading />}
       <Typography variant="h4">Приходные накладные</Typography>
       <Box sx={{ mt: 5, mb: 5 }}>
         <Button
           variant="contained"
           color="success"
           component={Link}
-          to="/new-supply"
+          to="/new-invoice"
         >
           Создать накладную
         </Button>

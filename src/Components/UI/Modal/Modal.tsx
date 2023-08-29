@@ -28,7 +28,7 @@ const Modal = ({
 }: Props) => {
 	return (
 		<Dialog open={isOpen} onClose={onClose}>
-			<DialogTitle>{title}</DialogTitle>
+			<DialogTitle color='black'>{title}</DialogTitle>
 			<DialogContent>{children}</DialogContent>
 			<DialogActions>
 				<Button onClick={onClose} disabled={isLoading}>

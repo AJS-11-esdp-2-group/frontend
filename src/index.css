@@ -1,6 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair&display=swap');
 * {
-  font-family: 'Playfair', serif;
   text-decoration: none;
   margin: 0;
 }
@@ -10,7 +8,7 @@ body {
 }
 
 header {
-  margin-bottom: 100px;
+  margin-bottom: 80px;
 }
 a {
   color: aliceblue;

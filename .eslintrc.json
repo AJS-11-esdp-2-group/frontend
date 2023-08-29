@@ -38,7 +38,6 @@
     "no-unused-vars":"warn",
       "no-console":"warn",
       "quotes": ["warn", "single"],
-      "jsx-quotes": ["warn", "prefer-double"],
       "max-len": ["warn", {"code": 120}], 
       "semi": ["warn", "always"],
       "comma-dangle": ["warn", "always-multiline"],

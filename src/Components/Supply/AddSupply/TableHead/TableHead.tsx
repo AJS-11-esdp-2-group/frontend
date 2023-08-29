@@ -1,57 +1,61 @@
-import { ISupplies } from '../../../../interfaces/ISupply';
 import {TableHead,TableRow,TableCell,} from '@mui/material';
 
-interface EnhancedTableProps {
-	numSelected: number;
-	onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-	rowCount: number;
-}
-
 interface HeadCell {
-	id: keyof ISupplies;
+	id: number;
 	label: string;
 	numeric: boolean;
 }
 
 const headCells: readonly HeadCell[] = [
 	{
-		id: 'source',
+		id: 1,
 		numeric: false,
 		label: 'Название',
 	},
 	{
-		id: 'target',
+		id: 2,
 		numeric: true,
 		label: 'В наличии',
 	},
 	{
-		id: 'item_name',
+		id: 3,
 		numeric: true,
 		label: 'Количество',
 	},
 	{
-		id: 'qty',
+		id: 4,
 		numeric: true,
 		label: 'Закуп.цена',
 	},
     {
-		id: 'total_price',
+		id: 5,
 		numeric: true,
 		label: 'Общая сумма',
 	},
+	{
+		id: 6,
+		numeric: true,
+		label: '',
+	},
+	{
+		id: 7,
+		numeric: true,
+		label: '',
+	}
 ];
 
 export default function EnhancedTableHead() {
 
 	return (
 		<TableHead>
-			<TableRow>
+			<TableRow sx={{backgroundColor: 'blanchedalmond'}}>
 				<TableCell padding="normal"></TableCell>
 				{headCells.map((headCell) => (
 					<TableCell
+						sx={{fontFamily: 'monospace', fontSize: '18px'}}
 						size="medium"
 						key={headCell.id}
-						align={headCell.numeric ? 'right' : 'left'}
+						align='center'
 					>
                         {headCell.label}
 					</TableCell>

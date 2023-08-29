@@ -10,12 +10,10 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 interface Props {
 	name_supplier: string;
-	contact_person: string;
 	email: string;
 	phone: string;
 	address: string;
-	id_country: string;
-	id_city: string;
+	comment: string;
 }
 
 const EditSupplier = () => {
@@ -26,12 +24,10 @@ const EditSupplier = () => {
 
 	const [form, setForm] = useState<Props>({
 		name_supplier: '',
-		contact_person: '',
 		email: '',
 		phone: '',
 		address: '',
-		id_country: '',
-		id_city: '',
+		comment: '',
 	});
 
 	const [open, setOpen] = useState(false);
@@ -45,12 +41,10 @@ const EditSupplier = () => {
 		if (data) {
 			setForm({
 				name_supplier: data.name_supplier || '',
-				contact_person: data.contact_person || '',
 				email: data.email || '',
 				phone: data.phone || '',
 				address: data.address || '',
-				id_country: data.id_country || '',
-				id_city: data.id_city || '',
+				comment: data.comment || '',
 			});
 		}
 	}, [data]);
@@ -95,12 +89,6 @@ const EditSupplier = () => {
 					onChange={inputChangeHandler}
 				/>
 				<FormElement
-					value={form.contact_person}
-					label="Контактное лицо"
-					name="contact_person"
-					onChange={inputChangeHandler}
-				/>
-				<FormElement
 					value={form.email}
 					label="Email"
 					name="email"
@@ -119,15 +107,9 @@ const EditSupplier = () => {
 					onChange={inputChangeHandler}
 				/>
 				<FormElement
-					value={form.id_country}
-					label="Страна"
-					name="id_country"
-					onChange={inputChangeHandler}
-				/>
-				<FormElement
-					value={form.id_city}
-					label="Город"
-					name="id_city"
+					value={form.comment}
+					label="Комментарий"
+					name="comment"
 					onChange={inputChangeHandler}
 				/>
 				<Button

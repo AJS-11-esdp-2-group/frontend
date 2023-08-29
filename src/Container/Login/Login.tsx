@@ -68,7 +68,6 @@ const Login = () => {
 		}
 	};
 	return (
-		<ThemeProvider theme={GlobalTheme}>
 			<Container component="section" maxWidth="xs">
 				<Snackbar
 					anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -120,7 +119,7 @@ const Login = () => {
 								Войти
 							</LoadingButton>
 							<Grid container>
-								<Grid item sx={{ marginLeft: 6 }}>
+								<Grid item sx={{ marginLeft: 6, pt:3 }}>
 									<Link component={RouterLink} to="/register">
 										У вас нет аккаунта? Зарегистрироваться
 									</Link>
@@ -130,7 +129,6 @@ const Login = () => {
 					</Box>
 				</Box>
 			</Container>
-		</ThemeProvider>
 	);
 };
 

@@ -4,7 +4,6 @@ import { useEditItemMutation, useGetItemByIdQuery } from '../../Store/services/i
 import { useGetAllcategoriesQuery, useGetSubcategoriesByIdCategoryQuery } from '../../Store/services/categories';
 import BasicSelect from '../../Components/UI/Form/SelectFormElement';
 import { useAppSelector } from '../../Store/hooks';
-import { useGetUnderSubcategoriesByIdCategoryQuery } from '../../Store/services/subcategories';
 import { useNavigate } from 'react-router';
 import { Container, Button, Snackbar, Alert } from '@mui/material';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
@@ -15,7 +14,6 @@ export interface ItemProps {
   item_description: string;
   id_category: string;
   id_subcategory: string;
-  id_under_subcategory: string;
   id_user: number | string;
 }
 
@@ -27,10 +25,10 @@ const EditItem = () => {
 
   const [categoryId, setCategoryId] = useState(0);
   const [subCategoryId, setSubCategoryId] = useState(0);
-
   const { data: categories } = useGetAllcategoriesQuery();
   const { data: subcategory } = useGetSubcategoriesByIdCategoryQuery(categoryId);
-  const { data: underSubcategory } = useGetUnderSubcategoriesByIdCategoryQuery(subCategoryId);
+  console.log(subcategory);
+  
   const [openItemId, setOpenItemId] = useState<number | null>(null);
 
   const handleClick = (itemId: number) => {
@@ -50,7 +48,6 @@ const EditItem = () => {
     item_description: '',
     id_category: '',
     id_subcategory: '',
-    id_under_subcategory: '',
     id_user: '',
   });
 
@@ -72,7 +69,6 @@ const EditItem = () => {
           item_description: itemById[0].item_description,
           id_category: itemById[0].id_category,
           id_subcategory: itemById[0].id_subcategory,
-          id_under_subcategory: itemById[0].id_under_subcategory,
           id_user: user.id,
         }));
       }
@@ -166,21 +162,6 @@ const EditItem = () => {
               : []
           }
         />
-        <BasicSelect
-          value={form.id_under_subcategory}
-          label="Подкатегория подкатегории"
-          name="id_under_subcategory"
-          onChange={(value) => selectChangeHandler('id_under_subcategory', value)}
-          options={
-            underSubcategory
-              ? underSubcategory.map((undersubs) => ({
-                  id: undersubs.id,
-                  name: undersubs.under_subcategory_name,
-                }))
-              : []
-          }
-        />
-
         <Button fullWidth variant="contained" color="success" type="submit" className="submit">
           Изменить
         </Button>

@@ -9,17 +9,12 @@ import { Provider } from 'react-redux';
 import { createTheme } from '@mui/material';
 
 export const GlobalTheme = createTheme({
-	components: {
-	  MuiContainer: {
-		styleOverrides: {
-		  root: ({ theme }) => theme.unstable_sx({}),
-		},
-	  },
+	components: {	
 	  MuiButtonBase: {
 		styleOverrides: {
 		  root: ({ theme }) =>
 			theme.unstable_sx({
-			  marginBottom: 3,
+			  marginBottom: 1,
 			}),
 		},
 	  },
@@ -27,8 +22,7 @@ export const GlobalTheme = createTheme({
 		styleOverrides: {
 		  root: ({ theme }) =>
 			theme.unstable_sx({
-			  marginBottom: 3,
-			  marginTop: 3,
+			  marginTop:1,	  
 			}),
 		},
 	  },
@@ -63,12 +57,7 @@ export const GlobalTheme = createTheme({
 		  container: {
 			display: 'flex',
 			alignItems:'stretch',
-			flexDirection:'column',
-			alignContent:'space-around',
-			justifyContent:'space-between',
-			'@media (max-width: 600px)': {
-			  display: 'block',
-			},
+			flexDirection:'row',
 		  },
 		},
 	  },
@@ -79,9 +68,32 @@ export const GlobalTheme = createTheme({
 						background: 
 						'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
 						'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-					})
-			}
-		}
+					}),
+			},
+		},
+		MuiCheckbox: {
+            styleOverrides: {
+                root: ({ theme }) =>
+                    theme.unstable_sx({
+                        position: 'absolute',
+                        top: 0,
+                        right: 0,
+                        zIndex: 1,
+						color: 'Highlight',
+                    }),
+            },
+        },
+		MuiTypography: {
+			styleOverrides: {
+				h6: {
+				  color: 'white',
+				  fontWeight: 'bold',
+				},
+				h5: {
+					fontWeight: 'bold',
+				},
+			  },
+		},
 	},
   });
   

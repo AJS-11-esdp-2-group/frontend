@@ -38,7 +38,7 @@ const FormElement = ({
 				onChange={onChange}
 				name={name}
 				variant="outlined"
-				fullWidth
+				sx={{width:450}}
 				label={label}
 				error={!!error}
 				helperText={error}
