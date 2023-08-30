@@ -1,5 +1,5 @@
 import { ICategories, ICategory } from '../../interfaces/ICategories';
-import { ISubcategory } from '../../interfaces/ISubcategories';
+import { ISubcategories, ISubcategory } from '../../interfaces/ISubcategories';
 import { api } from '../../features/index';
 
 const categoryApi = api.injectEndpoints({
@@ -11,7 +11,7 @@ const categoryApi = api.injectEndpoints({
 		getCategoryById: build.query<ICategories[], number | string>({
 			query: (id) => `/items_category/${id}`,
 		}),
-		getSubcategoriesByIdCategory: build.query<ISubcategory[], number>({
+		getSubcategoriesByIdCategory: build.query<ISubcategories[], number>({
 			query: (id) => `/items_subcategory?id_category=${id}`,
 		}),
 		addCategory: build.mutation<ICategories, ICategory>({
@@ -29,16 +29,29 @@ const categoryApi = api.injectEndpoints({
 			}),
 			invalidatesTags: ['Categories'],
 		}),
-		editCategory: build.mutation<
-			ICategories,
-			{ id: number; category: ICategory}
-		>({
+		editCategory: build.mutation<ICategories,
+			{ id: number; category: ICategory}>({
 			query: (category) => ({
 				url: `/items_category/${category.id}`,
 				method: 'PUT',
 				body: category.category,
 			}),
 			invalidatesTags: ['Categories'],
+		}),
+		addSubcategory: build.mutation<ISubcategories, ISubcategory>({
+			query: (items_subcategory) => ({
+				url: '/items_subcategory',
+				method: 'POST',
+				body: items_subcategory,
+			}),
+			invalidatesTags: ['Subcategories'],
+		}),
+		deleteSubcategory: build.mutation<void, number>({
+			query: (subcategoryId) => ({
+				url: `/items_subcategory/${subcategoryId}`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: ['Subcategories'],
 		}),
 	}),
 });
@@ -50,4 +63,6 @@ export const {
 	useAddCategoryMutation,
 	useDeleteCategoryMutation,
 	useEditCategoryMutation,
+	useAddSubcategoryMutation,
+	useDeleteSubcategoryMutation,
 } = categoryApi;

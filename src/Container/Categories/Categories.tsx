@@ -1,6 +1,7 @@
 import AddCategory from './AddCategory';
 import {
     useDeleteCategoryMutation,
+    useDeleteSubcategoryMutation,
     useGetAllcategoriesQuery,
     useGetSubcategoriesByIdCategoryQuery,
 } from '../../Store/services/categories';
@@ -9,8 +10,8 @@ import Modal from '../../Components/UI/Modal/Modal';
 import { CustomError } from '../../interfaces/errors/CustomError';
 import Loading from '../../Components/UI/Loading/Loading';
 import { GlobalTheme } from '../..';
-import { ISubcategory } from '../../interfaces/ISubcategories';
-import  { useEffect, useState } from 'react';
+import { ISubcategories, ISubcategory } from '../../interfaces/ISubcategories';
+import { useEffect, useState } from 'react';
 import {
     Container,
     List,
@@ -27,7 +28,7 @@ import {
     ThemeProvider,
 } from '@mui/material';
 
-import { Send as SendIcon, ExpandLess, ExpandMore } from '@mui/icons-material';
+import { Send as SendIcon, ExpandLess, ExpandMore, AddCircleOutline } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import QueueTwoToneIcon from '@mui/icons-material/QueueTwoTone';
 import StarsTwoToneIcon from '@mui/icons-material/StarsTwoTone';
@@ -35,17 +36,22 @@ import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
 import ModeEditTwoToneIcon from '@mui/icons-material/ModeEditTwoTone';
 import CheckBoxTwoToneIcon from '@mui/icons-material/CheckBoxTwoTone';
 import { useNavigate } from 'react-router';
+import AddSubcategory from './AddSubcategory';
 
 const Categories = () => {
     const { data, isLoading, isError, error } = useGetAllcategoriesQuery();
     const [open, setOpen] = useState(false);
-    const [openUnder, setUnder] = useState<number | null>(null);
     const [openModal, setOpenModal] = useState(false);
     const [deleteCategory] = useDeleteCategoryMutation();
+    const [deleteSubcategory] = useDeleteSubcategoryMutation();
     const [deleteCategoryId, setDeleteCategoryId] = useState<number | null>(null);
+    const [deleteSubcategoryId, setDeleteSubcategoryId] = useState<number | null>(null);
     const [openItemId, setOpenItemId] = useState<number | null>(null);
     const [uncoverForm, setUncoverForm] = useState(false);
+    const [uncoverSubcategoryForm, setUncoverSubcategoryForm] = useState(false);
     const navigate = useNavigate();
+    const [categoryId, setCategoryId] = useState(0);
+    const { data: subcategories, isFetching } = useGetSubcategoriesByIdCategoryQuery(categoryId);
 
     useEffect(() => {
         setOpen(isError);
@@ -92,8 +98,33 @@ const Categories = () => {
         }
     };
 
-    const [categoryId, setCategoryId] = useState(0);
-    const { data: subcategories, isFetching } = useGetSubcategoriesByIdCategoryQuery(categoryId);
+    const handleDeleteSubcategory = async (subcategoryId: number) => {
+        setDeleteSubcategoryId(subcategoryId);
+        setOpenModal(true);
+    };
+
+    const handleConfirmDeleteSubcategory = async () => {
+        if (deleteSubcategoryId) {
+            try {
+                const result = await deleteSubcategory(deleteSubcategoryId);
+                if ('error' in result && result.error) {
+                    setOpenModal(true);
+                    setOpen(true);
+                } else {
+                    setOpenModal(false);
+                }
+                setDeleteSubcategoryId(null);
+            } catch (error) {
+                setOpenModal(true);
+                setOpen(true);
+            }
+        }
+    };
+
+    const handleAddSubcategory = () => {
+        setUncoverSubcategoryForm(!uncoverSubcategoryForm);
+    };
+
 
     if (isLoading) return <Loading />;
     return (
@@ -152,6 +183,11 @@ const Categories = () => {
                                             <StarsTwoToneIcon sx={{ width: 30, height: 30 }} />
                                         </ListItemIcon>
                                         <ListItemText primary={category.category_name} />
+                                        <ListItemButton onClick={handleAddSubcategory}>
+                                            <ListItemIcon>
+                                                <AddCircleOutline />
+                                            </ListItemIcon>
+                                        </ListItemButton>
                                         <IconButton
                                             onClick={() => navigate(`/edit-category/${category.id}`)}
                                             aria-label='settings'
@@ -186,6 +222,7 @@ const Categories = () => {
                                     >
                                         <List component='div' disablePadding sx={{ flexDirection: 'column' }}>
                                             <>
+                                                {uncoverSubcategoryForm && category.id === categoryId && <AddSubcategory id_category={category.id} />}
                                                 {isFetching ? (
                                                     <ListItemText sx={{ pl: 9 }}>Loading...</ListItemText>
                                                 ) : subcategories?.length === 0 ? (
@@ -196,10 +233,18 @@ const Categories = () => {
                                                         <ListItemText>Нет подкатегорий</ListItemText>
                                                     </ListItemButton>
                                                 ) : (
-                                                    subcategories?.map((sub: ISubcategory) => {
-                                                        const isUnderOpen = sub.id === openUnder;
+                                                    subcategories?.map((sub: ISubcategories) => {
                                                         return (
                                                             <ListItemButton key={sub.id} sx={{ pl: 4 }}>
+                                                                <Modal
+                                                                    isOpen={openModal && deleteSubcategoryId === sub.id}
+                                                                    onClose={handleCloseModal}
+                                                                    title='Вы действительно хотите удалить эту подкатегорию?'
+                                                                    isLoading={isLoading}
+                                                                    actionButtonLabel='Удалить'
+                                                                    onActionButtonClick={handleConfirmDeleteSubcategory}
+                                                                    children={undefined}
+                                                                />
                                                                 <ListItemIcon>
                                                                     <CheckBoxTwoToneIcon
                                                                         sx={{ width: 30, height: 30 }}
@@ -208,10 +253,11 @@ const Categories = () => {
                                                                 <ListItemText key={sub.id}>
                                                                     {sub.subcategory_name}
                                                                 </ListItemText>
-                                                                <IconButton>
-                                                                    <DeleteForeverTwoToneIcon
-                                                                        sx={{ width: 30, height: 30 }}
-                                                                    />
+                                                                <IconButton
+                                                                    onClick={() => handleDeleteSubcategory(sub.id)}
+                                                                    aria-label='settings'
+                                                                >
+                                                                    <DeleteForeverTwoToneIcon sx={{ width: 30, height: 30 }} />
                                                                 </IconButton>
                                                             </ListItemButton>
                                                         );
@@ -220,6 +266,7 @@ const Categories = () => {
                                             </>
                                         </List>
                                     </Collapse>
+
                                 </Grid>
                             );
                         })}
