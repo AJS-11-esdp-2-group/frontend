@@ -13,6 +13,7 @@ const categoryApi = api.injectEndpoints({
 		}),
 		getSubcategoriesByIdCategory: build.query<ISubcategories[], number>({
 			query: (id) => `/items_subcategory?id_category=${id}`,
+			providesTags: () => [{ type: 'Subcategories' }],
 		}),
 		addCategory: build.mutation<ICategories, ICategory>({
 			query: (items_category) => ({
